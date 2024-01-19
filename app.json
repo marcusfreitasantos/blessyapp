@@ -2,6 +2,7 @@
   "expo": {
     "name": "blessyapp",
     "slug": "blessyapp",
+    "scheme": "blessyapp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -36,6 +37,20 @@
     },
     "updates": {
       "url": "https://u.expo.dev/ea43554e-5e38-46c3-9f9c-16155f5e6f7e"
-    }
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-font",
+        {
+          "fonts": [
+            "node_modules/@expo-google-fonts/ubuntu/Ubuntu_300Light.ttf",
+            "node_modules/@expo-google-fonts/ubuntu/Ubuntu_400Regular.ttf",
+            "node_modules/@expo-google-fonts/ubuntu/Ubuntu_500Medium.ttf",
+            "node_modules/@expo-google-fonts/ubuntu/Ubuntu_700Bold.ttf"
+          ]
+        }
+      ]
+    ]   
   }
 }
