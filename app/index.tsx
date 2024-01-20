@@ -2,7 +2,7 @@ import { Center, Text, Box, HStack } from "@gluestack-ui/themed";
 import { Link } from "expo-router";
 import Form from "@/components/form";
 
-const Login = () => {
+const Signin = () => {
   return (
     <Center h="100%" bg="$primary500" p={40}>
       <Text color="white" size="6xl" bold py={20}>
@@ -16,7 +16,7 @@ const Login = () => {
           <Text color="white">Crie sua conta!</Text>
         </Link>
 
-        <Link href="">
+        <Link href="/home">
           <Text color="white">Recuperar senha</Text>
         </Link>
       </HStack>
@@ -24,4 +24,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signin;

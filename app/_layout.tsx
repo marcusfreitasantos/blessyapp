@@ -1,3 +1,7 @@
+import UserDataProvider from "@/contexts/currentUserContext";
+import { Stack } from "expo-router";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
+import { config } from "../config/gluestack-ui.config";
 import {
   useFonts,
   Ubuntu_300Light,
@@ -5,10 +9,6 @@ import {
   Ubuntu_500Medium,
   Ubuntu_700Bold,
 } from "@expo-google-fonts/ubuntu";
-
-import { Stack } from "expo-router";
-import { GluestackUIProvider } from "@gluestack-ui/themed";
-import { config } from "../config/gluestack-ui.config";
 
 const RootLayout = () => {
   let [fontsLoaded, fontError] = useFonts({
@@ -23,16 +23,20 @@ const RootLayout = () => {
   }
 
   return (
-    <GluestackUIProvider config={config}>
-      <Stack>
-        <Stack.Screen
-          name="(tabs)"
-          options={{
-            headerShown: false,
-          }}
-        />
-      </Stack>
-    </GluestackUIProvider>
+    <UserDataProvider>
+      <GluestackUIProvider config={config}>
+        <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="sign-up" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(tabs)"
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack>
+      </GluestackUIProvider>
+    </UserDataProvider>
   );
 };
 

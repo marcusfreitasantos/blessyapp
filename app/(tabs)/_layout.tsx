@@ -1,7 +1,14 @@
-import React from "react";
-import { Tabs } from "expo-router";
+import { useContext } from "react";
+import { GlobalContext } from "@/contexts/currentUserContext";
+import { Tabs, Redirect } from "expo-router";
 
 const TabsLayout = () => {
+  const { token } = useContext(GlobalContext);
+
+  if (!token) {
+    return <Redirect href="/" />;
+  }
+
   return (
     <Tabs>
       <Tabs.Screen
@@ -33,28 +40,6 @@ const TabsLayout = () => {
         options={{
           headerTitle: "Perfil",
           title: "Perfil",
-        }}
-      />
-
-      <Tabs.Screen
-        name="index"
-        options={{
-          headerShown: false,
-          href: null,
-          tabBarStyle: {
-            display: "none",
-          },
-        }}
-      />
-
-      <Tabs.Screen
-        name="register"
-        options={{
-          headerShown: false,
-          href: null,
-          tabBarStyle: {
-            display: "none",
-          },
         }}
       />
     </Tabs>

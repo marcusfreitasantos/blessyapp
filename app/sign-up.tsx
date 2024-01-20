@@ -1,13 +1,13 @@
 import { Box, Text } from "@gluestack-ui/themed";
 import { Link } from "expo-router";
 
-const Register = () => {
+const Signup = () => {
   return (
     <Box bg="$primary500" p="$5">
-      <Text>Register</Text>
+      <Text>Signup</Text>
       <Link href="/">Já tem uma conta? Faça login.</Link>
     </Box>
   );
 };
 
-export default Register;
+export default Signup;
