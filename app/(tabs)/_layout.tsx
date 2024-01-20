@@ -39,14 +39,22 @@ const TabsLayout = () => {
       <Tabs.Screen
         name="index"
         options={{
+          headerShown: false,
           href: null,
+          tabBarStyle: {
+            display: "none",
+          },
         }}
       />
 
       <Tabs.Screen
         name="register"
         options={{
+          headerShown: false,
           href: null,
+          tabBarStyle: {
+            display: "none",
+          },
         }}
       />
     </Tabs>
