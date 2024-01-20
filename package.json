@@ -26,6 +26,7 @@
     "@gluestack-ui/config": "^1.0.13",
     "@gluestack-ui/themed": "^1.0.37",
     "@react-navigation/native": "^6.1.9",
+    "axios": "^1.6.5",
     "expo": "^50.0.2",
     "expo-constants": "~15.4.5",
     "expo-font": "~11.10.2",
