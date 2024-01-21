@@ -1,33 +1,34 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { Alert } from "react-native";
-import { authUser } from "@/services/api";
-import { GlobalContext } from "@/contexts/currentUserContext";
+import { createUser } from "@/services/api";
 import { router } from "expo-router";
 
 import { VStack } from "@gluestack-ui/themed";
-
-import { Mail, Lock } from "lucide-react-native";
+import { User, Mail, Lock } from "lucide-react-native";
 
 import ButtonComponent from "../Button";
 import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
 
-const LoginForm = () => {
-  const { setToken } = useContext(GlobalContext);
+const SignUpForm = () => {
+  const [userFullName, setUserFullName] = useState("");
   const [userEmail, setuserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
+  const [userConfirmPass, setUserConfirmPass] = useState("");
   const [loading, isLoading] = useState(false);
 
-  const userLogin = async () => {
+  const createNewUser = async () => {
+    const username = userFullName.replace(" ", "").toLowerCase();
+
     try {
       isLoading(true);
-      const response = await authUser(userEmail, userPass);
-      const jwtToken = response.data.token;
-      setToken(jwtToken);
-      router.replace("/home");
+      await createUser(username, userEmail, userPass, userFullName);
+      Alert.alert("Conta criada com sucesso!", "", [
+        { text: "Fazer Login", onPress: () => router.replace("/") },
+      ]);
     } catch (error) {
       console.log(error);
-      Alert.alert("Não foi possível fazer login", `Erro: ${error}`);
+      Alert.alert("Erro", `${error}`);
     } finally {
       isLoading(false);
     }
@@ -48,6 +49,14 @@ const LoginForm = () => {
           hardShadow={"1"}
         >
           <InputComponent
+            inputIcon={User}
+            inputType="text"
+            inputPlaceholder="Seu nome completo"
+            inputValue={userFullName}
+            onChangeText={(t: string) => setUserFullName(t)}
+          />
+
+          <InputComponent
             inputIcon={Mail}
             inputType="text"
             inputPlaceholder="Email"
@@ -63,9 +72,17 @@ const LoginForm = () => {
             onChangeText={(t: string) => setUserPass(t)}
           />
 
+          <InputComponent
+            inputIcon={Lock}
+            inputType="password"
+            inputPlaceholder="Confirme sua senha"
+            inputValue={userConfirmPass}
+            onChangeText={(t: string) => setUserConfirmPass(t)}
+          />
+
           <ButtonComponent
-            onPress={userLogin}
-            buttonText="Login"
+            onPress={createNewUser}
+            buttonText="Criar Conta"
             action="primary"
           />
         </VStack>
@@ -74,4 +91,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignUpForm;
