@@ -37,6 +37,8 @@ const InputComponent = ({
         placeholder={inputPlaceholder}
         value={inputValue}
         onChangeText={onChangeText}
+        placeholderTextColor="#eee"
+        color="#aaa"
       />
 
       {inputType === "password" && (
