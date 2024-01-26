@@ -8,9 +8,10 @@ import {
   EyeIcon,
   EyeOffIcon,
 } from "@gluestack-ui/themed";
+import { View } from "react-native";
 
 interface InputComponentProps {
-  inputIcon: {};
+  inputIcon?: {};
   inputType: "text" | "password";
   inputPlaceholder: string;
   inputValue: string;
@@ -28,16 +29,14 @@ const InputComponent = ({
 
   return (
     <Input variant="outline" size="md" p={10}>
-      <InputSlot pr={0}>
-        <InputIcon as={inputIcon} />
-      </InputSlot>
+      {inputIcon && <InputIcon as={inputIcon} testID="input__icon" />}
 
       <InputField
         type={showPassword ? "text" : inputType}
         placeholder={inputPlaceholder}
         value={inputValue}
         onChangeText={onChangeText}
-        placeholderTextColor="#eee"
+        placeholderTextColor="#aaa"
         color="#aaa"
       />
 

@@ -82,99 +82,100 @@ exports[`<Signin/> Should render login screen 1`] = `
       }
       variant="outline"
     >
-      <View
-        accessibilityElementsHidden={true}
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight="24"
+        bbWidth="24"
         data-style=""
         dataSet={
           {
             "style": "",
           }
         }
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        pr={0}
+        fill="none"
+        focusable={false}
+        height={24}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
         style={
           [
-            undefined,
-            {},
-            undefined,
+            {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            [
+              undefined,
+              {},
+              undefined,
+              {},
+              undefined,
+            ],
+            {
+              "flex": 0,
+              "height": 24,
+              "width": 24,
+            },
           ]
         }
-        tabIndex={-1}
+        testID="input__icon"
+        vbHeight={24}
+        vbWidth={24}
+        width={24}
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <RNSVGSvgView
-          align="xMidYMid"
-          bbHeight="24"
-          bbWidth="24"
-          data-style=""
-          dataSet={
-            {
-              "style": "",
-            }
-          }
-          fill="none"
-          focusable={false}
-          height={24}
-          meetOrSlice={0}
-          minX={0}
-          minY={0}
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          style={
+        <RNSVGGroup
+          fill={null}
+          propList={
             [
-              {
-                "backgroundColor": "transparent",
-                "borderWidth": 0,
-              },
-              [
-                undefined,
-                {},
-                undefined,
-                {},
-                undefined,
-              ],
-              {
-                "flex": 0,
-                "height": 24,
-                "width": 24,
-              },
+              "fill",
+              "stroke",
+              "strokeWidth",
+              "strokeLinecap",
+              "strokeLinejoin",
             ]
           }
-          vbHeight={24}
-          vbWidth={24}
-          width={24}
-          xmlns="http://www.w3.org/2000/svg"
+          stroke={
+            {
+              "type": 2,
+            }
+          }
+          strokeLinecap={1}
+          strokeLinejoin={1}
+          strokeWidth="2"
         >
-          <RNSVGGroup
+          <RNSVGRect
+            fill={null}
+            height="16"
+            propList={
+              [
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "strokeLinecap",
+                "strokeLinejoin",
+              ]
+            }
+            rx="2"
+            stroke={
+              {
+                "type": 2,
+              }
+            }
+            strokeLinecap={1}
+            strokeLinejoin={1}
+            strokeWidth="2"
+            testID="input__icon"
+            width="20"
+            x="2"
+            y="4"
+          />
+          <RNSVGPath
+            d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
             fill={null}
             propList={
               [
@@ -193,56 +194,10 @@ exports[`<Signin/> Should render login screen 1`] = `
             strokeLinecap={1}
             strokeLinejoin={1}
             strokeWidth="2"
-          >
-            <RNSVGRect
-              fill={null}
-              height="16"
-              propList={
-                [
-                  "fill",
-                  "stroke",
-                  "strokeWidth",
-                  "strokeLinecap",
-                  "strokeLinejoin",
-                ]
-              }
-              rx="2"
-              stroke={
-                {
-                  "type": 2,
-                }
-              }
-              strokeLinecap={1}
-              strokeLinejoin={1}
-              strokeWidth="2"
-              width="20"
-              x="2"
-              y="4"
-            />
-            <RNSVGPath
-              d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
-              fill={null}
-              propList={
-                [
-                  "fill",
-                  "stroke",
-                  "strokeWidth",
-                  "strokeLinecap",
-                  "strokeLinejoin",
-                ]
-              }
-              stroke={
-                {
-                  "type": 2,
-                }
-              }
-              strokeLinecap={1}
-              strokeLinejoin={1}
-              strokeWidth="2"
-            />
-          </RNSVGGroup>
-        </RNSVGSvgView>
-      </View>
+            testID="input__icon"
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
       <TextInput
         accessible={true}
         aria-label="Input Field"
@@ -259,11 +214,15 @@ exports[`<Signin/> Should render login screen 1`] = `
         onFocus={[Function]}
         onKeyPress={[Function]}
         placeholder="Email"
+        placeholderTextColor="#aaa"
         secureTextEntry={false}
         style={
           [
             undefined,
             {},
+            {
+              "color": "#aaa",
+            },
             undefined,
           ]
         }
@@ -289,99 +248,101 @@ exports[`<Signin/> Should render login screen 1`] = `
       }
       variant="outline"
     >
-      <View
-        accessibilityElementsHidden={true}
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        collapsable={false}
+      <RNSVGSvgView
+        align="xMidYMid"
+        bbHeight="24"
+        bbWidth="24"
         data-style=""
         dataSet={
           {
             "style": "",
           }
         }
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        pr={0}
+        fill="none"
+        focusable={false}
+        height={24}
+        meetOrSlice={0}
+        minX={0}
+        minY={0}
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
         style={
           [
-            undefined,
-            {},
-            undefined,
+            {
+              "backgroundColor": "transparent",
+              "borderWidth": 0,
+            },
+            [
+              undefined,
+              {},
+              undefined,
+              {},
+              undefined,
+            ],
+            {
+              "flex": 0,
+              "height": 24,
+              "width": 24,
+            },
           ]
         }
-        tabIndex={-1}
+        testID="input__icon"
+        vbHeight={24}
+        vbWidth={24}
+        width={24}
+        xmlns="http://www.w3.org/2000/svg"
       >
-        <RNSVGSvgView
-          align="xMidYMid"
-          bbHeight="24"
-          bbWidth="24"
-          data-style=""
-          dataSet={
-            {
-              "style": "",
-            }
-          }
-          fill="none"
-          focusable={false}
-          height={24}
-          meetOrSlice={0}
-          minX={0}
-          minY={0}
-          stroke="currentColor"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          style={
+        <RNSVGGroup
+          fill={null}
+          propList={
             [
-              {
-                "backgroundColor": "transparent",
-                "borderWidth": 0,
-              },
-              [
-                undefined,
-                {},
-                undefined,
-                {},
-                undefined,
-              ],
-              {
-                "flex": 0,
-                "height": 24,
-                "width": 24,
-              },
+              "fill",
+              "stroke",
+              "strokeWidth",
+              "strokeLinecap",
+              "strokeLinejoin",
             ]
           }
-          vbHeight={24}
-          vbWidth={24}
-          width={24}
-          xmlns="http://www.w3.org/2000/svg"
+          stroke={
+            {
+              "type": 2,
+            }
+          }
+          strokeLinecap={1}
+          strokeLinejoin={1}
+          strokeWidth="2"
         >
-          <RNSVGGroup
+          <RNSVGRect
+            fill={null}
+            height="11"
+            propList={
+              [
+                "fill",
+                "stroke",
+                "strokeWidth",
+                "strokeLinecap",
+                "strokeLinejoin",
+              ]
+            }
+            rx="2"
+            ry="2"
+            stroke={
+              {
+                "type": 2,
+              }
+            }
+            strokeLinecap={1}
+            strokeLinejoin={1}
+            strokeWidth="2"
+            testID="input__icon"
+            width="18"
+            x="3"
+            y="11"
+          />
+          <RNSVGPath
+            d="M7 11V7a5 5 0 0 1 10 0v4"
             fill={null}
             propList={
               [
@@ -400,57 +361,10 @@ exports[`<Signin/> Should render login screen 1`] = `
             strokeLinecap={1}
             strokeLinejoin={1}
             strokeWidth="2"
-          >
-            <RNSVGRect
-              fill={null}
-              height="11"
-              propList={
-                [
-                  "fill",
-                  "stroke",
-                  "strokeWidth",
-                  "strokeLinecap",
-                  "strokeLinejoin",
-                ]
-              }
-              rx="2"
-              ry="2"
-              stroke={
-                {
-                  "type": 2,
-                }
-              }
-              strokeLinecap={1}
-              strokeLinejoin={1}
-              strokeWidth="2"
-              width="18"
-              x="3"
-              y="11"
-            />
-            <RNSVGPath
-              d="M7 11V7a5 5 0 0 1 10 0v4"
-              fill={null}
-              propList={
-                [
-                  "fill",
-                  "stroke",
-                  "strokeWidth",
-                  "strokeLinecap",
-                  "strokeLinejoin",
-                ]
-              }
-              stroke={
-                {
-                  "type": 2,
-                }
-              }
-              strokeLinecap={1}
-              strokeLinejoin={1}
-              strokeWidth="2"
-            />
-          </RNSVGGroup>
-        </RNSVGSvgView>
-      </View>
+            testID="input__icon"
+          />
+        </RNSVGGroup>
+      </RNSVGSvgView>
       <TextInput
         accessible={true}
         aria-label="Input Field"
@@ -467,11 +381,15 @@ exports[`<Signin/> Should render login screen 1`] = `
         onFocus={[Function]}
         onKeyPress={[Function]}
         placeholder="Senha"
+        placeholderTextColor="#aaa"
         secureTextEntry={true}
         style={
           [
             undefined,
             {},
+            {
+              "color": "#aaa",
+            },
             undefined,
           ]
         }
@@ -721,9 +639,14 @@ exports[`<Signin/> Should render login screen 1`] = `
       [
         undefined,
         {},
+        {
+          "alignItems": "center",
+          "justifyContent": "space-between",
+        },
         undefined,
       ]
     }
+    w="100%"
   >
     <Text
       href="/sign-up"

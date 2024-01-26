@@ -1,4 +1,4 @@
-import { Center, Text, HStack } from "@gluestack-ui/themed";
+import { Center, Text, HStack, Box } from "@gluestack-ui/themed";
 import { Link } from "expo-router";
 import LoginForm from "@/components/LoginForm";
 
@@ -11,7 +11,13 @@ const Signin = () => {
 
       <LoginForm />
 
-      <HStack py={20} space="lg">
+      <HStack
+        py={20}
+        space="lg"
+        justifyContent="space-between"
+        alignItems="center"
+        w="100%"
+      >
         <Link href="/sign-up">
           <Text color="white">Crie sua conta!</Text>
         </Link>
