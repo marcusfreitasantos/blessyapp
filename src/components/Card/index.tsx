@@ -19,7 +19,7 @@ const CardComponent = () => {
 
   const customSize = 40;
   return (
-    <Pressable onPress={navigateToCardUrl} px={20} py={5}>
+    <Pressable onPress={navigateToCardUrl} px={20} pt={5}>
       <HStack
         p={15}
         justifyContent="space-between"
