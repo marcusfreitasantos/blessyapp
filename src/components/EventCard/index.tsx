@@ -1,4 +1,4 @@
-import { HStack, VStack, Text, Pressable } from "@gluestack-ui/themed";
+import { HStack, VStack, Text, Pressable, Divider } from "@gluestack-ui/themed";
 
 const EventCardComponent = () => {
   const navigateToCardUrl = () => {
@@ -22,12 +22,17 @@ const EventCardComponent = () => {
       >
         <VStack width="100%" space="md">
           <HStack justifyContent="space-between" alignItems="center">
-            <Text bold fontSize="$lg">
+            <Text bold fontSize="$lg" color="$primary500">
               Nome do evento
             </Text>
 
-            <Text fontSize="$sm">01/01/2024</Text>
+            <Text fontSize="$sm" bold>
+              01/01/2024
+            </Text>
           </HStack>
+
+          <Divider my="$0.5" />
+
           <Text fontSize="$sm">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
             vulputate quam quis sapien convallis vestibulum.
