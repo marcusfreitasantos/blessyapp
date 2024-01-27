@@ -45,7 +45,7 @@ const LoginForm = () => {
           w="100%"
           p={20}
           rounded={3}
-          hardShadow={"1"}
+          hardShadow="1"
         >
           <InputComponent
             inputIcon={Mail}
