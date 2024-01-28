@@ -6,7 +6,7 @@ const EventCardComponent = () => {
   };
 
   return (
-    <Pressable onPress={navigateToCardUrl} px={20} pt={5}>
+    <Pressable onPress={navigateToCardUrl} my={5}>
       <HStack
         p={15}
         justifyContent="space-between"

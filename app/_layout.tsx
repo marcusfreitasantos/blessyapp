@@ -1,6 +1,6 @@
 import UserDataProvider from "@/contexts/currentUserContext";
 import { Stack } from "expo-router";
-import { GluestackUIProvider } from "@gluestack-ui/themed";
+import { GluestackUIProvider, StatusBar } from "@gluestack-ui/themed";
 import { config } from "../config/gluestack-ui.config";
 import {
   useFonts,
@@ -25,6 +25,7 @@ const RootLayout = () => {
   return (
     <UserDataProvider>
       <GluestackUIProvider config={config}>
+        <StatusBar barStyle="light-content" />
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="sign-up" options={{ headerShown: false }} />

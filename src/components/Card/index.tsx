@@ -8,18 +8,25 @@ import {
 } from "@gluestack-ui/themed";
 import { Heart } from "lucide-react-native";
 
-const CardComponent = () => {
+interface CardComponentProps {
+  id: number;
+  logo: string;
+  name: string;
+  address: string;
+}
+
+const CardComponent = (props: CardComponentProps) => {
   const navigateToCardUrl = () => {
-    console.log("Navigate");
+    console.log("Navigate to church with ID:", props.id);
   };
 
   const bookmarkObject = () => {
-    console.log("bookmarked");
+    console.log("Bookmark church with ID:", props.id);
   };
 
   const customSize = 40;
   return (
-    <Pressable onPress={navigateToCardUrl} px={20} pt={5}>
+    <Pressable onPress={navigateToCardUrl} my={2}>
       <HStack
         p={15}
         justifyContent="space-between"
@@ -28,9 +35,7 @@ const CardComponent = () => {
         w="100%"
         bg="white"
         mt={5}
-        softShadow="4"
-        shadowOffset={{ width: 0, height: 10 }}
-        shadowOpacity={0.2}
+        softShadow="1"
         rounded={5}
       >
         <Box
@@ -47,12 +52,12 @@ const CardComponent = () => {
           </Text>
         </Box>
 
-        <VStack maxWidth={240}>
+        <VStack flex={1} px={10}>
           <Text bold fontSize="$lg">
-            Videira
+            {props.name}
           </Text>
           <Text fontSize="$sm" isTruncated>
-            Av. Desembargador, nº 111, Aracaju - SE
+            {props.address}
           </Text>
         </VStack>
 
