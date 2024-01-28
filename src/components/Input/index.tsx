@@ -10,13 +10,13 @@ import {
 } from "@gluestack-ui/themed";
 import { View } from "react-native";
 
-interface InputComponentProps {
+type InputComponentProps = {
   inputIcon?: {};
   inputType: "text" | "password";
   inputPlaceholder: string;
   inputValue: string;
   onChangeText: (t: string) => void;
-}
+};
 
 const InputComponent = ({
   inputIcon,

@@ -9,12 +9,12 @@ import {
 } from "@gluestack-ui/themed";
 import { Heart } from "lucide-react-native";
 
-interface CardComponentProps {
+type CardComponentProps = {
   id: number;
   logo: string;
   name: string;
   address: string;
-}
+};
 
 const CardComponent = (props: CardComponentProps) => {
   const navigateToCardUrl = () => {

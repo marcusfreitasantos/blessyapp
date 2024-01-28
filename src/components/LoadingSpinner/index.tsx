@@ -1,8 +1,8 @@
 import { Center, Text, HStack, Spinner } from "@gluestack-ui/themed";
 
-interface LoadingSpinnerProps {
+type LoadingSpinnerProps = {
   spinnerText: string;
-}
+};
 
 const LoadingSpinner = ({ spinnerText }: LoadingSpinnerProps) => {
   return (

@@ -1,8 +1,8 @@
 import { Heading } from "@gluestack-ui/themed";
 
-interface HeadingComponentProps {
+type HeadingComponentProps = {
   headingText: string;
-}
+};
 
 const HeadingComponent = ({ headingText }: HeadingComponentProps) => {
   return (

@@ -1,10 +1,10 @@
 import { Button, ButtonText } from "@gluestack-ui/themed";
 
-interface ButtonComponentProps {
+type ButtonComponentProps = {
   onPress: () => void;
   buttonText: string;
   action: "primary" | "secondary" | "positive" | "negative" | "default";
-}
+};
 
 const ButtonComponent = ({
   onPress,

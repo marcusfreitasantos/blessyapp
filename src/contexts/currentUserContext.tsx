@@ -1,13 +1,13 @@
 import { createContext, useState, ReactNode } from "react";
 
-interface tokenProps {
+type tokenProps = {
   token: string;
   setToken: React.Dispatch<React.SetStateAction<string>>;
-}
+};
 
-interface UserDataProviderProps {
+type UserDataProviderProps = {
   children: ReactNode;
-}
+};
 
 export const GlobalContext = createContext<tokenProps>({
   token: "",
