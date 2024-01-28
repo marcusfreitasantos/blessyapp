@@ -14,10 +14,10 @@ const HomeHeader = () => {
     console.log("Notifications");
   };
 
-  const hasImage = false;
+  const hasImage = true;
 
   return (
-    <VStack bg="#fff" pt={40} pb={10} px={20} alignItems="center">
+    <VStack bg="#fff" pt={50} pb={10} px={20} alignItems="center">
       <HStack
         w="100%"
         space="md"
