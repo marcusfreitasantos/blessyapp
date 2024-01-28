@@ -8,6 +8,7 @@ import {
   Image,
 } from "@gluestack-ui/themed";
 import { Heart } from "lucide-react-native";
+import { router, Link } from "expo-router";
 
 type CardComponentProps = {
   id: number;
@@ -18,7 +19,7 @@ type CardComponentProps = {
 
 const CardComponent = (props: CardComponentProps) => {
   const navigateToCardUrl = () => {
-    console.log("Navigate to church with ID:", props.id);
+    router.navigate(`/church/${props.id}`);
   };
 
   const bookmarkObject = () => {

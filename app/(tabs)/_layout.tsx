@@ -47,6 +47,14 @@ const TabsLayout = () => {
           tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
         }}
       />
+
+      <Tabs.Screen
+        name="church/[id]"
+        options={{
+          href: null,
+          headerShown: false,
+        }}
+      />
     </Tabs>
   );
 };
