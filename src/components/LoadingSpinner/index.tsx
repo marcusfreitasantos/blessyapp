@@ -6,7 +6,7 @@ type LoadingSpinnerProps = {
 
 const LoadingSpinner = ({ spinnerText }: LoadingSpinnerProps) => {
   return (
-    <Center w="100%" h={200}>
+    <Center w="100%" flex={1}>
       <HStack space="sm">
         <Spinner color="white" />
         <Text color="white" size="md">
