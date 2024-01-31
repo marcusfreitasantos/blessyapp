@@ -8,7 +8,7 @@ import {
   Image,
 } from "@gluestack-ui/themed";
 import { Heart } from "lucide-react-native";
-import { router, Link } from "expo-router";
+import { router } from "expo-router";
 
 type CardComponentProps = {
   id: number;

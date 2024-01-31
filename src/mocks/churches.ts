@@ -69,4 +69,11 @@ export const Churches = [
     address:
       "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet est mi, id hendrerit velit placerat placerat.",
   },
+  {
+    id: 11,
+    logo: "url",
+    name: "Igreja 11",
+    address:
+      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur aliquet est mi, id hendrerit velit placerat placerat.",
+  },
 ];
