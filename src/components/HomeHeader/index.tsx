@@ -1,7 +1,8 @@
-import { HStack, Text, VStack, Box, Image } from "@gluestack-ui/themed";
+import { useState } from "react";
+import { HStack, VStack, Box } from "@gluestack-ui/themed";
 import InputComponent from "../Input";
 import { Bell, Search } from "lucide-react-native";
-import { useState } from "react";
+import AvatarImgText from "../Avatar";
 
 const HomeHeader = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,8 +15,6 @@ const HomeHeader = () => {
     console.log("Notifications");
   };
 
-  const hasImage = true;
-
   return (
     <VStack bg="#fff" pt={50} pb={10} px={20} alignItems="center">
       <HStack
@@ -24,29 +23,10 @@ const HomeHeader = () => {
         alignItems="center"
         justifyContent="space-between"
       >
-        {hasImage ? (
-          <Image
-            size="xs"
-            source={{
-              uri: "https://github.com/marcusfreitasantos.png",
-            }}
-            alt="Avatar Image"
-            rounded={50}
-            borderColor="#ccc"
-            borderWidth={1}
-          />
-        ) : (
-          <Text
-            fontSize="$md"
-            bold
-            backgroundColor="$primary500"
-            p={8}
-            rounded={8}
-            color="#fff"
-          >
-            MF
-          </Text>
-        )}
+        <AvatarImgText
+          avatarImg="https://github.com/marcusfreitasantos.png"
+          avatarTitle="Marcus Freitas"
+        />
 
         <Box w="70%">
           <InputComponent

@@ -28,7 +28,7 @@ const Home = () => {
       <HomeHeader />
       <Box p={20} flex={1}>
         <ImageCarousel />
-        <HeadingComponent headingText="Igrejas mais próximas de você!" />
+        <HeadingComponent headingText="Encontre a sua igreja!" />
 
         <FlatList
           data={currentChuches}
