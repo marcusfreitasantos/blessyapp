@@ -1,13 +1,11 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Alert } from "react-native";
-import { authUser } from "@/services/api";
+import { authUser, validateToken } from "@/services/api";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import { router } from "expo-router";
-
 import { VStack } from "@gluestack-ui/themed";
-
 import { Mail, Lock } from "lucide-react-native";
-
 import ButtonComponent from "../Button";
 import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
@@ -24,6 +22,7 @@ const LoginForm = () => {
       const response = await authUser(userEmail, userPass);
       const jwtToken = response.data.token;
       setToken(jwtToken);
+      storeToken(jwtToken);
       router.replace("/home");
     } catch (error) {
       console.log(error);
@@ -32,6 +31,40 @@ const LoginForm = () => {
       isLoading(false);
     }
   };
+
+  const getStoredToken = async () => {
+    isLoading(true);
+    try {
+      const storedToken = await AsyncStorage.getItem(
+        "blessy_current_user_token"
+      );
+
+      if (storedToken !== null) {
+        const { data } = await validateToken(storedToken);
+
+        if (data.data.status === 200) {
+          setToken(storedToken);
+          router.replace("/home");
+        }
+      }
+    } catch (error) {
+      console.log("Error getting token from Async Storage:", error);
+    } finally {
+      isLoading(false);
+    }
+  };
+
+  const storeToken = async (currentToken: string) => {
+    try {
+      await AsyncStorage.setItem("blessy_current_user_token", currentToken);
+    } catch (error) {
+      console.log("Error setting token in Async Storage:", error);
+    }
+  };
+
+  useEffect(() => {
+    getStoredToken();
+  }, []);
 
   return (
     <>

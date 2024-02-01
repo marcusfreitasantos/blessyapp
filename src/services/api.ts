@@ -16,8 +16,11 @@ export const authUser = (username: string, password: string) => {
 export const validateToken = (token: string) => {
   const jwtAuthResponse = axios.post(
     `${process.env.EXPO_PUBLIC_VALIDATE_TOKEN}`,
+    "",
     {
-      token,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 
