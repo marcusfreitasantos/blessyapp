@@ -5,7 +5,7 @@ type AvatarProps = {
   avatarTitle: string;
 };
 
-const AvatarImgText = ({ avatarImg, avatarTitle }: AvatarProps) => {
+const Avatar = ({ avatarImg, avatarTitle }: AvatarProps) => {
   const customSize = 40;
 
   const getInitialLetters = () => {
@@ -41,4 +41,4 @@ const AvatarImgText = ({ avatarImg, avatarTitle }: AvatarProps) => {
   );
 };
 
-export default AvatarImgText;
+export default Avatar;

@@ -6,7 +6,7 @@ type HeadingComponentProps = {
 
 const HeadingComponent = ({ headingText }: HeadingComponentProps) => {
   return (
-    <Heading fontSize="$lg" mt={40}>
+    <Heading fontSize="$lg" mt={40} color="$secondary400">
       {headingText}
     </Heading>
   );

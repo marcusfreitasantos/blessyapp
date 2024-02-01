@@ -28,21 +28,26 @@ const InputComponent = ({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Input variant="outline" size="md" p={10}>
-      {inputIcon && <InputIcon as={inputIcon} testID="input__icon" />}
+    <Input variant="outline" size="md" p={10} borderColor="$secondary300">
+      {inputIcon && (
+        <InputIcon as={inputIcon} testID="input__icon" color="$secondary400" />
+      )}
 
       <InputField
         type={showPassword ? "text" : inputType}
         placeholder={inputPlaceholder}
         value={inputValue}
         onChangeText={onChangeText}
-        placeholderTextColor="#aaa"
-        color="#aaa"
+        placeholderTextColor="$secondary300"
+        color="$secondary400"
       />
 
       {inputType === "password" && (
         <InputSlot pr={0} onPress={() => setShowPassword(!showPassword)}>
-          <InputIcon as={showPassword ? EyeOffIcon : EyeIcon} />
+          <InputIcon
+            as={showPassword ? EyeOffIcon : EyeIcon}
+            color="$secondary400"
+          />
         </InputSlot>
       )}
     </Input>
