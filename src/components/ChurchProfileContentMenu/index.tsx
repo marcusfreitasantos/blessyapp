@@ -1,19 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
+
 import { HStack } from "@gluestack-ui/themed";
 import ButtonComponent from "../Button";
 
 const ChurchProfileContentMenu = () => {
-  const [currentContent, setCurrentContent] = useState("");
+  const { currentChurchContentCategory, setCurrentChurchContentCategory } =
+    useContext(ChurchContentGlobalContext);
+
   const [currentSelectedButton, setCurrentSelectedButton] = useState("buttonA");
 
   const handleClick = (content: string, currentButton: string) => {
-    setCurrentContent(content);
+    setCurrentChurchContentCategory(content);
     setCurrentSelectedButton(currentButton);
   };
 
   useEffect(() => {
-    console.log("currentContent: ", currentContent);
-  }, [currentContent]);
+    console.log("currentChurchContentCategory: ", currentChurchContentCategory);
+  }, [currentChurchContentCategory]);
 
   return (
     <HStack space="sm" w="100%" justifyContent="space-between" mb={10}>
@@ -21,21 +25,21 @@ const ChurchProfileContentMenu = () => {
         variant="outline"
         buttonText="Notícias"
         action={currentSelectedButton === "buttonA" ? "primary" : "secondary"}
-        onPress={() => handleClick("Notícias", "buttonA")}
+        onPress={() => handleClick("news", "buttonA")}
       />
 
       <ButtonComponent
         variant="outline"
         buttonText="Liturgia"
         action={currentSelectedButton === "buttonB" ? "primary" : "secondary"}
-        onPress={() => handleClick("Liturgia", "buttonB")}
+        onPress={() => handleClick("liturgy", "buttonB")}
       />
 
       <ButtonComponent
         variant="outline"
         buttonText="Eventos"
         action={currentSelectedButton === "buttonC" ? "primary" : "secondary"}
-        onPress={() => handleClick("Eventos", "buttonC")}
+        onPress={() => handleClick("events", "buttonC")}
       />
     </HStack>
   );

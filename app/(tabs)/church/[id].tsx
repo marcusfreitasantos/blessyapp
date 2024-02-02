@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import { useLocalSearchParams } from "expo-router";
 import ChurchProfileHeader from "@/components/ChurchProfileHeader";
 import { Box } from "@gluestack-ui/themed";
@@ -6,6 +7,8 @@ import ChurchProfileContentMenu from "@/components/ChurchProfileContentMenu";
 import { FlatList } from "react-native";
 import CardComponent from "@/components/Card";
 import { ChurchEvents } from "@/mocks/churchEvents";
+import { ChurchLiturgy } from "@/mocks/churchLiturgy";
+import { ChurchNews } from "@/mocks/churchNews";
 
 type currentContentProps = {
   id: number;
@@ -14,6 +17,10 @@ type currentContentProps = {
 };
 
 const ChurchScreen = () => {
+  const { currentChurchContentCategory } = useContext(
+    ChurchContentGlobalContext
+  );
+
   const currentChurch = useLocalSearchParams();
 
   const [currentContent, setCurrentContent] = useState<
@@ -21,8 +28,14 @@ const ChurchScreen = () => {
   >(null);
 
   useEffect(() => {
-    setCurrentContent(ChurchEvents);
-  }, []);
+    if (currentChurchContentCategory === "events") {
+      setCurrentContent(ChurchEvents);
+    } else if (currentChurchContentCategory === "liturgy") {
+      setCurrentContent(ChurchLiturgy);
+    } else {
+      setCurrentContent(ChurchNews);
+    }
+  }, [currentChurchContentCategory]);
 
   return (
     <>
