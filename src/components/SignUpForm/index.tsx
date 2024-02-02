@@ -84,6 +84,7 @@ const SignUpForm = () => {
             onPress={createNewUser}
             buttonText="Criar Conta"
             action="primary"
+            variant="solid"
           />
         </VStack>
       )}

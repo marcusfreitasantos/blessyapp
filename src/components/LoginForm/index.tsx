@@ -100,6 +100,7 @@ const LoginForm = () => {
             onPress={userLogin}
             buttonText="Login"
             action="primary"
+            variant="solid"
           />
         </VStack>
       )}
