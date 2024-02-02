@@ -16,7 +16,7 @@ const ChurchProfileContentMenu = () => {
   }, [currentContent]);
 
   return (
-    <HStack space="sm" w="100%" justifyContent="space-between">
+    <HStack space="sm" w="100%" justifyContent="space-between" mb={10}>
       <ButtonComponent
         variant="outline"
         buttonText="Notícias"

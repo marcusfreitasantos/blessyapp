@@ -1,7 +1,7 @@
 import { Image, Box, Text } from "@gluestack-ui/themed";
 
 type AvatarProps = {
-  avatarImg: string;
+  avatarImg?: string;
   avatarTitle: string;
 };
 

@@ -5,9 +5,11 @@ import Avatar from "../Avatar";
 
 type CardComponentProps = {
   id: number;
-  logo: string;
+  logo?: string;
   name: string;
-  address: string;
+  description: string;
+  hasImg?: boolean;
+  hasIcon?: boolean;
 };
 
 const CardComponent = (props: CardComponentProps) => {
@@ -35,22 +37,23 @@ const CardComponent = (props: CardComponentProps) => {
         borderLeftColor="$primary500"
         borderLeftWidth="$4"
       >
-        <Avatar
-          avatarImg="https://static.wixstatic.com/media/450325_60342534c4c34514b85f8c85081ca9f2~mv2.png/v1/crop/x_0,y_7,w_1507,h_567/fill/w_215,h_80,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/logo%20videira%20PNG.png"
-          avatarTitle={props.name}
-        />
+        {props.hasImg && (
+          <Avatar avatarImg={props.logo} avatarTitle={props.name} />
+        )}
         <VStack flex={1} px={10}>
           <Text bold fontSize="$lg" color="$primary500">
             {props.name}
           </Text>
           <Text fontSize="$sm" isTruncated color="$secondary400">
-            {props.address}
+            {props.description}
           </Text>
         </VStack>
 
-        <Pressable onPress={bookmarkObject}>
-          <Icon as={Heart} size="xl" color="$secondary400" />
-        </Pressable>
+        {props.hasIcon && (
+          <Pressable onPress={bookmarkObject}>
+            <Icon as={Heart} size="xl" color="$secondary400" />
+          </Pressable>
+        )}
       </HStack>
     </Pressable>
   );

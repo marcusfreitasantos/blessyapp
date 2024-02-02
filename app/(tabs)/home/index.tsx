@@ -37,7 +37,9 @@ const Home = () => {
               id={item.id}
               logo={item.logo}
               name={item.name}
-              address={item.address}
+              description={item.address}
+              hasImg
+              hasIcon
             />
           )}
           keyExtractor={(item) => item.id.toString()}

@@ -67,7 +67,9 @@ const ChurchProfileHeader = ({ currentChurchId }: currentChurchProps) => {
       <Box p={20}>
         <HStack justifyContent="space-between">
           <VStack>
-            <Heading color="$secondary700">Nome da Igreja</Heading>
+            <Heading color="$secondary700">
+              Nome da Igreja - {currentChurchId}
+            </Heading>
             <Text color="$secondary400">Endereço...</Text>
           </VStack>
 
