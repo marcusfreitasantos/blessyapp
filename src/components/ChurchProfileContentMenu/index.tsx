@@ -5,8 +5,9 @@ import { HStack } from "@gluestack-ui/themed";
 import ButtonComponent from "../Button";
 
 const ChurchProfileContentMenu = () => {
-  const { currentChurchContentCategory, setCurrentChurchContentCategory } =
-    useContext(ChurchContentGlobalContext);
+  const { setCurrentChurchContentCategory } = useContext(
+    ChurchContentGlobalContext
+  );
 
   const [currentSelectedButton, setCurrentSelectedButton] = useState("buttonA");
 
@@ -14,10 +15,6 @@ const ChurchProfileContentMenu = () => {
     setCurrentChurchContentCategory(content);
     setCurrentSelectedButton(currentButton);
   };
-
-  useEffect(() => {
-    console.log("currentChurchContentCategory: ", currentChurchContentCategory);
-  }, [currentChurchContentCategory]);
 
   return (
     <HStack space="sm" w="100%" justifyContent="space-between" mb={10}>

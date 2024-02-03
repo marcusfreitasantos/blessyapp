@@ -14,6 +14,7 @@ const TabsLayout = () => {
     <Tabs
       screenOptions={{
         tabBarShowLabel: false,
+        headerShown: false,
       }}
     >
       <Tabs.Screen
@@ -49,10 +50,9 @@ const TabsLayout = () => {
       />
 
       <Tabs.Screen
-        name="church/[id]/index"
+        name="church/[id]"
         options={{
           href: null,
-          headerShown: false,
         }}
       />
     </Tabs>
