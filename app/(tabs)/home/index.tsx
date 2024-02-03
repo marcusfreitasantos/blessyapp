@@ -38,6 +38,7 @@ const Home = () => {
               logo={item.logo}
               name={item.name}
               description={item.address}
+              parentUrl="church"
               hasImg
               hasIcon
             />

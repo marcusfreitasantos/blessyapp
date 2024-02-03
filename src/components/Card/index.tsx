@@ -5,6 +5,7 @@ import Avatar from "../Avatar";
 
 type CardComponentProps = {
   id: number;
+  parentUrl: string;
   logo?: string;
   name: string;
   description: string;
@@ -14,7 +15,7 @@ type CardComponentProps = {
 
 const CardComponent = (props: CardComponentProps) => {
   const navigateToCardUrl = () => {
-    router.navigate(`/church/${props.id}`);
+    router.navigate(`/${props.parentUrl}/${props.id}`);
   };
 
   const bookmarkObject = () => {

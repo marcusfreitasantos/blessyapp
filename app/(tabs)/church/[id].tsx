@@ -50,6 +50,7 @@ const ChurchScreen = () => {
               id={item.id}
               name={item.name}
               description={item.description}
+              parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
             />
           )}
           keyExtractor={(item) => item.id.toString()}
