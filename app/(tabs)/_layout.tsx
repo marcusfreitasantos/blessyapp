@@ -49,7 +49,7 @@ const TabsLayout = () => {
       />
 
       <Tabs.Screen
-        name="church/[id]"
+        name="church/[id]/index"
         options={{
           href: null,
           headerShown: false,

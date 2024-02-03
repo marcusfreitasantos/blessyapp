@@ -19,7 +19,7 @@ const ChurchContentDataProvider = ({
   children,
 }: ChurchContentDataProviderProps) => {
   const [currentChurchContentCategory, setCurrentChurchContentCategory] =
-    useState("");
+    useState("news");
 
   return (
     <ChurchContentGlobalContext.Provider
