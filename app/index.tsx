@@ -7,9 +7,6 @@ const Signin = () => {
   return (
     <Center h="100%" bg="$primary500" p={40}>
       <BlessyLogo />
-      <Text color="white" size="6xl" bold py={20}>
-        Blessy
-      </Text>
 
       <LoginForm />
 

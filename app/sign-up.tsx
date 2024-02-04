@@ -1,13 +1,12 @@
 import { Center, Text, HStack } from "@gluestack-ui/themed";
 import { Link } from "expo-router";
 import SignUpForm from "@/components/SignUpForm";
+import BlessyLogo from "@/components/Logo";
 
 const Signup = () => {
   return (
     <Center h="100%" bg="$primary500" p={40}>
-      <Text color="white" size="6xl" bold py={20}>
-        Blessy
-      </Text>
+      <BlessyLogo />
 
       <SignUpForm />
 

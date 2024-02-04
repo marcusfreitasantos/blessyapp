@@ -10,18 +10,12 @@ type ButtonComponentProps = {
 const ButtonComponent = ({
   onPress,
   buttonText,
-  action,
   variant,
+  action,
 }: ButtonComponentProps) => {
   return (
-    <Button
-      size="md"
-      variant={variant}
-      action={action}
-      onPress={onPress}
-      flex={1}
-    >
-      <ButtonText>{buttonText} </ButtonText>
+    <Button size="lg" variant={variant} action={action} onPress={onPress}>
+      <ButtonText>{buttonText}</ButtonText>
     </Button>
   );
 };

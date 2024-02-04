@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { GlobalContext } from "@/contexts/currentUserContext";
 import { HStack, VStack, Box, Pressable, Icon } from "@gluestack-ui/themed";
 import InputComponent from "../Input";
 import { Bell, Search } from "lucide-react-native";
 import Avatar from "../Avatar";
 
 const HomeHeader = () => {
+  const { setToken } = useContext(GlobalContext);
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = () => {
@@ -15,6 +18,15 @@ const HomeHeader = () => {
     console.log("Notifications");
   };
 
+  const logoutUser = async () => {
+    try {
+      await AsyncStorage.removeItem("blessy_current_user_token");
+      setToken("");
+    } catch (error) {
+      console.log("Error on logout ", error);
+    }
+  };
+
   return (
     <VStack bg="#fff" pt={50} pb={10} px={20} alignItems="center">
       <HStack
@@ -23,10 +35,12 @@ const HomeHeader = () => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Avatar
-          avatarImg="https://github.com/marcusfreitasantos.png"
-          avatarTitle="Marcus Freitas"
-        />
+        <Pressable onPress={logoutUser}>
+          <Avatar
+            avatarImg="https://github.com/marcusfreitasantos.png"
+            avatarTitle="Marcus Freitas"
+          />
+        </Pressable>
 
         <Box w="70%">
           <InputComponent
