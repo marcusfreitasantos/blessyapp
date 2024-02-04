@@ -5,7 +5,7 @@ import BlessyLogo from "@/components/Logo";
 
 const Signin = () => {
   return (
-    <Center h="100%" bg="$primary500" p={40}>
+    <Center h="100%" bg="$blessyPrimaryColor" p={40}>
       <BlessyLogo />
 
       <LoginForm />

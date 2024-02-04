@@ -26,7 +26,7 @@ const Avatar = ({ avatarImg, avatarTitle }: AvatarProps) => {
     />
   ) : (
     <Box
-      bg="$primary500"
+      bg="$blessyPrimaryColor"
       p={5}
       rounded={50}
       w={customSize}

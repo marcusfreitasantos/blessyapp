@@ -35,14 +35,14 @@ const CardComponent = (props: CardComponentProps) => {
         softShadow="1"
         borderTopRightRadius={5}
         borderBottomRightRadius={5}
-        borderLeftColor="$primary500"
+        borderLeftColor="$blessyPrimaryColor"
         borderLeftWidth="$4"
       >
         {props.hasImg && (
           <Avatar avatarImg={props.logo} avatarTitle={props.name} />
         )}
         <VStack flex={1} px={10}>
-          <Text bold fontSize="$lg" color="$primary500">
+          <Text bold fontSize="$lg" color="$blessyPrimaryColor">
             {props.name}
           </Text>
           <Text fontSize="$sm" isTruncated color="$secondary400">

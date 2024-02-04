@@ -22,7 +22,7 @@ const EventCardComponent = () => {
       >
         <VStack width="100%" space="md">
           <HStack justifyContent="space-between" alignItems="center">
-            <Text bold fontSize="$lg" color="$primary500">
+            <Text bold fontSize="$lg" color="$blessyPrimaryColor">
               Nome do evento
             </Text>
 
