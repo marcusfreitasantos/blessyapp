@@ -38,7 +38,7 @@ const CardComponent = (props: CardComponentProps) => {
   }, [currentIndexType]);
 
   return (
-    <Pressable onPress={navigateToCardUrl} my={2}>
+    <Pressable onPress={navigateToCardUrl} my={5}>
       <HStack
         p={15}
         justifyContent="space-between"

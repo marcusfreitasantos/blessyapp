@@ -3,8 +3,8 @@ import { FlatList } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import Paragraph from "@/components/Paragraph";
 import { ChurchContents } from "@/mocks/churchContent";
-import HeadingComponent from "@/components/Heading";
 import { useState } from "react";
+import ContentTitle from "@/components/ContentTitle";
 
 const ContentTypeScreen = () => {
   const [currentContent, setCurrentContent] = useState(ChurchContents);
@@ -13,9 +13,8 @@ const ContentTypeScreen = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
+      <ContentTitle contentTitle="Nome do evento" contentDate="02/02/2024" />
       <Box p={20} flex={1}>
-        <HeadingComponent headingText={`Nome do ${contentType} ${id}`} />
-
         {currentContent && (
           <FlatList
             data={currentContent}

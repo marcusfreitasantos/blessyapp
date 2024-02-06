@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Stack } from "expo-router";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 
@@ -6,6 +6,27 @@ const ChurchContentTypeStacks = () => {
   const { currentChurchContentCategory } = useContext(
     ChurchContentGlobalContext
   );
+
+  const [translatedCategory, setTranslatedCategory] = useState("");
+
+  const translateCurrentChurchContentCategory = () => {
+    switch (currentChurchContentCategory) {
+      case "news":
+        setTranslatedCategory("Notícias");
+        break;
+      case "liturgy":
+        setTranslatedCategory("Liturgia");
+        break;
+
+      case "events":
+        setTranslatedCategory("Eventos");
+        break;
+    }
+  };
+
+  useEffect(() => {
+    translateCurrentChurchContentCategory();
+  }, [currentChurchContentCategory]);
 
   return (
     <Stack
@@ -17,7 +38,9 @@ const ChurchContentTypeStacks = () => {
         name="[contentType]/[id]"
         options={{
           headerShown: true,
-          title: currentChurchContentCategory.toUpperCase(),
+          title: translatedCategory,
+          headerTitleStyle: { color: "#575757", fontWeight: "bold" },
+          contentStyle: { backgroundColor: "white" },
         }}
       />
     </Stack>

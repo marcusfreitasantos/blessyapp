@@ -9,6 +9,7 @@ import CardComponent from "@/components/Card";
 import { ChurchEvents } from "@/mocks/churchEvents";
 import { ChurchLiturgy } from "@/mocks/churchLiturgy";
 import { ChurchNews } from "@/mocks/churchNews";
+import ChurchProfileHeaderContent from "@/components/ChurchProfileHeaderContent";
 
 type currentContentProps = {
   id: number;
@@ -40,8 +41,11 @@ const ChurchScreen = () => {
   return (
     <>
       <StatusBar barStyle="light-content" />
-      <ChurchProfileHeader currentChurchId={currentChurch.id} />
+      <ChurchProfileHeader />
+
       <Box p={20} flex={1}>
+        <ChurchProfileHeaderContent currentChurchId={currentChurch.id} />
+
         <ChurchProfileContentMenu />
 
         <FlatList
