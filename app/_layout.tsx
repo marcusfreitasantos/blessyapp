@@ -27,7 +27,7 @@ const RootLayout = () => {
     <UserDataProvider>
       <ChurchContentDataProvider>
         <GluestackUIProvider config={config}>
-          <StatusBar barStyle="light-content" />
+          <StatusBar barStyle="dark-content" />
           <Stack>
             <Stack.Screen name="index" options={{ headerShown: false }} />
             <Stack.Screen name="sign-up" options={{ headerShown: false }} />

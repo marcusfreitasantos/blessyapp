@@ -1,4 +1,4 @@
-import { HStack, VStack, Text, Icon, Box } from "@gluestack-ui/themed";
+import { StatusBar, Box } from "@gluestack-ui/themed";
 import { FlatList } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import Paragraph from "@/components/Paragraph";
@@ -11,19 +11,25 @@ const ContentTypeScreen = () => {
   const { contentType, id } = useLocalSearchParams();
 
   return (
-    <Box p={20} flex={1}>
-      <HeadingComponent headingText={`Nome do ${contentType} ${id}`} />
+    <>
+      <StatusBar barStyle="dark-content" />
+      <Box p={20} flex={1}>
+        <HeadingComponent headingText={`Nome do ${contentType} ${id}`} />
 
-      {currentContent && (
-        <FlatList
-          data={currentContent}
-          renderItem={({ item }) => (
-            <Paragraph paragraphTitle={item.title} paragraphText={item.text} />
-          )}
-          keyExtractor={(item) => item.title.toString()}
-        />
-      )}
-    </Box>
+        {currentContent && (
+          <FlatList
+            data={currentContent}
+            renderItem={({ item }) => (
+              <Paragraph
+                paragraphTitle={item.title}
+                paragraphText={item.text}
+              />
+            )}
+            keyExtractor={(item) => item.title.toString()}
+          />
+        )}
+      </Box>
+    </>
   );
 };
 

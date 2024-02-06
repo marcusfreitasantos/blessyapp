@@ -28,7 +28,14 @@ const HomeHeader = () => {
   };
 
   return (
-    <VStack bg="#fff" pt={50} pb={10} px={20} alignItems="center">
+    <VStack
+      bg="#fff"
+      pt={50}
+      pb={10}
+      px={20}
+      alignItems="center"
+      softShadow="2"
+    >
       <HStack
         w="100%"
         space="md"
@@ -53,7 +60,7 @@ const HomeHeader = () => {
         </Box>
 
         <Pressable onPress={openNotificationsMenu}>
-          <Icon as={Bell} size="xl" color="$secondary400" />
+          <Icon as={Bell} size="xl" color="$blessyPrimaryColor" />
         </Pressable>
       </HStack>
     </VStack>

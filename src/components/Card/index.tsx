@@ -2,9 +2,11 @@ import { HStack, VStack, Text, Icon, Pressable } from "@gluestack-ui/themed";
 import { Heart } from "lucide-react-native";
 import { router } from "expo-router";
 import Avatar from "../Avatar";
+import { useEffect, useState } from "react";
 
 type CardComponentProps = {
   id: number;
+  currentIndex: number;
   parentUrl: string;
   logo?: string;
   name: string;
@@ -14,6 +16,7 @@ type CardComponentProps = {
 };
 
 const CardComponent = (props: CardComponentProps) => {
+  const [currentIndexType, setCurrentIndexType] = useState("even");
   const navigateToCardUrl = () => {
     router.navigate(`/${props.parentUrl}/${props.id}`);
   };
@@ -21,6 +24,18 @@ const CardComponent = (props: CardComponentProps) => {
   const bookmarkObject = () => {
     console.log("Bookmark church with ID:", props.id);
   };
+
+  const identifyOddOrEvenIndex = () => {
+    if (props.currentIndex % 2 === 0) {
+      setCurrentIndexType("even");
+    } else {
+      setCurrentIndexType("odd");
+    }
+  };
+
+  useEffect(() => {
+    identifyOddOrEvenIndex();
+  }, [currentIndexType]);
 
   return (
     <Pressable onPress={navigateToCardUrl} my={2}>
@@ -35,7 +50,11 @@ const CardComponent = (props: CardComponentProps) => {
         softShadow="1"
         borderTopRightRadius={5}
         borderBottomRightRadius={5}
-        borderLeftColor="$blessyPrimaryColor"
+        borderLeftColor={
+          currentIndexType === "odd"
+            ? "$blessyPrimaryColor"
+            : "$blessySecondaryColor"
+        }
         borderLeftWidth="$4"
       >
         {props.hasImg && (

@@ -2,7 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import { useLocalSearchParams } from "expo-router";
 import ChurchProfileHeader from "@/components/ChurchProfileHeader";
-import { Box } from "@gluestack-ui/themed";
+import { Box, StatusBar } from "@gluestack-ui/themed";
 import ChurchProfileContentMenu from "@/components/ChurchProfileContentMenu";
 import { FlatList } from "react-native";
 import CardComponent from "@/components/Card";
@@ -39,18 +39,20 @@ const ChurchScreen = () => {
 
   return (
     <>
+      <StatusBar barStyle="light-content" />
       <ChurchProfileHeader currentChurchId={currentChurch.id} />
       <Box p={20} flex={1}>
         <ChurchProfileContentMenu />
 
         <FlatList
           data={currentContent}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <CardComponent
               id={item.id}
               name={item.name}
               description={item.description}
               parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
+              currentIndex={index}
             />
           )}
           keyExtractor={(item) => item.id.toString()}

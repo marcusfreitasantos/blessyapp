@@ -29,6 +29,7 @@ export const gluestackUIConfig = createConfig({
     colors: {
       //BLESSY COLORS START
       blessyPrimaryColor: "#45B7D0",
+      blessySecondaryColor: "#195562",
       //BLESSY COLORS END
       error00: "#FEE9E9",
       error50: "#FEE2E2",
