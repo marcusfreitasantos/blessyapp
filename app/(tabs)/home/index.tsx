@@ -6,6 +6,7 @@ import ImageCarousel from "@/components/ImageCarousel";
 import HeadingComponent from "@/components/Heading";
 import { Churches } from "@/mocks/churches";
 import { FlatList } from "react-native";
+import BannerImg from "../../../assets/home_banner.jpg";
 
 type currentChurchesProps = {
   id: number;
@@ -19,6 +20,8 @@ const Home = () => {
     currentChurchesProps[] | null
   >(null);
 
+  const imgArray = [BannerImg, BannerImg, BannerImg];
+
   useEffect(() => {
     setCurrentChurches(Churches);
   }, []);
@@ -27,8 +30,10 @@ const Home = () => {
     <>
       <StatusBar barStyle="dark-content" />
       <HomeHeader />
+
       <Box p={20} flex={1} bgColor="$white">
-        <ImageCarousel />
+        <ImageCarousel carouselImages={imgArray} />
+
         <HeadingComponent headingText="Encontre a sua igreja!" />
 
         <FlatList
