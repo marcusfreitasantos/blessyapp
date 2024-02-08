@@ -28,14 +28,7 @@ const HomeHeader = () => {
   };
 
   return (
-    <VStack
-      bg="#fff"
-      pt={50}
-      pb={10}
-      px={20}
-      alignItems="center"
-      softShadow="2"
-    >
+    <VStack bg="$white" pt={50} pb={10} px={20} alignItems="center">
       <HStack
         w="100%"
         space="md"
