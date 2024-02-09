@@ -7,8 +7,8 @@ type ContentTitleProps = {
 
 const ContentTitle = ({ contentTitle, contentDate }: ContentTitleProps) => {
   return (
-    <Box pt={40} px={20}>
-      <Heading color="$blessyPrimaryColor" fontSize="$3xl">
+    <Box>
+      <Heading color="$blessyPrimaryColor" fontSize="$2xl">
         {contentTitle}
       </Heading>
 

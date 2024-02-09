@@ -1,8 +1,8 @@
+import { useEffect, useState } from "react";
+import { router } from "expo-router";
 import { HStack, VStack, Text, Icon, Pressable } from "@gluestack-ui/themed";
 import { Heart } from "lucide-react-native";
-import { router } from "expo-router";
 import Avatar from "../Avatar";
-import { useEffect, useState } from "react";
 
 type CardComponentProps = {
   id: number;

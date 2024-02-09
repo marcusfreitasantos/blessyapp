@@ -40,7 +40,6 @@ const ChurchContentTypeStacks = () => {
           headerShown: true,
           title: translatedCategory,
           headerTitleStyle: { color: "#575757", fontWeight: "bold" },
-          contentStyle: { backgroundColor: "white" },
         }}
       />
     </Stack>

@@ -43,7 +43,7 @@ const ChurchScreen = () => {
       <StatusBar barStyle="light-content" />
       <ChurchProfileHeader />
 
-      <Box p={20} flex={1}>
+      <Box p={20} flex={1} bg="$white">
         <ChurchProfileHeaderContent currentChurchId={currentChurch.id} />
 
         <ChurchProfileContentMenu />
