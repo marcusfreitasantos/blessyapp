@@ -1,7 +1,14 @@
 import { useState } from "react";
 import { FlatList } from "react-native";
 import { useLocalSearchParams, router, usePathname } from "expo-router";
-import { StatusBar, Box, HStack, Pressable, Icon } from "@gluestack-ui/themed";
+import {
+  StatusBar,
+  Box,
+  HStack,
+  Pressable,
+  Icon,
+  Divider,
+} from "@gluestack-ui/themed";
 import Paragraph from "@/components/Paragraph";
 import { ChurchContents } from "@/mocks/churchContent";
 import ContentTitle from "@/components/ContentTitle";
@@ -27,7 +34,7 @@ const ContentTypeScreen = () => {
             contentDate="02/02/2024"
           />
 
-          {contentType === "events" && (
+          {contentType === "liturgy" && (
             <Pressable
               onPress={goToMusics}
               bg="$blessyPrimaryColor"
@@ -38,6 +45,10 @@ const ContentTypeScreen = () => {
             </Pressable>
           )}
         </HStack>
+
+        <Box px={20}>
+          <Divider />
+        </Box>
 
         <Box px={20} pb={20} flex={1}>
           {currentContent && (

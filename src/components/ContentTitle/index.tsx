@@ -1,4 +1,4 @@
-import { Text, Box, Divider, Heading } from "@gluestack-ui/themed";
+import { Text, Box, Heading } from "@gluestack-ui/themed";
 
 type ContentTitleProps = {
   contentTitle: string;
@@ -15,7 +15,6 @@ const ContentTitle = ({ contentTitle, contentDate }: ContentTitleProps) => {
       <Text bold fontSize="$md">
         Publicado em: <Text>{contentDate}</Text>
       </Text>
-      <Divider mt={10} />
     </Box>
   );
 };

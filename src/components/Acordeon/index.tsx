@@ -15,17 +15,31 @@ import { Musics } from "@/mocks/musics";
 
 const Acordeon = () => {
   return (
-    <Accordion>
+    <Accordion
+      borderColor="$blessyPrimaryColor"
+      shadowColor="transparent"
+      rounded={5}
+    >
       {Musics &&
-        Musics.map((music) => {
+        Musics.map((music, index) => {
           return (
-            <AccordionItem value={music.id.toString()}>
-              <AccordionHeader>
+            <AccordionItem
+              rounded={5}
+              value={music.id.toString()}
+              key={music.id.toString()}
+            >
+              <AccordionHeader
+                borderTopWidth={index === 0 ? 0 : 1}
+                borderColor="$blessyPrimaryColor"
+                bg="$white"
+              >
                 <AccordionTrigger>
                   {({ isExpanded }) => {
                     return (
                       <>
-                        <AccordionTitleText>{music.name}</AccordionTitleText>
+                        <AccordionTitleText color="$blessyPrimaryColor">
+                          {music.name}
+                        </AccordionTitleText>
                         {isExpanded ? (
                           <AccordionIcon as={ChevronUp} ml="$3" />
                         ) : (
@@ -36,9 +50,11 @@ const Acordeon = () => {
                   }}
                 </AccordionTrigger>
               </AccordionHeader>
-              <AccordionContent h={300}>
+              <AccordionContent h={400}>
                 <ScrollView>
-                  <AccordionContentText>{music.lyrics}</AccordionContentText>
+                  <AccordionContentText color="$secondary400">
+                    {music.lyrics}
+                  </AccordionContentText>
                 </ScrollView>
               </AccordionContent>
             </AccordionItem>
