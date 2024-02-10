@@ -46,7 +46,7 @@ const ContentTypeScreen = () => {
           )}
         </HStack>
 
-        <Box px={20}>
+        <Box px={20} my={20}>
           <Divider />
         </Box>
 
