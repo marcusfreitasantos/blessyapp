@@ -14,7 +14,13 @@ const ButtonComponent = ({
   action,
 }: ButtonComponentProps) => {
   return (
-    <Button size="lg" variant={variant} action={action} onPress={onPress}>
+    <Button
+      size="lg"
+      variant={variant}
+      action={action}
+      onPress={onPress}
+      borderWidth={2}
+    >
       <ButtonText>{buttonText}</ButtonText>
     </Button>
   );

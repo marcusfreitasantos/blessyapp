@@ -12,7 +12,7 @@ import {
 import Paragraph from "@/components/Paragraph";
 import { ChurchContents } from "@/mocks/churchContent";
 import ContentTitle from "@/components/ContentTitle";
-import { ListMusic } from "lucide-react-native";
+import { Music } from "lucide-react-native";
 
 const ContentTypeScreen = () => {
   const [currentContent, setCurrentContent] = useState(ChurchContents);
@@ -41,7 +41,7 @@ const ContentTypeScreen = () => {
               p={10}
               rounded={50}
             >
-              <Icon as={ListMusic} size="xl" color="$white" />
+              <Icon as={Music} size="xl" color="$white" />
             </Pressable>
           )}
         </HStack>
