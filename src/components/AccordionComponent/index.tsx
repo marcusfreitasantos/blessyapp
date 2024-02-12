@@ -13,7 +13,7 @@ import {
 import { ChevronUp, ChevronDown } from "lucide-react-native";
 import { Musics } from "@/mocks/musics";
 
-const Acordeon = () => {
+const AccordionComponent = () => {
   return (
     <Accordion
       borderColor="$blessyPrimaryColor"
@@ -64,4 +64,4 @@ const Acordeon = () => {
   );
 };
 
-export default Acordeon;
+export default AccordionComponent;

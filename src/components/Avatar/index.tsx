@@ -15,6 +15,7 @@ const Avatar = ({ avatarImg, avatarTitle }: AvatarProps) => {
 
   return avatarImg ? (
     <Image
+      testID="avatar__img"
       size="xs"
       source={{
         uri: avatarImg,
@@ -26,6 +27,7 @@ const Avatar = ({ avatarImg, avatarTitle }: AvatarProps) => {
     />
   ) : (
     <Box
+      testID="avatar__text"
       bg="$blessyPrimaryColor"
       p={5}
       rounded={50}

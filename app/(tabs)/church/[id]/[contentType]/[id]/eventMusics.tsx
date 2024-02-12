@@ -1,6 +1,6 @@
 import { router } from "expo-router";
 import { Box, Pressable, Text, Icon } from "@gluestack-ui/themed";
-import Acordeon from "@/components/Acordeon";
+import AccordionComponent from "@/components/AccordionComponent";
 import { X } from "lucide-react-native";
 
 const EventMusicScreen = () => {
@@ -19,7 +19,7 @@ const EventMusicScreen = () => {
         <Text color="$secondary400">Fechar</Text>
       </Pressable>
 
-      <Acordeon />
+      <AccordionComponent />
     </Box>
   );
 };
