@@ -70,7 +70,7 @@ const CardComponent = (props: CardComponentProps) => {
         </VStack>
 
         {props.hasIcon && (
-          <Pressable onPress={bookmarkObject}>
+          <Pressable onPress={bookmarkObject} testID="card__component_icon">
             <Icon as={Heart} size="xl" color="$secondary400" />
           </Pressable>
         )}
