@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 
 import { HStack, ScrollView, Box } from "@gluestack-ui/themed";
