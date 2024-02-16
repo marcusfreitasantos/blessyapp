@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useRef } from "react";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 
 import { HStack, ScrollView, Box } from "@gluestack-ui/themed";
@@ -8,6 +8,8 @@ const ChurchProfileContentMenu = () => {
   const { setCurrentChurchContentCategory } = useContext(
     ChurchContentGlobalContext
   );
+
+  const scrollRef = useRef();
 
   const contentCategoriesGroup = [
     {
@@ -28,21 +30,42 @@ const ChurchProfileContentMenu = () => {
   const [currentSelectedButton, setCurrentSelectedButton] =
     useState("button_0");
 
-  const handleClick = (content: string, currentButton: string) => {
+  const autoScrollMenuItems = (currentButtonIndex: number) => {
+    if (scrollRef.current) {
+      if (currentButtonIndex === contentCategoriesGroup.length - 1) {
+        scrollRef.current.scrollToEnd();
+      } else {
+        scrollRef.current.scrollTo({
+          x: 0,
+          y: 0,
+        });
+      }
+    }
+  };
+
+  const handleClick = (
+    content: string,
+    currentButton: string,
+    currentButtonIndex: number
+  ) => {
     setCurrentChurchContentCategory(content);
     setCurrentSelectedButton(currentButton);
+    autoScrollMenuItems(currentButtonIndex);
   };
 
   const buttonsWidth = 140;
 
   return (
     <HStack space="sm" w="100%" justifyContent="space-between" my={20}>
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        ref={scrollRef}
+      >
         {contentCategoriesGroup.map((item, index) => {
           return (
-            <Box w={buttonsWidth} mr={5}>
+            <Box w={buttonsWidth} mr={5} key={item.name}>
               <ButtonComponent
-                key={item.name}
                 variant="outline"
                 buttonText={item.buttonText}
                 action={
@@ -50,7 +73,7 @@ const ChurchProfileContentMenu = () => {
                     ? "primary"
                     : "secondary"
                 }
-                onPress={() => handleClick(item.name, `button_${index}`)}
+                onPress={() => handleClick(item.name, `button_${index}`, index)}
               />
             </Box>
           );
