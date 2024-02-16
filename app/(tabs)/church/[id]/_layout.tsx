@@ -3,7 +3,7 @@ import { Stack } from "expo-router";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 
 const ChurchContentTypeStacks = () => {
-  const { currentChurchContentCategory } = useContext(
+  const { currentChurchContentCategory, showMusicsGroup } = useContext(
     ChurchContentGlobalContext
   );
 
@@ -37,7 +37,7 @@ const ChurchContentTypeStacks = () => {
       <Stack.Screen
         name="[contentType]/[id]"
         options={{
-          headerShown: true,
+          headerShown: !showMusicsGroup,
           title: translatedCategory,
           headerTitleStyle: { color: "#575757", fontWeight: "bold" },
         }}
