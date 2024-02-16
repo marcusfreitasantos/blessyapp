@@ -10,6 +10,7 @@ import { ChurchEvents } from "@/mocks/churchEvents";
 import { ChurchLiturgy } from "@/mocks/churchLiturgy";
 import { ChurchNews } from "@/mocks/churchNews";
 import ChurchProfileHeaderContent from "@/components/ChurchProfileHeaderContent";
+import { ContentCategories } from "@/mocks/contentCategories";
 
 type currentContentProps = {
   id: number;
@@ -46,7 +47,7 @@ const ChurchScreen = () => {
       <Box p={20} flex={1} bg="$white">
         <ChurchProfileHeaderContent currentChurchId={currentChurch.id} />
 
-        <ChurchProfileContentMenu />
+        <ChurchProfileContentMenu contentCategoriesGroup={ContentCategories} />
 
         <FlatList
           data={currentContent}

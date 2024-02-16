@@ -4,28 +4,21 @@ import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import { HStack, ScrollView, Box } from "@gluestack-ui/themed";
 import ButtonComponent from "../Button";
 
-const ChurchProfileContentMenu = () => {
+type contentCategoriesGroupProps = {
+  contentCategoriesGroup: {
+    name: string;
+    buttonText: string;
+  }[];
+};
+
+const ChurchProfileContentMenu = ({
+  contentCategoriesGroup,
+}: contentCategoriesGroupProps) => {
   const { setCurrentChurchContentCategory } = useContext(
     ChurchContentGlobalContext
   );
 
   const scrollRef = useRef();
-
-  const contentCategoriesGroup = [
-    {
-      name: "news",
-      buttonText: "Notícias",
-    },
-    {
-      name: "liturgy",
-      buttonText: "Liturgia",
-    },
-
-    {
-      name: "events",
-      buttonText: "Eventos",
-    },
-  ];
 
   const [currentSelectedButton, setCurrentSelectedButton] =
     useState("button_0");
