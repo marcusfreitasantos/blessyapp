@@ -4,9 +4,9 @@ import CardComponent from "@/components/Card";
 import { Box, StatusBar } from "@gluestack-ui/themed";
 import ImageCarousel from "@/components/ImageCarousel";
 import HeadingComponent from "@/components/Heading";
-import { Churches } from "@/mocks/churches";
 import { FlatList } from "react-native";
 import BannerImg from "../../../assets/home_banner.jpg";
+import { getChurches } from "@/services/churches";
 
 type currentChurchesProps = {
   id: number;
@@ -22,8 +22,13 @@ const Home = () => {
 
   const imgArray = [BannerImg, BannerImg, BannerImg];
 
+  const getChurchesFromApi = async () => {
+    const res = await getChurches();
+    setCurrentChurches(res.data);
+  };
+
   useEffect(() => {
-    setCurrentChurches(Churches);
+    getChurchesFromApi();
   }, []);
 
   return (
