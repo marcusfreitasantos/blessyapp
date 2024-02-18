@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
+import { FlatList } from "react-native";
+import { Box, StatusBar, RefreshControl } from "@gluestack-ui/themed";
 import HomeHeader from "@/components/HomeHeader";
 import CardComponent from "@/components/Card";
-import { Box, StatusBar } from "@gluestack-ui/themed";
 import ImageCarousel from "@/components/ImageCarousel";
 import HeadingComponent from "@/components/Heading";
-import { FlatList } from "react-native";
 import BannerImg from "../../../assets/home_banner.jpg";
 import { getChurches } from "@/services/churches";
 
@@ -20,11 +20,19 @@ const Home = () => {
     currentChurchesProps[] | null
   >(null);
 
+  const [isLoading, setIsLoading] = useState(false);
   const imgArray = [BannerImg, BannerImg, BannerImg];
 
   const getChurchesFromApi = async () => {
-    const res = await getChurches();
-    setCurrentChurches(res.data);
+    try {
+      setIsLoading(true);
+      const res = await getChurches();
+      setCurrentChurches(res.data);
+    } catch (error) {
+      console.log("Error from request list", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -43,6 +51,12 @@ const Home = () => {
 
         <FlatList
           data={currentChuches}
+          refreshControl={
+            <RefreshControl
+              refreshing={isLoading}
+              onRefresh={getChurchesFromApi}
+            />
+          }
           renderItem={({ item, index }) => (
             <CardComponent
               id={item.id}
