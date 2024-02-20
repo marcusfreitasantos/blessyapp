@@ -10,32 +10,33 @@ import {
 import Avatar from "../Avatar";
 
 type currentChurchProps = {
-  currentChurchId: string | string[] | undefined;
+  currentChurchInfo: {
+    id: number;
+    name: string;
+    address: string;
+    description: string;
+    logo: string;
+    coverImg: string;
+  };
 };
 
 const ChurchProfileHeaderContent = ({
-  currentChurchId,
+  currentChurchInfo,
 }: currentChurchProps) => {
   return (
     <Box>
       <HStack justifyContent="space-between">
         <VStack>
-          <Heading color="$secondary700">
-            Nome da Igreja - {currentChurchId}
-          </Heading>
-          <Text color="$secondary400">Endereço...</Text>
+          <Heading color="$secondary700">{currentChurchInfo.name}</Heading>
+          <Text color="$secondary400">{currentChurchInfo.address}</Text>
         </VStack>
 
-        <Avatar avatarImg="" avatarTitle="Nome da Igreja" />
+        <Avatar avatarImg="" avatarTitle={currentChurchInfo.name} />
       </HStack>
 
       <Divider my={20} bgColor="$secondary400" />
 
-      <Text color="$secondary400">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate
-        quam quis sapien convallis vestibulum. Phasellus maximus commodo nisi,
-        at bibendum mi tincidunt sed.
-      </Text>
+      <Text color="$secondary400">{currentChurchInfo.description}</Text>
     </Box>
   );
 };

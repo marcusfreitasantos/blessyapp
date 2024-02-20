@@ -27,7 +27,7 @@ const Home = () => {
     try {
       setIsLoading(true);
       const res = await getChurches();
-      setCurrentChurches(res.data);
+      setCurrentChurches(res?.data);
     } catch (error) {
       console.log("Error from request list", error);
     } finally {

@@ -1,16 +1,19 @@
 import { useEffect, useState, useContext } from "react";
-import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
-import { useLocalSearchParams } from "expo-router";
-import ChurchProfileHeader from "@/components/ChurchProfileHeader";
-import { Box, StatusBar } from "@gluestack-ui/themed";
-import ChurchProfileContentMenu from "@/components/ChurchProfileContentMenu";
 import { FlatList } from "react-native";
+import { useLocalSearchParams } from "expo-router";
+import { Box, StatusBar } from "@gluestack-ui/themed";
+import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
+import ChurchProfileHeader from "@/components/ChurchProfileHeader";
+import ChurchProfileContentMenu from "@/components/ChurchProfileContentMenu";
 import CardComponent from "@/components/Card";
 import { ChurchEvents } from "@/mocks/churchEvents";
 import { ChurchLiturgy } from "@/mocks/churchLiturgy";
 import { ChurchNews } from "@/mocks/churchNews";
 import ChurchProfileHeaderContent from "@/components/ChurchProfileHeaderContent";
 import { ContentCategories } from "@/mocks/contentCategories";
+import { getChurchById } from "@/services/churches";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import { useIsFocused } from "@react-navigation/native";
 
 type currentContentProps = {
   id: number;
@@ -18,16 +21,42 @@ type currentContentProps = {
   description: string;
 };
 
+type currentChurchProps = {
+  id: number;
+  name: string;
+  address: string;
+  description: string;
+  logo: string;
+  coverImg: string;
+};
+
 const ChurchScreen = () => {
   const { currentChurchContentCategory } = useContext(
     ChurchContentGlobalContext
   );
 
+  const isFocused = useIsFocused();
+  const [isLoading, setIsLoading] = useState(true);
   const currentChurch = useLocalSearchParams();
 
   const [currentContent, setCurrentContent] = useState<
     currentContentProps[] | null
   >(null);
+
+  const [currentChurchInfo, setCurrentChurchInfo] =
+    useState<currentChurchProps | null>(null);
+
+  const getCurrentChurchById = async () => {
+    try {
+      setIsLoading(true);
+      const res = await getChurchById(currentChurch.id);
+      setCurrentChurchInfo(res?.data);
+    } catch (error) {
+      console.log("Error from getChurchById: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (currentChurchContentCategory === "events") {
@@ -39,32 +68,50 @@ const ChurchScreen = () => {
     }
   }, [currentChurchContentCategory]);
 
-  return (
-    <>
-      <StatusBar barStyle="light-content" />
-      <ChurchProfileHeader />
+  useEffect(() => {
+    getCurrentChurchById();
+  }, [isFocused]);
 
-      <Box p={20} flex={1} bg="$white">
-        <ChurchProfileHeaderContent currentChurchId={currentChurch.id} />
+  if (currentChurchInfo)
+    return (
+      <>
+        <StatusBar barStyle="light-content" />
 
-        <ChurchProfileContentMenu contentCategoriesGroup={ContentCategories} />
+        {isLoading ? (
+          <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
+        ) : (
+          <>
+            <ChurchProfileHeader />
 
-        <FlatList
-          data={currentContent}
-          renderItem={({ item, index }) => (
-            <CardComponent
-              id={item.id}
-              name={item.name}
-              description={item.description}
-              parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
-              currentIndex={index}
-            />
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
-      </Box>
-    </>
-  );
+            <Box p={20} flex={1} bg="$white">
+              {currentChurchInfo && (
+                <ChurchProfileHeaderContent
+                  currentChurchInfo={currentChurchInfo}
+                />
+              )}
+
+              <ChurchProfileContentMenu
+                contentCategoriesGroup={ContentCategories}
+              />
+
+              <FlatList
+                data={currentContent}
+                renderItem={({ item, index }) => (
+                  <CardComponent
+                    id={item.id}
+                    name={item.name}
+                    description={item.description}
+                    parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
+                    currentIndex={index}
+                  />
+                )}
+                keyExtractor={(item) => item.id.toString()}
+              />
+            </Box>
+          </>
+        )}
+      </>
+    );
 };
 
 export default ChurchScreen;
