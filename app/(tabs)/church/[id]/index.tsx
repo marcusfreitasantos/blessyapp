@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { FlatList } from "react-native";
+import { FlatList, Image } from "react-native";
 import { useLocalSearchParams } from "expo-router";
 import { Box, StatusBar } from "@gluestack-ui/themed";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
@@ -14,6 +14,7 @@ import { ContentCategories } from "@/mocks/contentCategories";
 import { getChurchById } from "@/services/churches";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useIsFocused } from "@react-navigation/native";
+import DefaultCoverImg from "../../../../assets/default_cover_img.png";
 
 type currentContentProps = {
   id: number;
@@ -27,13 +28,17 @@ type currentChurchProps = {
   address: string;
   description: string;
   logo: string;
-  coverImg: string;
+  cover_img: string;
 };
 
 const ChurchScreen = () => {
   const { currentChurchContentCategory } = useContext(
     ChurchContentGlobalContext
   );
+
+  const defaultCoverImgUri = Image.resolveAssetSource(
+    Number(DefaultCoverImg)
+  ).uri;
 
   const isFocused = useIsFocused();
   const [isLoading, setIsLoading] = useState(true);
@@ -81,7 +86,13 @@ const ChurchScreen = () => {
           <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
         ) : (
           <>
-            <ChurchProfileHeader />
+            <ChurchProfileHeader
+              coverImg={
+                currentChurchInfo.cover_img
+                  ? currentChurchInfo.cover_img
+                  : defaultCoverImgUri
+              }
+            />
 
             <Box p={20} flex={1} bg="$white">
               {currentChurchInfo && (

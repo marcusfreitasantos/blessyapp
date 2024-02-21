@@ -16,7 +16,7 @@ type currentChurchProps = {
     address: string;
     description: string;
     logo: string;
-    coverImg: string;
+    cover_img: string;
   };
 };
 

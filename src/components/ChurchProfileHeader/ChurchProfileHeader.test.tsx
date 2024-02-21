@@ -3,7 +3,9 @@ import ChurchProfileHeader from ".";
 
 describe("ChurchProfileHeader Component", () => {
   it("Should render the profile header", () => {
-    const profileHeader = render(<ChurchProfileHeader />);
+    const profileHeader = render(
+      <ChurchProfileHeader coverImg={"DefaultCoverImg"} />
+    );
     expect(profileHeader).toBeTruthy();
   });
 });

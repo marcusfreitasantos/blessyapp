@@ -3,7 +3,11 @@ import { LinearGradient } from "expo-linear-gradient";
 import { ArrowLeft, Heart, Share2 } from "lucide-react-native";
 import { router } from "expo-router";
 
-const ChurchProfileHeader = () => {
+type CoverImgProps = {
+  coverImg: string;
+};
+
+const ChurchProfileHeader = ({ coverImg }: CoverImgProps) => {
   const handleBack = () => {
     router.back();
   };
@@ -20,7 +24,7 @@ const ChurchProfileHeader = () => {
     <ImageBackground
       h={200}
       source={{
-        uri: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg?size=626&ext=jpg&ga=GA1.1.1448711260.1706572800&semt=ais",
+        uri: coverImg,
       }}
     >
       <LinearGradient colors={["black", "transparent"]} style={{ flex: 1 }} />
