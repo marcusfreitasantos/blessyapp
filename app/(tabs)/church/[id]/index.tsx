@@ -6,20 +6,17 @@ import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import ChurchProfileHeader from "@/components/ChurchProfileHeader";
 import ChurchProfileContentMenu from "@/components/ChurchProfileContentMenu";
 import CardComponent from "@/components/Card";
-import { ChurchEvents } from "@/mocks/churchEvents";
-import { ChurchLiturgy } from "@/mocks/churchLiturgy";
-import { ChurchNews } from "@/mocks/churchNews";
 import ChurchProfileHeaderContent from "@/components/ChurchProfileHeaderContent";
 import { ContentCategories } from "@/mocks/contentCategories";
-import { getChurchById } from "@/services/churches";
+import { getChurchById, getChurchContent } from "@/services/churches";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useIsFocused } from "@react-navigation/native";
 import DefaultCoverImg from "../../../../assets/default_cover_img.png";
 
 type currentContentProps = {
-  id: number;
-  name: string;
-  description: string;
+  churchId: number;
+  postTitle: string;
+  postContent: string;
 };
 
 type currentChurchProps = {
@@ -63,66 +60,73 @@ const ChurchScreen = () => {
     }
   };
 
-  useEffect(() => {
-    if (currentChurchContentCategory === "events") {
-      setCurrentContent(ChurchEvents);
-    } else if (currentChurchContentCategory === "liturgy") {
-      setCurrentContent(ChurchLiturgy);
-    } else {
-      setCurrentContent(ChurchNews);
+  const getCurrentChurchContent = async () => {
+    try {
+      setIsLoading(true);
+      const res = await getChurchContent(
+        currentChurch.id,
+        currentChurchContentCategory
+      );
+      setCurrentContent(res?.data);
+    } catch (error) {
+      console.log("Error from getCurrentChurchContent: ", error);
+      setCurrentContent(null);
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  useEffect(() => {
+    getCurrentChurchContent();
   }, [currentChurchContentCategory]);
 
   useEffect(() => {
     getCurrentChurchById();
   }, [isFocused]);
 
-  if (currentChurchInfo)
-    return (
-      <>
-        <StatusBar barStyle="light-content" />
+  if (!currentChurchInfo) {
+    return <LoadingSpinner spinnerColor="$blessyPrimaryColor" />;
+  }
+
+  return (
+    <>
+      <StatusBar barStyle="light-content" />
+
+      <ChurchProfileHeader
+        coverImg={
+          currentChurchInfo.cover_img
+            ? currentChurchInfo.cover_img
+            : defaultCoverImgUri
+        }
+      />
+
+      <Box p={20} flex={1} bg="$white">
+        {currentChurchInfo && (
+          <ChurchProfileHeaderContent currentChurchInfo={currentChurchInfo} />
+        )}
+
+        <ChurchProfileContentMenu contentCategoriesGroup={ContentCategories} />
 
         {isLoading ? (
           <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
         ) : (
-          <>
-            <ChurchProfileHeader
-              coverImg={
-                currentChurchInfo.cover_img
-                  ? currentChurchInfo.cover_img
-                  : defaultCoverImgUri
-              }
-            />
-
-            <Box p={20} flex={1} bg="$white">
-              {currentChurchInfo && (
-                <ChurchProfileHeaderContent
-                  currentChurchInfo={currentChurchInfo}
-                />
-              )}
-
-              <ChurchProfileContentMenu
-                contentCategoriesGroup={ContentCategories}
+          <FlatList
+            data={currentContent}
+            renderItem={({ item, index }) => (
+              <CardComponent
+                id={item.churchId}
+                name={item.postTitle}
+                description={item.postContent}
+                parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
+                currentIndex={index}
               />
-
-              <FlatList
-                data={currentContent}
-                renderItem={({ item, index }) => (
-                  <CardComponent
-                    id={item.id}
-                    name={item.name}
-                    description={item.description}
-                    parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
-                    currentIndex={index}
-                  />
-                )}
-                keyExtractor={(item) => item.id.toString()}
-              />
-            </Box>
-          </>
+            )}
+            keyExtractor={(item) => item.churchId.toString()}
+          />
         )}
-      </>
-    );
+      </Box>
+    </>
+  );
 };
 
 export default ChurchScreen;
