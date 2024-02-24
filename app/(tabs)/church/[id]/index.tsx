@@ -16,6 +16,7 @@ import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 
 type currentContentProps = {
   churchId: number;
+  id: number;
   postTitle: string;
   postContent: string;
 };
@@ -118,14 +119,14 @@ const ChurchScreen = () => {
             ListEmptyComponent={<EmptyListCardComponent />}
             renderItem={({ item, index }) => (
               <CardComponent
-                id={item.churchId}
+                id={item.id}
                 name={item.postTitle}
                 description={item.postContent}
                 parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
                 currentIndex={index}
               />
             )}
-            keyExtractor={(item) => item.churchId.toString()}
+            keyExtractor={(item) => item.id.toString()}
           />
         )}
       </Box>
