@@ -7,6 +7,8 @@ import ImageCarousel from "@/components/ImageCarousel";
 import HeadingComponent from "@/components/Heading";
 import BannerImg from "../../../assets/home_banner.jpg";
 import { getChurches } from "@/services/churches";
+import EmptyListCardComponent from "@/components/EmptyListCardComponent";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 type currentChurchesProps = {
   id: number;
@@ -39,6 +41,10 @@ const Home = () => {
     getChurchesFromApi();
   }, []);
 
+  if (isLoading) {
+    return <LoadingSpinner spinnerColor="$blessyPrimaryColor" />;
+  }
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -51,6 +57,7 @@ const Home = () => {
 
         <FlatList
           data={currentChuches}
+          ListEmptyComponent={<EmptyListCardComponent />}
           refreshControl={
             <RefreshControl
               refreshing={isLoading}

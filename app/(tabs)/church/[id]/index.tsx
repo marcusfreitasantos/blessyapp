@@ -12,6 +12,7 @@ import { getChurchById, getChurchContent } from "@/services/churches";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useIsFocused } from "@react-navigation/native";
 import DefaultCoverImg from "../../../../assets/default_cover_img.png";
+import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 
 type currentContentProps = {
   churchId: number;
@@ -114,6 +115,7 @@ const ChurchScreen = () => {
         ) : (
           <FlatList
             data={currentContent}
+            ListEmptyComponent={<EmptyListCardComponent />}
             renderItem={({ item, index }) => (
               <CardComponent
                 id={item.churchId}
