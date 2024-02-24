@@ -4,6 +4,7 @@ import { HStack, ScrollView, Box } from "@gluestack-ui/themed";
 import ButtonComponent from "../Button";
 
 type contentCategoriesGroupProps = {
+  getContent: (content: string) => void;
   contentCategoriesGroup: {
     name: string;
     buttonText: string;
@@ -11,6 +12,7 @@ type contentCategoriesGroupProps = {
 };
 
 const ChurchProfileContentMenu = ({
+  getContent,
   contentCategoriesGroup,
 }: contentCategoriesGroupProps) => {
   const { setCurrentChurchContentCategory } = useContext(
@@ -40,6 +42,7 @@ const ChurchProfileContentMenu = ({
     currentButton: string,
     currentButtonIndex: number
   ) => {
+    getContent(content);
     setCurrentChurchContentCategory(content);
     setCurrentSelectedButton(currentButton);
     autoScrollMenuItems(currentButtonIndex);

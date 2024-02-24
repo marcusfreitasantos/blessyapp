@@ -25,7 +25,7 @@ type currentChurchProps = {
   address: string;
   description: string;
   logo: string;
-  cover_img: string;
+  coverImg: string;
 };
 
 const ChurchScreen = () => {
@@ -60,13 +60,10 @@ const ChurchScreen = () => {
     }
   };
 
-  const getCurrentChurchContent = async () => {
+  const getCurrentChurchContent = async (contentCategory: string) => {
     try {
       setIsLoading(true);
-      const res = await getChurchContent(
-        currentChurch.id,
-        currentChurchContentCategory
-      );
+      const res = await getChurchContent(currentChurch.id, contentCategory);
       setCurrentContent(res?.data);
     } catch (error) {
       console.log("Error from getCurrentChurchContent: ", error);
@@ -77,11 +74,13 @@ const ChurchScreen = () => {
   };
 
   useEffect(() => {
-    getCurrentChurchContent();
-  }, [currentChurchContentCategory]);
-
-  useEffect(() => {
-    getCurrentChurchById();
+    if (isFocused) {
+      getCurrentChurchById();
+      getCurrentChurchContent("news");
+    } else {
+      setCurrentChurchInfo(null);
+      setCurrentContent(null);
+    }
   }, [isFocused]);
 
   if (!currentChurchInfo) {
@@ -94,8 +93,8 @@ const ChurchScreen = () => {
 
       <ChurchProfileHeader
         coverImg={
-          currentChurchInfo.cover_img
-            ? currentChurchInfo.cover_img
+          currentChurchInfo.coverImg
+            ? currentChurchInfo.coverImg
             : defaultCoverImgUri
         }
       />
@@ -105,7 +104,10 @@ const ChurchScreen = () => {
           <ChurchProfileHeaderContent currentChurchInfo={currentChurchInfo} />
         )}
 
-        <ChurchProfileContentMenu contentCategoriesGroup={ContentCategories} />
+        <ChurchProfileContentMenu
+          contentCategoriesGroup={ContentCategories}
+          getContent={getCurrentChurchContent}
+        />
 
         {isLoading ? (
           <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
