@@ -33,3 +33,18 @@ export const getChurchContent = (
     console.log("Error: ", error);
   }
 };
+
+export const getChurchSingleContentById = (
+  churchId: string | string[] | undefined,
+  contentType: string,
+  contentId: string
+) => {
+  try {
+    const response = axios.get(
+      `${process.env.EXPO_PUBLIC_BASE_URL}/church/${churchId}/${contentType}/${contentId}`
+    );
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};

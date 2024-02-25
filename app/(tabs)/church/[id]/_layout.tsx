@@ -35,7 +35,7 @@ const ChurchContentTypeStacks = () => {
       }}
     >
       <Stack.Screen
-        name="[contentType]/[id]"
+        name="[contentType]/[contentId]"
         options={{
           headerShown: !showMusicsGroup,
           title: translatedCategory,

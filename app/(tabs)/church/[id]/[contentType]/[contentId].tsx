@@ -26,6 +26,11 @@ const ContentTypeScreen = () => {
   const goToMusics = () => {
     setShowMusicsGroup(!showMusicsGroup);
   };
+  const path = usePathname();
+
+  useEffect(() => {
+    console.log("current route", path);
+  }, []);
 
   return (
     <>
