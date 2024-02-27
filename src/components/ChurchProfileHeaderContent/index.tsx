@@ -28,15 +28,19 @@ const ChurchProfileHeaderContent = ({
       <HStack justifyContent="space-between">
         <VStack>
           <Heading color="$secondary700">{currentChurchInfo.name}</Heading>
-          <Text color="$secondary400">{currentChurchInfo.address}</Text>
+          <Text color="$secondary400" fontSize="$sm">
+            {currentChurchInfo.address}
+          </Text>
         </VStack>
 
         <Avatar avatarImg="" avatarTitle={currentChurchInfo.name} />
       </HStack>
 
-      <Divider my={20} bgColor="$secondary400" />
+      <Divider my={10} bgColor="$secondary400" />
 
-      <Text color="$secondary400">{currentChurchInfo.description}</Text>
+      <Text color="$secondary400" fontSize="$sm">
+        {currentChurchInfo.description}
+      </Text>
     </Box>
   );
 };

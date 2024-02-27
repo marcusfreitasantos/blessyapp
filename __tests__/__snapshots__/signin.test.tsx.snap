@@ -952,7 +952,7 @@ exports[`<Signin/> Should render login screen 1`] = `
       onResponderTerminationRequest={[Function]}
       onStartShouldSetResponder={[Function]}
       role="button"
-      size="lg"
+      size="md"
       states={
         {
           "active": false,
@@ -980,8 +980,8 @@ exports[`<Signin/> Should render login screen 1`] = `
           },
           {},
           {
-            "height": 44,
-            "paddingHorizontal": 24,
+            "height": 40,
+            "paddingHorizontal": 20,
           },
           {},
           {
@@ -990,8 +990,8 @@ exports[`<Signin/> Should render login screen 1`] = `
           },
           {},
           {
-            "height": 44,
-            "paddingHorizontal": 24,
+            "height": 40,
+            "paddingHorizontal": 20,
           },
           {},
           {
@@ -1009,7 +1009,7 @@ exports[`<Signin/> Should render login screen 1`] = `
             "style": "",
           }
         }
-        size="lg"
+        size="md"
         style={
           [
             undefined,
@@ -1023,8 +1023,8 @@ exports[`<Signin/> Should render login screen 1`] = `
             },
             {},
             {
-              "fontSize": 18,
-              "lineHeight": 28,
+              "fontSize": 16,
+              "lineHeight": 22,
             },
             undefined,
             {},

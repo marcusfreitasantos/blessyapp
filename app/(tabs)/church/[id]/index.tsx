@@ -14,14 +14,14 @@ import { useIsFocused } from "@react-navigation/native";
 import DefaultCoverImg from "../../../../assets/default_cover_img.png";
 import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 
-type currentContentProps = {
+type CurrentContentProps = {
   churchId: number;
   id: number;
   postTitle: string;
-  postContent: string;
+  postExcerpt: string;
 };
 
-type currentChurchProps = {
+type CurrentChurchProps = {
   id: number;
   name: string;
   address: string;
@@ -31,9 +31,8 @@ type currentChurchProps = {
 };
 
 const ChurchScreen = () => {
-  const { currentChurchContentCategory } = useContext(
-    ChurchContentGlobalContext
-  );
+  const { currentChurchContentCategory, setCurrentChurchContentCategory } =
+    useContext(ChurchContentGlobalContext);
 
   const defaultCoverImgUri = Image.resolveAssetSource(
     Number(DefaultCoverImg)
@@ -44,11 +43,11 @@ const ChurchScreen = () => {
   const currentChurch = useLocalSearchParams();
 
   const [currentContent, setCurrentContent] = useState<
-    currentContentProps[] | null
+    CurrentContentProps[] | null
   >(null);
 
   const [currentChurchInfo, setCurrentChurchInfo] =
-    useState<currentChurchProps | null>(null);
+    useState<CurrentChurchProps | null>(null);
 
   const getCurrentChurchById = async () => {
     try {
@@ -82,6 +81,7 @@ const ChurchScreen = () => {
     } else {
       setCurrentChurchInfo(null);
       setCurrentContent(null);
+      setCurrentChurchContentCategory("news");
     }
   }, [isFocused]);
 
@@ -121,7 +121,7 @@ const ChurchScreen = () => {
               <CardComponent
                 id={item.id}
                 name={item.postTitle}
-                description={item.postContent}
+                description={item.postExcerpt}
                 parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
                 currentIndex={index}
               />

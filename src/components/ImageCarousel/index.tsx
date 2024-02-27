@@ -1,3 +1,4 @@
+import { Dimensions } from "react-native";
 import { ScrollView, Image, Box } from "@gluestack-ui/themed";
 
 type CarouselImagesProps = {
@@ -5,7 +6,8 @@ type CarouselImagesProps = {
 };
 
 const ImageCarousel = ({ carouselImages }: CarouselImagesProps) => {
-  const imgWidth = 320;
+  const deviceWidth = Dimensions.get("window").width;
+  const imgWidth = (deviceWidth * 80) / 100;
 
   return (
     <Box>

@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { FlatList } from "react-native";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
-import { useLocalSearchParams, router, usePathname } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 import {
   StatusBar,
   Box,
@@ -11,27 +11,58 @@ import {
   Divider,
 } from "@gluestack-ui/themed";
 import Paragraph from "@/components/Paragraph";
-import { ChurchContents } from "@/mocks/churchContent";
 import ContentTitle from "@/components/ContentTitle";
 import { Music } from "lucide-react-native";
 import MusicsGroup from "@/components/MusicsGroup";
+import { getChurchSingleContentById } from "@/services/churches";
+import LoadingSpinner from "@/components/LoadingSpinner";
+
+type CurrentContentProps = {
+  id: string;
+  churchId: string;
+  postDate: string;
+  postTitle: string;
+  postExcerpt: string;
+  postContent: [
+    {
+      paragraph_title: string;
+      paragraph_text: string;
+    }
+  ];
+};
 
 const ContentTypeScreen = () => {
   const { showMusicsGroup, setShowMusicsGroup } = useContext(
     ChurchContentGlobalContext
   );
-  const [currentContent, setCurrentContent] = useState(ChurchContents);
-  const { contentType, id } = useLocalSearchParams();
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentContent, setCurrentContent] =
+    useState<CurrentContentProps | null>(null);
+  const { contentId, contentType, id } = useLocalSearchParams();
 
   const goToMusics = () => {
     setShowMusicsGroup(!showMusicsGroup);
   };
-  const path = usePathname();
+
+  const getCurrentContent = async () => {
+    try {
+      setIsLoading(true);
+      const res = await getChurchSingleContentById(id, contentType, contentId);
+      setCurrentContent(res?.data);
+    } catch (error) {
+      console.log("Error from getCurrentContent: ", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    console.log("current route", path);
+    getCurrentContent();
   }, []);
 
+  if (isLoading) {
+    return <LoadingSpinner spinnerColor="$blessyPrimaryColor" />;
+  }
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -40,42 +71,46 @@ const ContentTypeScreen = () => {
         <MusicsGroup />
       ) : (
         <Box flex={1} bg="$white">
-          <HStack justifyContent="space-between" alignItems="center" p={20}>
-            <ContentTitle
-              contentTitle="Nome do evento"
-              contentDate="02/02/2024"
-            />
+          {currentContent && (
+            <>
+              <HStack justifyContent="space-between" alignItems="center" p={20}>
+                <ContentTitle
+                  contentTitle={currentContent.postTitle}
+                  contentDate={currentContent.postDate}
+                />
 
-            {contentType === "liturgy" && (
-              <Pressable
-                onPress={goToMusics}
-                bg="$blessyPrimaryColor"
-                p={10}
-                rounded={50}
-              >
-                <Icon as={Music} size="xl" color="$white" />
-              </Pressable>
-            )}
-          </HStack>
+                {contentType === "liturgy" && (
+                  <Pressable
+                    onPress={goToMusics}
+                    bg="$blessyPrimaryColor"
+                    p={10}
+                    rounded={50}
+                  >
+                    <Icon as={Music} size="xl" color="$white" />
+                  </Pressable>
+                )}
+              </HStack>
 
-          <Box px={20} my={20}>
-            <Divider />
-          </Box>
+              <Box px={20} my={20}>
+                <Divider />
+              </Box>
 
-          <Box px={20} pb={20} flex={1}>
-            {currentContent && (
-              <FlatList
-                data={currentContent}
-                renderItem={({ item }) => (
-                  <Paragraph
-                    paragraphTitle={item.title}
-                    paragraphText={item.text}
+              <Box px={20} pb={20} flex={1}>
+                {currentContent.postContent && (
+                  <FlatList
+                    data={currentContent.postContent}
+                    renderItem={({ item }) => (
+                      <Paragraph
+                        paragraphTitle={item.paragraph_title}
+                        paragraphText={item.paragraph_text}
+                      />
+                    )}
+                    keyExtractor={(item) => item.paragraph_title.toString()}
                   />
                 )}
-                keyExtractor={(item) => item.title.toString()}
-              />
-            )}
-          </Box>
+              </Box>
+            </>
+          )}
         </Box>
       )}
     </>

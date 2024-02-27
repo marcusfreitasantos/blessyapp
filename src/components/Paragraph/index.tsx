@@ -10,7 +10,7 @@ const Paragraph = ({ paragraphTitle, paragraphText }: ParagraphProps) => {
   return (
     <Box>
       <HeadingComponent headingText={paragraphTitle} />
-      <Text fontSize="$sm" color="$secondary400">
+      <Text fontSize="$sm" color="$secondary400" mb={40}>
         {paragraphText}
       </Text>
     </Box>

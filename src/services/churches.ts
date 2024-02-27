@@ -36,8 +36,8 @@ export const getChurchContent = (
 
 export const getChurchSingleContentById = (
   churchId: string | string[] | undefined,
-  contentType: string,
-  contentId: string
+  contentType: string | string[] | undefined,
+  contentId: string | string[] | undefined
 ) => {
   try {
     const response = axios.get(
