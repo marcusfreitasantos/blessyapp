@@ -19,7 +19,7 @@ const ImageCarousel = ({ carouselImages }: CarouselImagesProps) => {
               source={item}
               w={imgWidth}
               alt="banner"
-              h={150}
+              h={180}
               rounded={5}
               mr={index === carouselImages.length - 1 ? 0 : 10}
             />

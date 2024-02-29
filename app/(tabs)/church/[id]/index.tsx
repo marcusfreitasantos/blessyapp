@@ -75,14 +75,8 @@ const ChurchScreen = () => {
   };
 
   useEffect(() => {
-    if (isFocused) {
-      getCurrentChurchById();
-      getCurrentChurchContent("news");
-    } else {
-      setCurrentChurchInfo(null);
-      setCurrentContent(null);
-      setCurrentChurchContentCategory("news");
-    }
+    getCurrentChurchById();
+    getCurrentChurchContent("news");
   }, [isFocused]);
 
   if (!currentChurchInfo) {
