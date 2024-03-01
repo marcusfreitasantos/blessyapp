@@ -15,14 +15,10 @@ const ChurchProfileContentMenu = ({
   getContent,
   contentCategoriesGroup,
 }: contentCategoriesGroupProps) => {
-  const { setCurrentChurchContentCategory } = useContext(
-    ChurchContentGlobalContext
-  );
+  const { currentChurchContentCategory, setCurrentChurchContentCategory } =
+    useContext(ChurchContentGlobalContext);
 
   const scrollRef = useRef();
-
-  const [currentSelectedButton, setCurrentSelectedButton] =
-    useState("button_0");
 
   const autoScrollMenuItems = (currentButtonIndex: number) => {
     if (scrollRef.current) {
@@ -37,14 +33,9 @@ const ChurchProfileContentMenu = ({
     }
   };
 
-  const handleClick = (
-    content: string,
-    currentButton: string,
-    currentButtonIndex: number
-  ) => {
+  const handleClick = (content: string, currentButtonIndex: number) => {
     getContent(content);
     setCurrentChurchContentCategory(content);
-    setCurrentSelectedButton(currentButton);
     autoScrollMenuItems(currentButtonIndex);
   };
 
@@ -64,7 +55,7 @@ const ChurchProfileContentMenu = ({
                 variant="outline"
                 buttonText={item.buttonText}
                 action={
-                  currentSelectedButton === `button_${index}`
+                  currentChurchContentCategory === item.name
                     ? "primary"
                     : "secondary"
                 }

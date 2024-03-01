@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { FlatList, Image } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, router } from "expo-router";
 import { Box, StatusBar } from "@gluestack-ui/themed";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import ChurchProfileHeader from "@/components/ChurchProfileHeader";
@@ -75,8 +75,14 @@ const ChurchScreen = () => {
   };
 
   useEffect(() => {
-    getCurrentChurchById();
-    getCurrentChurchContent("news");
+    console.log(currentChurch);
+    if (isFocused) {
+      getCurrentChurchById();
+      getCurrentChurchContent(currentChurchContentCategory);
+    } else {
+      setCurrentContent(null);
+      setCurrentChurchInfo(null);
+    }
   }, [isFocused]);
 
   if (!currentChurchInfo) {

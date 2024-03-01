@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import { HStack, ImageBackground, Icon, Pressable } from "@gluestack-ui/themed";
 import { LinearGradient } from "expo-linear-gradient";
 import { ArrowLeft, Heart, Share2 } from "lucide-react-native";
@@ -8,7 +10,12 @@ type CoverImgProps = {
 };
 
 const ChurchProfileHeader = ({ coverImg }: CoverImgProps) => {
+  const { setCurrentChurchContentCategory } = useContext(
+    ChurchContentGlobalContext
+  );
+
   const handleBack = () => {
+    setCurrentChurchContentCategory("news");
     router.back();
   };
 
