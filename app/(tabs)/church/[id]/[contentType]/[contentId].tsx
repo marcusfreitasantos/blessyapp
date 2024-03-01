@@ -79,7 +79,7 @@ const ContentTypeScreen = () => {
                   contentDate={currentContent.postDate}
                 />
 
-                {contentType === "liturgy" && (
+                {contentType === "not show" && (
                   <Pressable
                     onPress={goToMusics}
                     bg="$blessyPrimaryColor"
