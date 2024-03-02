@@ -18,7 +18,7 @@ const ChurchContentTypeStacks = () => {
         setTranslatedCategory("Liturgia");
         break;
 
-      case "events":
+      case "event":
         setTranslatedCategory("Eventos");
         break;
     }

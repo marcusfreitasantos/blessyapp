@@ -9,7 +9,7 @@ export const ContentCategories = [
   },
 
   {
-    name: "events",
+    name: "event",
     buttonText: "Eventos",
   },
 ];
