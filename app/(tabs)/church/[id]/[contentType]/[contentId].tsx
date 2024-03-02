@@ -29,6 +29,19 @@ type CurrentContentProps = {
       paragraph_text: string;
     }
   ];
+  eventStartDate: string;
+  eventEndDate: string;
+  eventTime: string;
+  eventAddress: string;
+  eventEntranceType: string;
+  eventEntranceValue: string;
+  eventLink: [
+    {
+      title: string;
+      url: URL;
+      target: string;
+    }
+  ];
 };
 
 const ContentTypeScreen = () => {
