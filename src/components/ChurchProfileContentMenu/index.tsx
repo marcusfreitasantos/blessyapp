@@ -59,7 +59,7 @@ const ChurchProfileContentMenu = ({
                     ? "primary"
                     : "secondary"
                 }
-                onPress={() => handleClick(item.name, `button_${index}`, index)}
+                onPress={() => handleClick(item.name, index)}
               />
             </Box>
           );

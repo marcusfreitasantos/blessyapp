@@ -11,7 +11,7 @@ import { ContentCategories } from "@/mocks/contentCategories";
 import { getChurchById, getChurchContent } from "@/services/churches";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useIsFocused } from "@react-navigation/native";
-import DefaultCoverImg from "../../../../assets/default_cover_img.png";
+import DefaultCoverImg from "../../../../assets/default_cover_img.jpg";
 import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 
 type CurrentContentProps = {
@@ -75,7 +75,6 @@ const ChurchScreen = () => {
   };
 
   useEffect(() => {
-    console.log(currentChurch);
     if (isFocused) {
       getCurrentChurchById();
       getCurrentChurchContent(currentChurchContentCategory);
