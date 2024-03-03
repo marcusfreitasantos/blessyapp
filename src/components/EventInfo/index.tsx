@@ -28,39 +28,62 @@ const EventInfo = ({
     }
   };
 
-  const textColor = "$secondary500";
+  const componentProperties = {
+    textColor: "$secondary500",
+    fontSize: 14,
+  };
   return (
     <Box>
       <HStack alignItems="center">
-        <Icon as={Calendar} size="md" color={textColor} />
-        <Text ml={10} color={textColor}>
+        <Icon as={Calendar} size="md" color={componentProperties.textColor} />
+        <Text
+          ml={10}
+          color={componentProperties.textColor}
+          fontSize={componentProperties.fontSize}
+        >
           {eventStartDate} - {eventEndDate}
         </Text>
       </HStack>
 
       <HStack alignItems="center">
-        <Icon as={Clock} size="md" color={textColor} />
-        <Text ml={10} color={textColor}>
+        <Icon as={Clock} size="md" color={componentProperties.textColor} />
+        <Text
+          ml={10}
+          color={componentProperties.textColor}
+          fontSize={componentProperties.fontSize}
+        >
           {eventTime}
         </Text>
       </HStack>
 
       <HStack alignItems="center">
-        <Icon color={textColor} as={MapPin} size="md" />
-        <Text color={textColor} ml={10}>
+        <Icon color={componentProperties.textColor} as={MapPin} size="md" />
+        <Text
+          color={componentProperties.textColor}
+          ml={10}
+          fontSize={componentProperties.fontSize}
+        >
           {eventAddress}
         </Text>
       </HStack>
 
       <HStack alignItems="center" justifyContent="space-between" pt={10}>
-        <Text color={textColor} bold>
+        <Text
+          color={componentProperties.textColor}
+          bold
+          fontSize={componentProperties.fontSize}
+        >
           {translateEntranceType()}
         </Text>
 
         {eventEntranceType === "notfree" && (
           <>
-            <Text color={textColor}>|</Text>
-            <Text bold color="$blessyPrimaryColor">
+            <Text color={componentProperties.textColor}>|</Text>
+            <Text
+              bold
+              color="$blessyPrimaryColor"
+              fontSize={componentProperties.fontSize}
+            >
               Inscrição: R${eventEntranceValue}
             </Text>
           </>
