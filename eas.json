@@ -20,18 +20,9 @@
       "channel": "production",
       "autoIncrement": true,
       "android": {
-        "autoIncrement": "versionCode"
+        "autoIncrement": "versionCode",
+        "image" : "latest"
       }
     }
-  },
-  "submit": {
-    "preview": {
-      "android": {
-        "track": "internal",
-        "serviceAccountKeyPath": "",
-        "releaseStatus": "draft"
-      }
-    },
-    "production": {}
   }
 }

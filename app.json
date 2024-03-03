@@ -22,7 +22,9 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#45B7D0"
-      }
+      },
+      "package": "com.blessyapp",
+      "versionCode": 4
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -51,6 +53,6 @@
           ]
         }
       ]
-    ]   
+    ]
   }
 }
