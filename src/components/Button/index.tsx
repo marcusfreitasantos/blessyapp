@@ -5,6 +5,7 @@ type ButtonComponentProps = {
   buttonText: string;
   variant: "solid" | "outline" | "link" | undefined;
   action: "primary" | "secondary" | "positive" | "negative" | "default";
+  rounded?: boolean;
 };
 
 const ButtonComponent = ({
@@ -12,6 +13,7 @@ const ButtonComponent = ({
   buttonText,
   variant,
   action,
+  rounded,
 }: ButtonComponentProps) => {
   return (
     <Button
@@ -20,6 +22,7 @@ const ButtonComponent = ({
       action={action}
       onPress={onPress}
       borderWidth={2}
+      rounded={rounded ? "$md" : "$none"}
     >
       <ButtonText>{buttonText}</ButtonText>
     </Button>

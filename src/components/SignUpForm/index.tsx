@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Alert } from "react-native";
-import { createUser } from "@/services/api";
+import { createUser } from "@/services/users";
 import { router } from "expo-router";
 
 import { VStack } from "@gluestack-ui/themed";
@@ -85,6 +85,7 @@ const SignUpForm = () => {
             buttonText="Criar Conta"
             action="primary"
             variant="solid"
+            rounded
           />
         </VStack>
       )}

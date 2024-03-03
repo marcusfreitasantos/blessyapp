@@ -8,7 +8,6 @@ import {
   EyeIcon,
   EyeOffIcon,
 } from "@gluestack-ui/themed";
-import { View } from "react-native";
 
 type InputComponentProps = {
   inputIcon?: {};

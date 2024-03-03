@@ -16,6 +16,8 @@ import { Music } from "lucide-react-native";
 import MusicsGroup from "@/components/MusicsGroup";
 import { getChurchSingleContentById } from "@/services/churches";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import EventInfo from "@/components/EventInfo";
+import ButtonComponent from "@/components/Button";
 
 type CurrentContentProps = {
   id: string;
@@ -35,13 +37,11 @@ type CurrentContentProps = {
   eventAddress: string;
   eventEntranceType: string;
   eventEntranceValue: string;
-  eventLink: [
-    {
-      title: string;
-      url: URL;
-      target: string;
-    }
-  ];
+  eventLink: {
+    title: string;
+    url: URL;
+    target: string;
+  };
 };
 
 const ContentTypeScreen = () => {
@@ -104,7 +104,25 @@ const ContentTypeScreen = () => {
                 )}
               </HStack>
 
-              <Box px={20} my={20}>
+              {contentType === "event" && (
+                <>
+                  <Box px={20} my={10}>
+                    <Divider />
+                  </Box>
+                  <HStack px={20}>
+                    <EventInfo
+                      eventAddress={currentContent.eventAddress}
+                      eventEndDate={currentContent.eventEndDate}
+                      eventEntranceType={currentContent.eventEntranceType}
+                      eventEntranceValue={currentContent.eventEntranceValue}
+                      eventStartDate={currentContent.eventStartDate}
+                      eventTime={currentContent.eventTime}
+                    />
+                  </HStack>
+                </>
+              )}
+
+              <Box px={20} my={10}>
                 <Divider />
               </Box>
 
@@ -122,6 +140,15 @@ const ContentTypeScreen = () => {
                   />
                 )}
               </Box>
+
+              {contentType === "event" && (
+                <ButtonComponent
+                  buttonText={currentContent.eventLink.title}
+                  onPress={() => console.log("inscreva-se")}
+                  variant="solid"
+                  action="primary"
+                />
+              )}
             </>
           )}
         </Box>

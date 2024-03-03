@@ -52,6 +52,7 @@ const ChurchProfileContentMenu = ({
           return (
             <Box w={buttonsWidth} mr={5} key={item.name}>
               <ButtonComponent
+                rounded
                 variant="outline"
                 buttonText={item.buttonText}
                 action={
