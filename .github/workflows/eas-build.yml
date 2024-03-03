@@ -14,12 +14,18 @@ jobs:
         with:
           node-version: 18.x
           cache: npm
+
       - name: Setup Expo and EAS
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
           token: ${{ secrets.EXPO_TOKEN }}
+
       - name: Install dependencies
-        run: npm ci
+        run: npm install
+
+      - name: Run Tests
+        run: npm test -- -u
+
       - name: Build on EAS
         run: eas build --platform android --non-interactive --no-wait
