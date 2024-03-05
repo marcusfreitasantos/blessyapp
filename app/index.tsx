@@ -1,11 +1,16 @@
-import { Center, Text, HStack, Box } from "@gluestack-ui/themed";
+import { Text, HStack, ImageBackground } from "@gluestack-ui/themed";
 import { Link } from "expo-router";
 import LoginForm from "@/components/LoginForm";
 import BlessyLogo from "@/components/Logo";
+import { backgroundImgUri } from "@/components/DefaultImages";
 
 const Signin = () => {
   return (
-    <Center h="100%" bg="$blessyPrimaryColor" p={40}>
+    <ImageBackground
+      src={backgroundImgUri}
+      p={40}
+      style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+    >
       <BlessyLogo />
 
       <LoginForm />
@@ -25,7 +30,7 @@ const Signin = () => {
           <Text color="white">Recuperar senha</Text>
         </Link>
       </HStack>
-    </Center>
+    </ImageBackground>
   );
 };
 

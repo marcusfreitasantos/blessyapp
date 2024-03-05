@@ -29,3 +29,6 @@ jobs:
 
       - name: Build on EAS
         run: eas build --platform android --non-interactive --no-wait
+
+      - name: Submit on Play Store
+        run: eas submit -p android --profile production

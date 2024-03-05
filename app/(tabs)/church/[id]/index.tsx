@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
-import { FlatList, Image } from "react-native";
-import { useLocalSearchParams, router } from "expo-router";
+import { FlatList } from "react-native";
+import { useLocalSearchParams } from "expo-router";
 import { Box, StatusBar } from "@gluestack-ui/themed";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import ChurchProfileHeader from "@/components/ChurchProfileHeader";
@@ -11,8 +11,8 @@ import { ContentCategories } from "@/mocks/contentCategories";
 import { getChurchById, getChurchContent } from "@/services/churches";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useIsFocused } from "@react-navigation/native";
-import DefaultCoverImg from "../../../../assets/default_cover_img.jpg";
 import EmptyListCardComponent from "@/components/EmptyListCardComponent";
+import { defaultCoverImgUri } from "@/components/DefaultImages";
 
 type CurrentContentProps = {
   churchId: number;
@@ -33,10 +33,6 @@ type CurrentChurchProps = {
 const ChurchScreen = () => {
   const { currentChurchContentCategory, setCurrentChurchContentCategory } =
     useContext(ChurchContentGlobalContext);
-
-  const defaultCoverImgUri = Image.resolveAssetSource(
-    Number(DefaultCoverImg)
-  ).uri;
 
   const isFocused = useIsFocused();
   const [isLoading, setIsLoading] = useState(true);
