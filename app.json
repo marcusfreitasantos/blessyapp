@@ -24,7 +24,7 @@
         "backgroundColor": "#45B7D0"
       },
       "package": "com.blessyapp",
-      "versionCode": 4
+      "versionCode": 7
     },
     "web": {
       "favicon": "./assets/favicon.png"

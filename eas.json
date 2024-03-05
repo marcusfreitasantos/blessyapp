@@ -8,20 +8,16 @@
       "distribution": "internal",
       "channel": "development"
     },
-    "preview": {
-      "distribution": "internal",
-      "channel": "preview",
-      "autoIncrement": true,
-      "android": {
-        "autoIncrement": "versionCode"
-      }
-    },
     "production": {
       "channel": "production",
-      "autoIncrement": true,
+      "autoIncrement": true
+    }
+  },
+    "submit": {
+    "production": {
       "android": {
-        "autoIncrement": "versionCode",
-        "image" : "latest"
+        "track": "internal",
+        "releaseStatus": "draft"
       }
     }
   }

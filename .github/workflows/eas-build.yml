@@ -1,34 +1,31 @@
-name: EAS Build
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
-jobs:
-  build:
-    name: Install and build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18.x
-          cache: npm
+# name: EAS Build
+# on:
+#   workflow_dispatch:
+#   push:
+#     branches:
+#       - main
+# jobs:
+#   build:
+#     name: Install and build
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v3
+#       - uses: actions/setup-node@v3
+#         with:
+#           node-version: 18.x
+#           cache: npm
 
-      - name: Setup Expo and EAS
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
+#       - name: Setup Expo and EAS
+#         uses: expo/expo-github-action@v8
+#         with:
+#           eas-version: latest
+#           token: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Install dependencies
-        run: npm install
+#       - name: Install dependencies
+#         run: npm install
 
-      - name: Run Tests
-        run: npm test -- -u
+#       - name: Run Tests
+#         run: npm test -- -u
 
-      - name: Build on EAS
-        run: eas build --platform android --non-interactive --no-wait
-
-      - name: Submit on Play Store
-        run: eas submit -p android --profile production
+#       - name: Build on EAS
+#         run: eas build --platform android --non-interactive --no-wait
