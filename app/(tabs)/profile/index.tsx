@@ -1,12 +1,8 @@
-import { Link } from "expo-router";
 import { Text, View } from "react-native";
+import HeaderDefault from "@/components/DefaultHeader";
 
 const Profile = () => {
-  return (
-    <View>
-      <Text>Perfil</Text>
-    </View>
-  );
+  return <HeaderDefault screenName="Perfil" />;
 };
 
 export default Profile;

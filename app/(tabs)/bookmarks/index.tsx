@@ -1,12 +1,7 @@
-import { Link } from "expo-router";
-import { Text, View } from "react-native";
+import HeaderDefault from "@/components/DefaultHeader";
 
 const Bookmarks = () => {
-  return (
-    <View>
-      <Text>Favoritos</Text>
-    </View>
-  );
+  return <HeaderDefault screenName="Favoritos" />;
 };
 
 export default Bookmarks;

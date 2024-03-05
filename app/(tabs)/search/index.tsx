@@ -1,12 +1,7 @@
-import { Link } from "expo-router";
-import { Text, View } from "react-native";
+import HeaderDefault from "@/components/DefaultHeader";
 
 const Search = () => {
-  return (
-    <View>
-      <Text>Pesquisar</Text>
-    </View>
-  );
+  return <HeaderDefault screenName="Pesquisa Avançada" />;
 };
 
 export default Search;
