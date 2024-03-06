@@ -101,6 +101,7 @@ const LoginForm = () => {
             buttonText="Login"
             action="primary"
             variant="solid"
+            rounded
           />
         </VStack>
       )}
