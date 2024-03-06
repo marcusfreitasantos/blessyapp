@@ -11,7 +11,7 @@ import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
 
 const LoginForm = () => {
-  const { setToken } = useContext(GlobalContext);
+  const { setUserObj } = useContext(GlobalContext);
   const [userEmail, setuserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [loading, isLoading] = useState(false);
@@ -20,9 +20,8 @@ const LoginForm = () => {
     try {
       isLoading(true);
       const response = await authUser(userEmail, userPass);
-      const jwtToken = response.data.token;
-      setToken(jwtToken);
-      storeToken(jwtToken);
+      setUserObj(response.data);
+      storeUserObj(response.data);
       router.replace("/home");
     } catch (error) {
       console.log(error);
@@ -32,18 +31,18 @@ const LoginForm = () => {
     }
   };
 
-  const getStoredToken = async () => {
+  const getStoredUserObj = async () => {
     isLoading(true);
     try {
-      const storedToken = await AsyncStorage.getItem(
-        "blessy_current_user_token"
-      );
+      const storedUserObj = await AsyncStorage.getItem("blessy_current_user");
 
-      if (storedToken !== null) {
-        const { data } = await validateToken(storedToken);
+      if (storedUserObj !== null) {
+        const currentUserObj = JSON.parse(storedUserObj);
+
+        const { data } = await validateToken(currentUserObj.token);
 
         if (data.data.status === 200) {
-          setToken(storedToken);
+          setUserObj(currentUserObj);
           router.replace("/home");
         }
       }
@@ -54,16 +53,19 @@ const LoginForm = () => {
     }
   };
 
-  const storeToken = async (currentToken: string) => {
+  const storeUserObj = async (userObj: {}) => {
     try {
-      await AsyncStorage.setItem("blessy_current_user_token", currentToken);
+      await AsyncStorage.setItem(
+        "blessy_current_user",
+        JSON.stringify(userObj)
+      );
     } catch (error) {
       console.log("Error setting token in Async Storage:", error);
     }
   };
 
   useEffect(() => {
-    getStoredToken();
+    getStoredUserObj();
   }, []);
 
   return (

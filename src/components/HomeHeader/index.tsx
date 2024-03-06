@@ -7,7 +7,7 @@ import { Bell, Search } from "lucide-react-native";
 import Avatar from "../Avatar";
 
 const HomeHeader = () => {
-  const { setToken } = useContext(GlobalContext);
+  const { setUserObj } = useContext(GlobalContext);
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = () => {
@@ -20,8 +20,8 @@ const HomeHeader = () => {
 
   const logoutUser = async () => {
     try {
-      await AsyncStorage.removeItem("blessy_current_user_token");
-      setToken("");
+      await AsyncStorage.removeItem("blessy_current_user");
+      setUserObj({});
     } catch (error) {
       console.log("Error on logout ", error);
     }

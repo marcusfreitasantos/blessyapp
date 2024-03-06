@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
+import { GlobalContext } from "@/contexts/currentUserContext";
 import { VStack } from "@gluestack-ui/themed";
 import HeaderDefault from "@/components/DefaultHeader";
 import InputComponent from "@/components/Input";
@@ -6,9 +7,10 @@ import ButtonComponent from "@/components/Button";
 import { User, Mail, Lock } from "lucide-react-native";
 
 const Profile = () => {
-  const [userFirstName, setUserFirstName] = useState("");
-  const [userLastName, setUserLastName] = useState("");
-  const [userEmail, setuserEmail] = useState("");
+  const { userObj } = useContext(GlobalContext);
+  const [userFirstName, setUserFirstName] = useState(userObj.firstName);
+  const [userLastName, setUserLastName] = useState(userObj.lastName);
+  const [userEmail, setuserEmail] = useState(userObj.email);
   const [userPass, setUserPass] = useState("");
 
   const userUpdate = async () => {
@@ -16,6 +18,7 @@ const Profile = () => {
       `userFirstName: ${userFirstName}, userLastName: ${userLastName}, userEmail: ${userEmail}, userPass: ${userPass}`
     );
   };
+
   return (
     <>
       <HeaderDefault screenName="Perfil" />

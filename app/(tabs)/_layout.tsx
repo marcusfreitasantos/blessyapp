@@ -5,9 +5,9 @@ import { Home, Search, Heart, User } from "lucide-react-native";
 import { gluestackUIConfig } from "config/gluestack-ui.config";
 
 const TabsLayout = () => {
-  const { token } = useContext(GlobalContext);
+  const { userObj } = useContext(GlobalContext);
 
-  if (!token) {
+  if (!userObj.token) {
     return <Redirect href="/" />;
   }
 
