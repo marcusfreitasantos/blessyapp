@@ -7,7 +7,7 @@ import { Bell, Search } from "lucide-react-native";
 import Avatar from "../Avatar";
 
 const HomeHeader = () => {
-  const { setUserObj } = useContext(GlobalContext);
+  const { userObj, setUserObj } = useContext(GlobalContext);
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = () => {
@@ -21,7 +21,14 @@ const HomeHeader = () => {
   const logoutUser = async () => {
     try {
       await AsyncStorage.removeItem("blessy_current_user");
-      setUserObj({});
+      setUserObj({
+        token: "",
+        userID: 0,
+        email: "",
+        firstName: "",
+        lastName: "",
+        avatar: "",
+      });
     } catch (error) {
       console.log("Error on logout ", error);
     }
@@ -36,10 +43,7 @@ const HomeHeader = () => {
         justifyContent="space-between"
       >
         <Pressable onPress={logoutUser}>
-          <Avatar
-            avatarImg="https://github.com/marcusfreitasantos.png"
-            avatarTitle="Marcus Freitas"
-          />
+          <Avatar avatarImg={userObj.avatar} avatarTitle="Marcus Freitas" />
         </Pressable>
 
         <Box w="70%">

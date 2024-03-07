@@ -7,6 +7,7 @@ type tokenProps = {
     email: string;
     firstName: string;
     lastName: string;
+    avatar: string;
   };
   setUserObj: React.Dispatch<
     React.SetStateAction<{
@@ -15,6 +16,7 @@ type tokenProps = {
       email: string;
       firstName: string;
       lastName: string;
+      avatar: string;
     }>
   >;
 };
@@ -30,6 +32,7 @@ export const GlobalContext = createContext<tokenProps>({
     email: "",
     firstName: "",
     lastName: "",
+    avatar: "",
   },
   setUserObj: () => {},
 });
@@ -41,6 +44,7 @@ const UserDataProvider = ({ children }: UserDataProviderProps) => {
     email: "",
     firstName: "",
     lastName: "",
+    avatar: "",
   });
 
   return (
