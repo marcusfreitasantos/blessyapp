@@ -9,6 +9,15 @@ import { updateUserById } from "@/services/users";
 import useStoreUserObj from "@/hooks/useStoreUserObj";
 import LoadingSpinner from "@/components/LoadingSpinner";
 
+type UpdateduserObjProps = {
+  token: string;
+  userID: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+};
+
 const Profile = () => {
   const { userObj, setUserObj } = useContext(GlobalContext);
   const [userFirstName, setUserFirstName] = useState(userObj.firstName);
@@ -28,17 +37,18 @@ const Profile = () => {
         userPass
       );
 
-      const updatedUserObj = {
-        token: userObj.token,
-        userID: userObj.userID,
-        email: res.data.email,
-        firstName: res.data.firstName,
-        lastName: res.data.lastName,
-      };
-
-      setUserObj(updatedUserObj);
-
-      useStoreUserObj(updatedUserObj);
+      if (res) {
+        const updatedUserObj: UpdateduserObjProps = {
+          token: userObj.token,
+          userID: userObj.userID,
+          email: res.data.email,
+          firstName: res.data.firstName,
+          lastName: res.data.lastName,
+          avatar: "",
+        };
+        setUserObj(updatedUserObj);
+        useStoreUserObj(updatedUserObj);
+      }
     } catch (error) {
       console.log("Error from userUpdateAfterSubmitForm: ", error);
     } finally {

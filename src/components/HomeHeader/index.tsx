@@ -43,7 +43,7 @@ const HomeHeader = () => {
         justifyContent="space-between"
       >
         <Pressable onPress={logoutUser}>
-          <Avatar avatarImg={userObj.avatar} avatarTitle="Marcus Freitas" />
+          <Avatar avatarTitle={userObj.firstName} />
         </Pressable>
 
         <Box w="70%">
