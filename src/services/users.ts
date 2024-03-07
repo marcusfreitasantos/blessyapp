@@ -15,3 +15,23 @@ export const createUser = (
 
   return createdUser;
 };
+
+export const updateUserById = (
+  userID: number,
+  firstName: string,
+  lastName: string,
+  email: string,
+  userPass: string
+) => {
+  const updatedUser = axios.post(
+    `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}`,
+    {
+      firstName,
+      lastName,
+      email,
+      userPass,
+    }
+  );
+
+  return updatedUser;
+};

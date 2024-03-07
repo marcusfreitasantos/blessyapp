@@ -9,6 +9,7 @@ import { Mail, Lock } from "lucide-react-native";
 import ButtonComponent from "../Button";
 import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
+import useStoreUserObj from "@/hooks/useStoreUserObj";
 
 const LoginForm = () => {
   const { setUserObj } = useContext(GlobalContext);
@@ -21,7 +22,7 @@ const LoginForm = () => {
       isLoading(true);
       const response = await authUser(userEmail, userPass);
       setUserObj(response.data);
-      storeUserObj(response.data);
+      useStoreUserObj(response.data);
       router.replace("/home");
     } catch (error) {
       console.log(error);
@@ -50,17 +51,6 @@ const LoginForm = () => {
       console.log("Error getting token from Async Storage:", error);
     } finally {
       isLoading(false);
-    }
-  };
-
-  const storeUserObj = async (userObj: {}) => {
-    try {
-      await AsyncStorage.setItem(
-        "blessy_current_user",
-        JSON.stringify(userObj)
-      );
-    } catch (error) {
-      console.log("Error setting token in Async Storage:", error);
     }
   };
 
