@@ -8,6 +8,7 @@ import { User, Mail, Lock } from "lucide-react-native";
 import { updateUserById } from "@/services/users";
 import useStoreUserObj from "@/hooks/useStoreUserObj";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import ModalComponent from "@/components/ModalComponent";
 
 type UpdateduserObjProps = {
   token: string;
@@ -18,6 +19,12 @@ type UpdateduserObjProps = {
   avatar: string;
 };
 
+type ModalComponentProps = {
+  modalText: string;
+  modalState: boolean;
+  modalType: "success" | "error";
+};
+
 const Profile = () => {
   const { userObj, setUserObj } = useContext(GlobalContext);
   const [userFirstName, setUserFirstName] = useState(userObj.firstName);
@@ -25,6 +32,11 @@ const Profile = () => {
   const [userEmail, setuserEmail] = useState(userObj.email);
   const [userPass, setUserPass] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [modalProps, setModalProps] = useState<ModalComponentProps>({
+    modalText: "",
+    modalType: "success",
+    modalState: false,
+  });
 
   const userUpdateAfterSubmitForm = async () => {
     try {
@@ -48,9 +60,20 @@ const Profile = () => {
         };
         setUserObj(updatedUserObj);
         useStoreUserObj(updatedUserObj);
+        setModalProps({
+          modalText: "Seu perfil foi atualizado.",
+          modalType: "success",
+          modalState: true,
+        });
       }
     } catch (error) {
       console.log("Error from userUpdateAfterSubmitForm: ", error);
+      setModalProps({
+        modalText:
+          "Seu perfil não foi atualizado, tente novamente mais tarde ou entre em contato com nosso suporte.",
+        modalType: "error",
+        modalState: true,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -64,6 +87,11 @@ const Profile = () => {
         <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
       ) : (
         <VStack space="xl" reversed={false} w="100%" p={20}>
+          <ModalComponent
+            modalText={modalProps.modalText}
+            modalState={modalProps.modalState}
+            modalType={modalProps.modalType}
+          />
           <InputComponent
             inputIcon={User}
             inputType="text"
@@ -71,7 +99,6 @@ const Profile = () => {
             inputValue={userFirstName}
             onChangeText={(t: string) => setUserFirstName(t)}
           />
-
           <InputComponent
             inputIcon={User}
             inputType="text"
@@ -79,7 +106,6 @@ const Profile = () => {
             inputValue={userLastName}
             onChangeText={(t: string) => setUserLastName(t)}
           />
-
           <InputComponent
             inputIcon={Mail}
             inputType="text"
@@ -87,7 +113,6 @@ const Profile = () => {
             inputValue={userEmail}
             onChangeText={(t: string) => setuserEmail(t)}
           />
-
           <InputComponent
             inputIcon={Lock}
             inputType="password"
@@ -95,7 +120,6 @@ const Profile = () => {
             inputValue={userPass}
             onChangeText={(t: string) => setUserPass(t)}
           />
-
           <InputComponent
             inputIcon={Lock}
             inputType="password"
@@ -103,7 +127,6 @@ const Profile = () => {
             inputValue={userPass}
             onChangeText={(t: string) => setUserPass(t)}
           />
-
           <ButtonComponent
             onPress={userUpdateAfterSubmitForm}
             buttonText="Atualizar"
