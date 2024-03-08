@@ -1,17 +1,26 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import { HStack, VStack, Box, Pressable, Icon } from "@gluestack-ui/themed";
 import InputComponent from "../Input";
 import { Bell, Search } from "lucide-react-native";
 import Avatar from "../Avatar";
+import { getChurchByKeyword } from "@/services/churches";
 
 const HomeHeader = () => {
   const { userObj, setUserObj } = useContext(GlobalContext);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const handleSearch = () => {
-    console.log("Searching..");
+  const handleSearch = (keyword: string) => {
+    setSearchTerm(keyword);
+    setTimeout(async () => {
+      try {
+        const res = await getChurchByKeyword(keyword);
+        console.log(res?.data);
+      } catch (error) {
+        console.log("Error from handleSearch: ", error);
+      }
+    }, 1000);
   };
 
   const openNotificationsMenu = () => {
@@ -52,7 +61,7 @@ const HomeHeader = () => {
             inputType="text"
             inputPlaceholder="Pesquisar"
             inputValue={searchTerm}
-            onChangeText={(t) => setSearchTerm(t)}
+            onChangeText={(t) => handleSearch(t)}
           />
         </Box>
 

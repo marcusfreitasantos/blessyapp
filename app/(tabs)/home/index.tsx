@@ -50,6 +50,8 @@ const Home = () => {
       <StatusBar barStyle="dark-content" />
       <HomeHeader />
 
+      {/* search results */}
+
       <Box p={20} flex={1} bgColor="$white">
         <ImageCarousel carouselImages={imgArray} />
 

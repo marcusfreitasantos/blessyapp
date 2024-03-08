@@ -48,3 +48,14 @@ export const getChurchSingleContentById = (
     console.log("Error: ", error);
   }
 };
+
+export const getChurchByKeyword = (keyword: string) => {
+  try {
+    const response = axios.get(
+      `${process.env.EXPO_PUBLIC_BASE_URL}/church/search/${keyword}`
+    );
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
