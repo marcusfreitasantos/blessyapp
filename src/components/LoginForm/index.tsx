@@ -10,13 +10,24 @@ import ButtonComponent from "../Button";
 import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
 import useStoreUserObj from "@/hooks/useStoreUserObj";
+import ModalComponent from "../ModalComponent";
+
+type ModalComponentProps = {
+  modalText: string;
+  modalState: boolean;
+  modalType: "success" | "error";
+};
 
 const LoginForm = () => {
   const { setUserObj } = useContext(GlobalContext);
   const [userEmail, setuserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [loading, isLoading] = useState(false);
-
+  const [modalProps, setModalProps] = useState<ModalComponentProps>({
+    modalText: "",
+    modalType: "success",
+    modalState: false,
+  });
   const userLogin = async () => {
     try {
       isLoading(true);
@@ -26,7 +37,11 @@ const LoginForm = () => {
       router.replace("/home");
     } catch (error) {
       console.log(error);
-      Alert.alert("Não foi possível fazer login", `Erro: ${error}`);
+      setModalProps({
+        modalText: "Usuário ou senha incorretos!",
+        modalType: "error",
+        modalState: true,
+      });
     } finally {
       isLoading(false);
     }
@@ -72,6 +87,11 @@ const LoginForm = () => {
           rounded={3}
           hardShadow="1"
         >
+          <ModalComponent
+            modalText={modalProps.modalText}
+            modalState={modalProps.modalState}
+            modalType={modalProps.modalType}
+          />
           <InputComponent
             inputIcon={Mail}
             inputType="text"
