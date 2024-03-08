@@ -9,6 +9,13 @@ import { User, Mail, Lock } from "lucide-react-native";
 import ButtonComponent from "../Button";
 import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
+import ModalComponent from "../ModalComponent";
+
+type ModalComponentProps = {
+  modalText: string;
+  modalState: boolean;
+  modalType: "success" | "error";
+};
 
 const SignUpForm = () => {
   const [userFullName, setUserFullName] = useState("");
@@ -16,6 +23,11 @@ const SignUpForm = () => {
   const [userPass, setUserPass] = useState("");
   const [userConfirmPass, setUserConfirmPass] = useState("");
   const [loading, isLoading] = useState(false);
+  const [modalProps, setModalProps] = useState<ModalComponentProps>({
+    modalText: "",
+    modalType: "success",
+    modalState: false,
+  });
 
   const createNewUser = async () => {
     const username = userFullName.replace(" ", "").toLowerCase();
@@ -23,14 +35,25 @@ const SignUpForm = () => {
     try {
       isLoading(true);
       await createUser(username, userEmail, userPass, userFullName);
-      Alert.alert("Conta criada com sucesso!", "", [
-        { text: "Fazer Login", onPress: () => router.replace("/") },
-      ]);
+      setModalProps({
+        modalText: "Conta criada com sucesso!",
+        modalType: "success",
+        modalState: true,
+      });
     } catch (error) {
       console.log(error);
-      Alert.alert("Erro", `${error}`);
+      setModalProps({
+        modalText:
+          "Não foi possível criar sua conta, tente novamente ou entre em contato com nosso suporte.",
+        modalType: "error",
+        modalState: true,
+      });
     } finally {
       isLoading(false);
+      setUserFullName("");
+      setuserEmail("");
+      setUserPass("");
+      setUserConfirmPass("");
     }
   };
 
@@ -48,6 +71,11 @@ const SignUpForm = () => {
           rounded={3}
           hardShadow={"1"}
         >
+          <ModalComponent
+            modalText={modalProps.modalText}
+            modalState={modalProps.modalState}
+            modalType={modalProps.modalType}
+          />
           <InputComponent
             inputIcon={User}
             inputType="text"
