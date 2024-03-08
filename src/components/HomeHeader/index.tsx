@@ -1,26 +1,19 @@
 import { useState, useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GlobalContext } from "@/contexts/currentUserContext";
+import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import { HStack, VStack, Box, Pressable, Icon } from "@gluestack-ui/themed";
 import InputComponent from "../Input";
 import { Bell, Search } from "lucide-react-native";
 import Avatar from "../Avatar";
-import { getChurchByKeyword } from "@/services/churches";
 
 const HomeHeader = () => {
   const { userObj, setUserObj } = useContext(GlobalContext);
-  const [searchTerm, setSearchTerm] = useState("");
+
+  const { searchTerm, setSearchTerm } = useContext(ChurchContentGlobalContext);
 
   const handleSearch = (keyword: string) => {
     setSearchTerm(keyword);
-    setTimeout(async () => {
-      try {
-        const res = await getChurchByKeyword(keyword);
-        console.log(res?.data);
-      } catch (error) {
-        console.log("Error from handleSearch: ", error);
-      }
-    }, 1000);
   };
 
   const openNotificationsMenu = () => {

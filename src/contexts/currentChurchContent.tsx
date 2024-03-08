@@ -5,6 +5,8 @@ type currentChurchContentProps = {
   setCurrentChurchContentCategory: React.Dispatch<React.SetStateAction<string>>;
   showMusicsGroup: boolean;
   setShowMusicsGroup: React.Dispatch<React.SetStateAction<boolean>>;
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 };
 
 type ChurchContentDataProviderProps = {
@@ -17,6 +19,8 @@ export const ChurchContentGlobalContext =
     setCurrentChurchContentCategory: () => {},
     showMusicsGroup: false,
     setShowMusicsGroup: () => false,
+    searchTerm: "",
+    setSearchTerm: () => {},
   });
 
 const ChurchContentDataProvider = ({
@@ -26,6 +30,7 @@ const ChurchContentDataProvider = ({
     useState("news");
 
   const [showMusicsGroup, setShowMusicsGroup] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   return (
     <ChurchContentGlobalContext.Provider
@@ -34,6 +39,8 @@ const ChurchContentDataProvider = ({
         setCurrentChurchContentCategory,
         showMusicsGroup,
         setShowMusicsGroup,
+        searchTerm,
+        setSearchTerm,
       }}
     >
       {children}
