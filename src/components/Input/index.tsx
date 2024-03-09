@@ -1,20 +1,15 @@
 import { useState } from "react";
-
-import {
-  Input,
-  InputField,
-  InputSlot,
-  InputIcon,
-  EyeIcon,
-  EyeOffIcon,
-} from "@gluestack-ui/themed";
+import { Input, InputField, InputSlot, InputIcon } from "@gluestack-ui/themed";
+import { EyeIcon, EyeOff, X } from "lucide-react-native";
 
 type InputComponentProps = {
   inputIcon?: {};
   inputType: "text" | "password";
   inputPlaceholder: string;
   inputValue: string;
+  clearButton?: boolean;
   onChangeText: (t: string) => void;
+  onPress?: () => void;
 };
 
 const InputComponent = ({
@@ -22,7 +17,9 @@ const InputComponent = ({
   inputType,
   inputPlaceholder,
   inputValue,
+  clearButton,
   onChangeText,
+  onPress,
 }: InputComponentProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -41,13 +38,19 @@ const InputComponent = ({
         color="$secondary400"
       />
 
-      {inputType === "password" && (
+      {inputType === "password" ? (
         <InputSlot pr={0} onPress={() => setShowPassword(!showPassword)}>
           <InputIcon
-            as={showPassword ? EyeOffIcon : EyeIcon}
+            as={showPassword ? EyeOff : EyeIcon}
             color="$secondary400"
           />
         </InputSlot>
+      ) : (
+        clearButton && (
+          <InputSlot pr={0} onPress={onPress}>
+            <InputIcon as={X} color="$secondary400" />
+          </InputSlot>
+        )
       )}
     </Input>
   );

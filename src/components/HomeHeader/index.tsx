@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
@@ -55,6 +55,8 @@ const HomeHeader = () => {
             inputPlaceholder="Pesquisar"
             inputValue={searchTerm}
             onChangeText={(t) => handleSearch(t)}
+            clearButton={searchTerm ? true : false}
+            onPress={() => setSearchTerm("")}
           />
         </Box>
 
