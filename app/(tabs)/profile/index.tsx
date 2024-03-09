@@ -86,7 +86,14 @@ const Profile = () => {
       {isLoading ? (
         <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
       ) : (
-        <VStack space="xl" reversed={false} w="100%" p={20}>
+        <VStack
+          space="xl"
+          reversed={false}
+          w="100%"
+          p={20}
+          bgColor="$white"
+          flex={1}
+        >
           <ModalComponent
             modalText={modalProps.modalText}
             modalState={modalProps.modalState}

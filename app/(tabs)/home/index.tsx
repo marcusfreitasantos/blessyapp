@@ -8,11 +8,11 @@ import ImageCarousel from "@/components/ImageCarousel";
 import HeadingComponent from "@/components/Heading";
 import BannerImg from "../../../assets/home_banner.jpg";
 import { getChurches } from "@/services/churches";
-import { getChurchByKeyword } from "@/services/churches";
+import { getChurchesByKeyword } from "@/services/churches";
 import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 import SearchResult from "@/components/SearchResult";
 
-type currentChurchesProps = {
+type CurrentChurchesProps = {
   id: number;
   logo: string;
   name: string;
@@ -21,7 +21,7 @@ type currentChurchesProps = {
 
 const Home = () => {
   const [currentChuches, setCurrentChurches] = useState<
-    currentChurchesProps[] | null
+    CurrentChurchesProps[] | null
   >(null);
 
   const { searchTerm } = useContext(ChurchContentGlobalContext);
@@ -30,7 +30,7 @@ const Home = () => {
 
   const findChurchBySearchTerm = async () => {
     try {
-      const res = await getChurchByKeyword(searchTerm);
+      const res = await getChurchesByKeyword(searchTerm);
       setCurrentChurches(res?.data);
     } catch (error) {
       console.log("Error from handleSearch: ", error);

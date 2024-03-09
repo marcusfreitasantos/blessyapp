@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FlatList } from "react-native";
 import { Box } from "@gluestack-ui/themed";
 import CardComponent from "../Card";
@@ -19,26 +18,28 @@ type ChurchesListProps = {
 const SearchResult = ({ churchesList }: ChurchesListProps) => {
   return (
     <Box p={20} flex={1} bgColor="$white">
-      <HeadingComponent headingText="Resultados de busca:" />
-
       {churchesList && (
-        <FlatList
-          data={churchesList}
-          ListEmptyComponent={<EmptyListCardComponent />}
-          renderItem={({ item, index }) => (
-            <CardComponent
-              id={item.id}
-              logo={item.logo}
-              name={item.name}
-              description={item.address}
-              parentUrl="church"
-              currentIndex={index}
-              hasImg
-              hasIcon
-            />
-          )}
-          keyExtractor={(item) => item.id.toString()}
-        />
+        <>
+          <HeadingComponent headingText="Resultados de busca:" />
+
+          <FlatList
+            data={churchesList}
+            ListEmptyComponent={<EmptyListCardComponent />}
+            renderItem={({ item, index }) => (
+              <CardComponent
+                id={item.id}
+                logo={item.logo}
+                name={item.name}
+                description={item.address}
+                parentUrl="church"
+                currentIndex={index}
+                hasImg
+                hasIcon
+              />
+            )}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        </>
       )}
     </Box>
   );
