@@ -79,7 +79,7 @@ const LoginForm = () => {
         <LoadingSpinner spinnerText="Entrando" />
       ) : (
         <VStack
-          space="xl"
+          space="md"
           reversed={false}
           bg="white"
           w="100%"

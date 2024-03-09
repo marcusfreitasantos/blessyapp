@@ -73,6 +73,8 @@ const Home = () => {
           <HeadingComponent headingText="Encontre a sua igreja!" />
 
           <FlatList
+            contentContainerStyle={{ paddingBottom: 60 }}
+            showsVerticalScrollIndicator={false}
             data={currentChuches}
             ListEmptyComponent={<EmptyListCardComponent />}
             refreshControl={

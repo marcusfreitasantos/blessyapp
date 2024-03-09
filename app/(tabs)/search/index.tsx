@@ -57,7 +57,7 @@ const Search = () => {
     <>
       <HeaderDefault screenName="Pesquisa Avançada" />
 
-      <VStack space="xl" reversed={false} w="100%" p={20} bgColor="$white">
+      <VStack space="md" reversed={false} w="100%" p={20} bgColor="$white">
         <InputComponent
           inputIcon={Church}
           inputType="text"

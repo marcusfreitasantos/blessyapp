@@ -15,7 +15,7 @@ const Signup = () => {
 
       <SignUpForm />
 
-      <HStack py={20} space="lg">
+      <HStack py={20}>
         <Link href="/">
           <Text color="white">Já tem uma conta? Faça login.</Text>
         </Link>

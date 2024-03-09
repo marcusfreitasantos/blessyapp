@@ -38,7 +38,7 @@ const CardComponent = (props: CardComponentProps) => {
   }, [currentIndexType]);
 
   return (
-    <Pressable onPress={navigateToCardUrl} my={5}>
+    <Pressable onPress={navigateToCardUrl} my={1}>
       <HStack
         p={15}
         justifyContent="space-between"
@@ -46,10 +46,7 @@ const CardComponent = (props: CardComponentProps) => {
         space="xs"
         w="100%"
         bg="white"
-        mt={5}
         softShadow="1"
-        borderTopRightRadius={5}
-        borderBottomRightRadius={5}
         borderLeftColor={
           currentIndexType === "odd"
             ? "$blessyPrimaryColor"

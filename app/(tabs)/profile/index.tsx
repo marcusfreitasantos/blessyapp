@@ -87,7 +87,7 @@ const Profile = () => {
         <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
       ) : (
         <VStack
-          space="xl"
+          space="md"
           reversed={false}
           w="100%"
           p={20}
