@@ -9,6 +9,8 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import SearchResult from "@/components/SearchResult";
 import { getChurchesByMetadata } from "@/services/churches";
 import { useIsFocused } from "@react-navigation/native";
+import SelectComponent from "@/components/SelectComponent";
+import { BrazilianStates } from "@/mocks/brazilianStatesList";
 
 type CurrentChurchesProps = {
   id: number;
@@ -17,6 +19,12 @@ type CurrentChurchesProps = {
   address: string;
 };
 
+type SelectItemsListProps = [
+  {
+    name: string;
+    value: string;
+  }
+];
 const Search = () => {
   const [churchName, setChurchName] = useState("");
   const [churchCity, setChurchCity] = useState("");
@@ -27,6 +35,7 @@ const Search = () => {
   >(null);
   const [isLoading, setIsLoading] = useState(false);
   const isFocused = useIsFocused();
+  const selectItemsList: SelectItemsListProps = BrazilianStates;
 
   const findChurchByMetadata = async () => {
     try {
@@ -65,13 +74,12 @@ const Search = () => {
           inputValue={churchName}
           onChangeText={(t: string) => setChurchName(t)}
         />
-        <InputComponent
-          inputIcon={MapPin}
-          inputType="text"
-          inputPlaceholder="Estado"
-          inputValue={churchState}
-          onChangeText={(t: string) => setChurchState(t)}
+
+        <SelectComponent
+          selectItemsList={selectItemsList}
+          onValueChange={setChurchState}
         />
+
         <InputComponent
           inputIcon={MapPin}
           inputType="text"
@@ -79,6 +87,7 @@ const Search = () => {
           inputValue={churchCity}
           onChangeText={(t: string) => setChurchCity(t)}
         />
+
         <InputComponent
           inputIcon={MapPin}
           inputType="text"
