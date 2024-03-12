@@ -1,6 +1,6 @@
 import { createContext, useState, ReactNode } from "react";
 
-type tokenProps = {
+type currentUserProps = {
   userObj: {
     token: string;
     userID: number;
@@ -8,6 +8,7 @@ type tokenProps = {
     firstName: string;
     lastName: string;
     avatar: string;
+    bookmarks: number[];
   };
   setUserObj: React.Dispatch<
     React.SetStateAction<{
@@ -17,6 +18,7 @@ type tokenProps = {
       firstName: string;
       lastName: string;
       avatar: string;
+      bookmarks: number[];
     }>
   >;
 };
@@ -25,7 +27,7 @@ type UserDataProviderProps = {
   children: ReactNode;
 };
 
-export const GlobalContext = createContext<tokenProps>({
+export const GlobalContext = createContext<currentUserProps>({
   userObj: {
     token: "",
     userID: 0,
@@ -33,6 +35,7 @@ export const GlobalContext = createContext<tokenProps>({
     firstName: "",
     lastName: "",
     avatar: "",
+    bookmarks: [0],
   },
   setUserObj: () => {},
 });
@@ -45,6 +48,7 @@ const UserDataProvider = ({ children }: UserDataProviderProps) => {
     firstName: "",
     lastName: "",
     avatar: "",
+    bookmarks: [0],
   });
 
   return (

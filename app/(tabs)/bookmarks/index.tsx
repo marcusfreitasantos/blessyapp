@@ -6,11 +6,13 @@ import HeaderDefault from "@/components/DefaultHeader";
 import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 import { getUserBookmarks } from "@/services/users";
 import CardComponent from "@/components/Card";
+import { useIsFocused } from "@react-navigation/native";
 
 const Bookmarks = () => {
   const { userObj } = useContext(GlobalContext);
   const [isLoading, setIsLoading] = useState(false);
   const [currentChuches, setCurrentChurches] = useState(null);
+  const isFocused = useIsFocused();
 
   const getUserBookmarkedChurches = async () => {
     try {
@@ -25,8 +27,8 @@ const Bookmarks = () => {
   };
 
   useEffect(() => {
-    getUserBookmarkedChurches();
-  }, []);
+    if (isFocused) getUserBookmarkedChurches();
+  }, [isFocused]);
   return (
     <>
       <HeaderDefault screenName="Favoritos" />

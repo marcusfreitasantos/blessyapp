@@ -15,19 +15,67 @@ type CardComponentProps = {
   description: string;
   hasImg?: boolean;
   hasIcon?: boolean;
+  bookmarked?: boolean;
+};
+
+type UpdateduserObjProps = {
+  token: string;
+  userID: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  bookmarks: number[];
 };
 
 const CardComponent = (props: CardComponentProps) => {
-  const { userObj } = useContext(GlobalContext);
+  const { userObj, setUserObj } = useContext(GlobalContext);
   const [currentIndexType, setCurrentIndexType] = useState("even");
+  const [bookmarkIconFill, setBookmarkIconFill] = useState(props.bookmarked);
   const navigateToCardUrl = () => {
     router.navigate(`/${props.parentUrl}/${props.id}`);
   };
 
-  const bookmarkObject = async () => {
+  const handleBookmarks = async () => {
+    setBookmarkIconFill(!bookmarkIconFill);
+    if (bookmarkIconFill) {
+      removeBookmarkedChurch();
+    } else {
+      bookmarkChurch();
+    }
+  };
+
+  const bookmarkChurch = async () => {
     try {
       const req = await saveUserBookmarks(userObj.userID, props.id);
-      console.log(req?.data);
+      const updatedUserObj: UpdateduserObjProps = {
+        token: userObj.token,
+        userID: userObj.userID,
+        email: userObj.email,
+        firstName: userObj.firstName,
+        lastName: userObj.lastName,
+        avatar: "",
+        bookmarks: req?.data,
+      };
+      setUserObj(updatedUserObj);
+    } catch (error) {
+      console.log("Error from bookmarkObject: ", error);
+    }
+  };
+
+  const removeBookmarkedChurch = async () => {
+    try {
+      const req = await removeUserBookmarks(userObj.userID, props.id);
+      const updatedUserObj: UpdateduserObjProps = {
+        token: userObj.token,
+        userID: userObj.userID,
+        email: userObj.email,
+        firstName: userObj.firstName,
+        lastName: userObj.lastName,
+        avatar: "",
+        bookmarks: req?.data,
+      };
+      setUserObj(updatedUserObj);
     } catch (error) {
       console.log("Error from bookmarkObject: ", error);
     }
@@ -75,8 +123,13 @@ const CardComponent = (props: CardComponentProps) => {
         </VStack>
 
         {props.hasIcon && (
-          <Pressable onPress={bookmarkObject} testID="card__component_icon">
-            <Icon as={Heart} size="xl" color="$secondary400" />
+          <Pressable onPress={handleBookmarks} testID="card__component_icon">
+            <Icon
+              as={Heart}
+              size="xl"
+              color="$secondary400"
+              fill={bookmarkIconFill ? "$secondary400" : "$white"}
+            />
           </Pressable>
         )}
       </HStack>

@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { GlobalContext } from "@/contexts/currentUserContext";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import { FlatList } from "react-native";
 import { Box, StatusBar, RefreshControl } from "@gluestack-ui/themed";
@@ -23,7 +24,7 @@ const Home = () => {
   const [currentChuches, setCurrentChurches] = useState<
     CurrentChurchesProps[] | null
   >(null);
-
+  const { userObj } = useContext(GlobalContext);
   const { searchTerm } = useContext(ChurchContentGlobalContext);
   const [isLoading, setIsLoading] = useState(false);
   const imgArray = [BannerImg, BannerImg, BannerImg];
@@ -55,6 +56,7 @@ const Home = () => {
     if (searchTerm) {
       findChurchBySearchTerm();
     } else {
+      console.log(userObj.bookmarks);
       getChurchesFromApi();
     }
   }, [searchTerm]);
@@ -93,6 +95,7 @@ const Home = () => {
                 currentIndex={index}
                 hasImg
                 hasIcon
+                bookmarked={userObj.bookmarks.includes(item.id)}
               />
             )}
             keyExtractor={(item) => item.id.toString()}

@@ -17,6 +17,7 @@ type UpdateduserObjProps = {
   firstName: string;
   lastName: string;
   avatar: string;
+  bookmarks: number[];
 };
 
 type ModalComponentProps = {
@@ -57,6 +58,7 @@ const Profile = () => {
           firstName: res.data.firstName,
           lastName: res.data.lastName,
           avatar: "",
+          bookmarks: userObj.bookmarks,
         };
         setUserObj(updatedUserObj);
         useStoreUserObj(updatedUserObj);
