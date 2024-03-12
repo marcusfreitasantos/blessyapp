@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { router } from "expo-router";
 import { HStack, VStack, Text, Icon, Pressable } from "@gluestack-ui/themed";
 import { Heart } from "lucide-react-native";
 import Avatar from "../Avatar";
+import { saveUserBookmarks, removeUserBookmarks } from "@/services/users";
+import { GlobalContext } from "@/contexts/currentUserContext";
 
 type CardComponentProps = {
   id: number;
@@ -16,13 +18,19 @@ type CardComponentProps = {
 };
 
 const CardComponent = (props: CardComponentProps) => {
+  const { userObj } = useContext(GlobalContext);
   const [currentIndexType, setCurrentIndexType] = useState("even");
   const navigateToCardUrl = () => {
     router.navigate(`/${props.parentUrl}/${props.id}`);
   };
 
-  const bookmarkObject = () => {
-    console.log("Bookmark church with ID:", props.id);
+  const bookmarkObject = async () => {
+    try {
+      const req = await saveUserBookmarks(userObj.userID, props.id);
+      console.log(req?.data);
+    } catch (error) {
+      console.log("Error from bookmarkObject: ", error);
+    }
   };
 
   const identifyOddOrEvenIndex = () => {
