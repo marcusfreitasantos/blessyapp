@@ -35,3 +35,39 @@ export const updateUserById = (
 
   return updatedUser;
 };
+
+export const saveUserBookmarks = (userID: number, churchId: number) => {
+  try {
+    const response = axios.post(
+      `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}/bookmark`,
+      {
+        churchId,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
+export const removeUserBookmarks = (userID: number, churchId: number) => {
+  try {
+    const response = axios.delete(
+      `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}/bookmark/${churchId}`
+    );
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
+export const getUserBookmarks = (userID: number) => {
+  try {
+    const response = axios.get(
+      `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}/bookmark`
+    );
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
