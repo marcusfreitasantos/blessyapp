@@ -26,7 +26,7 @@ export const getChurchContent = (
 ) => {
   try {
     const response = axios.get(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/church/${churchId}/${contentType}`
+      `${process.env.EXPO_PUBLIC_BASE_URL}/church/${churchId}/content/${contentType}`
     );
     return response;
   } catch (error) {
@@ -41,7 +41,7 @@ export const getChurchSingleContentById = (
 ) => {
   try {
     const response = axios.get(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/church/${churchId}/${contentType}/${contentId}`
+      `${process.env.EXPO_PUBLIC_BASE_URL}/church/${churchId}/content/${contentType}/${contentId}`
     );
     return response;
   } catch (error) {
