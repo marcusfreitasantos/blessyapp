@@ -71,3 +71,20 @@ export const getUserBookmarks = (userID: number) => {
     console.log("Error: ", error);
   }
 };
+
+export const saveUserDeviceToken = (
+  userID: number,
+  userDeviceToken: string
+) => {
+  try {
+    const response = axios.post(
+      `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}/devices`,
+      {
+        userDeviceToken,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};

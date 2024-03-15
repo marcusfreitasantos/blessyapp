@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Alert } from "react-native";
 import { authUser, validateToken } from "@/services/api";
+import { saveUserDeviceToken } from "@/services/users";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import { router } from "expo-router";
 import { VStack } from "@gluestack-ui/themed";
@@ -11,6 +11,7 @@ import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
 import useStoreUserObj from "@/hooks/useStoreUserObj";
 import ModalComponent from "../ModalComponent";
+import messaging from "@react-native-firebase/messaging";
 
 type ModalComponentProps = {
   modalText: string;
@@ -28,12 +29,14 @@ const LoginForm = () => {
     modalType: "success",
     modalState: false,
   });
+
   const userLogin = async () => {
     try {
       isLoading(true);
       const response = await authUser(userEmail, userPass);
       setUserObj(response.data);
       useStoreUserObj(response.data);
+      getUserDeviceTokenAndSaveInDatabase(response.data.userID);
       router.replace("/home");
     } catch (error) {
       console.log(error);
@@ -66,6 +69,18 @@ const LoginForm = () => {
       console.log("Error getting token from Async Storage:", error);
     } finally {
       isLoading(false);
+    }
+  };
+
+  const getUserDeviceTokenAndSaveInDatabase = async (currentUserId: number) => {
+    try {
+      const deviceToken = await messaging().getToken();
+
+      if (deviceToken) {
+        await saveUserDeviceToken(currentUserId, deviceToken);
+      }
+    } catch (error) {
+      console.log("Error from getUserDeviceToken: ", error);
     }
   };
 
