@@ -1,15 +1,25 @@
 import { useContext } from "react";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
-import { HStack, ImageBackground, Icon, Pressable } from "@gluestack-ui/themed";
+import {
+  HStack,
+  ImageBackground,
+  Icon,
+  Pressable,
+  Text,
+} from "@gluestack-ui/themed";
 import { LinearGradient } from "expo-linear-gradient";
 import { ArrowLeft, Heart, Share2 } from "lucide-react-native";
 import { router } from "expo-router";
 
-type CoverImgProps = {
+type ChurchProfileHeaderProps = {
   coverImg: string;
+  totalFollowers: number;
 };
 
-const ChurchProfileHeader = ({ coverImg }: CoverImgProps) => {
+const ChurchProfileHeader = ({
+  coverImg,
+  totalFollowers,
+}: ChurchProfileHeaderProps) => {
   const { setCurrentChurchContentCategory } = useContext(
     ChurchContentGlobalContext
   );
@@ -47,9 +57,15 @@ const ChurchProfileHeader = ({ coverImg }: CoverImgProps) => {
         </Pressable>
 
         <HStack space="2xl">
-          <Pressable onPress={bookmarkCurrentChurch}>
-            <Icon as={Heart} color="white" size="xl" />
-          </Pressable>
+          <HStack>
+            <Text color="$white" pr={5}>
+              {totalFollowers ? totalFollowers : ""}
+            </Text>
+
+            <Pressable onPress={bookmarkCurrentChurch}>
+              <Icon as={Heart} color="white" size="xl" />
+            </Pressable>
+          </HStack>
 
           <Pressable onPress={shareCurrentChurch}>
             <Icon as={Share2} color="white" size="xl" />

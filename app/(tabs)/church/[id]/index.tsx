@@ -28,6 +28,7 @@ type CurrentChurchProps = {
   description: string;
   logo: string;
   coverImg: string;
+  totalFollowers: number;
 };
 
 const ChurchScreen = () => {
@@ -89,6 +90,7 @@ const ChurchScreen = () => {
       <StatusBar barStyle="light-content" />
 
       <ChurchProfileHeader
+        totalFollowers={currentChurchInfo.totalFollowers}
         coverImg={
           currentChurchInfo.coverImg
             ? currentChurchInfo.coverImg
