@@ -11,16 +11,6 @@ import {
   Ubuntu_700Bold,
 } from "@expo-google-fonts/ubuntu";
 
-import * as Notifications from "expo-notifications";
-
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
-
 const RootLayout = () => {
   let [fontsLoaded, fontError] = useFonts({
     Ubuntu_300Light,
