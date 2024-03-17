@@ -20,6 +20,7 @@ type NotificationMessageProps = {
 const onMessageReceived = async ({
   notification,
 }: NotificationMessageProps) => {
+  if (!notification) return;
   const { title, body } = notification;
   callNotificationAlert(title, body);
 };

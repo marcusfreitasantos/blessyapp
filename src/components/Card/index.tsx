@@ -5,6 +5,8 @@ import { Heart } from "lucide-react-native";
 import Avatar from "../Avatar";
 import { saveUserBookmarks, removeUserBookmarks } from "@/services/users";
 import { GlobalContext } from "@/contexts/currentUserContext";
+import messaging from "@react-native-firebase/messaging";
+import useStoreUserObj from "@/hooks/useStoreUserObj";
 
 type CardComponentProps = {
   id: number;
@@ -29,6 +31,7 @@ type UpdateduserObjProps = {
 };
 
 const CardComponent = (props: CardComponentProps) => {
+  const firebaseChurchTopic = `topic_church_${props.id}`;
   const { userObj, setUserObj } = useContext(GlobalContext);
   const [currentIndexType, setCurrentIndexType] = useState("even");
   const [bookmarkIconFill, setBookmarkIconFill] = useState(props.bookmarked);
@@ -58,6 +61,8 @@ const CardComponent = (props: CardComponentProps) => {
         bookmarks: req?.data,
       };
       setUserObj(updatedUserObj);
+      useStoreUserObj(updatedUserObj);
+      messaging().subscribeToTopic(firebaseChurchTopic);
     } catch (error) {
       console.log("Error from bookmarkObject: ", error);
     }
@@ -76,6 +81,8 @@ const CardComponent = (props: CardComponentProps) => {
         bookmarks: req?.data,
       };
       setUserObj(updatedUserObj);
+      useStoreUserObj(updatedUserObj);
+      messaging().unsubscribeFromTopic(firebaseChurchTopic);
     } catch (error) {
       console.log("Error from bookmarkObject: ", error);
     }
@@ -114,7 +121,7 @@ const CardComponent = (props: CardComponentProps) => {
           <Avatar avatarImg={props.logo} avatarTitle={props.name} />
         )}
         <VStack flex={1} px={10}>
-          <Text bold fontSize="$lg" color="$blessyPrimaryColor">
+          <Text bold fontSize="$lg" color="$secondary400">
             {props.name}
           </Text>
           <Text fontSize="$sm" isTruncated color="$secondary400">
@@ -127,8 +134,8 @@ const CardComponent = (props: CardComponentProps) => {
             <Icon
               as={Heart}
               size="xl"
-              color="$secondary400"
-              fill={bookmarkIconFill ? "$secondary400" : "$white"}
+              color="$blessyPrimaryColor"
+              fill={bookmarkIconFill ? "$blessyPrimaryColor" : "$white"}
             />
           </Pressable>
         )}
