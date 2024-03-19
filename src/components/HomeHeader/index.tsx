@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import { HStack, VStack, Box, Pressable, Icon } from "@gluestack-ui/themed";
@@ -8,7 +9,8 @@ import { Bell, Search } from "lucide-react-native";
 import Avatar from "../Avatar";
 
 const HomeHeader = () => {
-  const { userObj, setUserObj } = useContext(GlobalContext);
+  const navigation = useNavigation();
+  const { userObj } = useContext(GlobalContext);
 
   const { searchTerm, setSearchTerm } = useContext(ChurchContentGlobalContext);
 
@@ -20,20 +22,8 @@ const HomeHeader = () => {
     console.log("Notifications");
   };
 
-  const logoutUser = async () => {
-    try {
-      await AsyncStorage.removeItem("blessy_current_user");
-      setUserObj({
-        token: "",
-        userID: 0,
-        email: "",
-        firstName: "",
-        lastName: "",
-        avatar: "",
-      });
-    } catch (error) {
-      console.log("Error on logout ", error);
-    }
+  const showProfileMenu = () => {
+    navigation.dispatch(DrawerActions.openDrawer());
   };
 
   return (
@@ -44,7 +34,7 @@ const HomeHeader = () => {
         alignItems="center"
         justifyContent="space-between"
       >
-        <Pressable onPress={logoutUser}>
+        <Pressable onPress={showProfileMenu}>
           <Avatar avatarTitle={userObj.firstName} />
         </Pressable>
 

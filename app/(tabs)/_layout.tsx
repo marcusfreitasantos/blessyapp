@@ -19,7 +19,7 @@ const TabsLayout = () => {
       }}
     >
       <Tabs.Screen
-        name="home/index"
+        name="home"
         options={{
           headerShown: false,
           tabBarActiveTintColor:

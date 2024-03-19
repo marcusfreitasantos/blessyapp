@@ -56,7 +56,6 @@ const Home = () => {
     if (searchTerm) {
       findChurchBySearchTerm();
     } else {
-      console.log(userObj.bookmarks);
       getChurchesFromApi();
     }
   }, [searchTerm]);
