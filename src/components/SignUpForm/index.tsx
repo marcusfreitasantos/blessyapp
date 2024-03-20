@@ -1,7 +1,5 @@
 import { useState } from "react";
-import { Alert } from "react-native";
 import { createUser } from "@/services/users";
-import { router } from "expo-router";
 
 import { VStack } from "@gluestack-ui/themed";
 import { User, Mail, Lock } from "lucide-react-native";
@@ -10,6 +8,7 @@ import ButtonComponent from "../Button";
 import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
 import ModalComponent from "../ModalComponent";
+import loginUser from "@/utils/loginUser";
 
 type ModalComponentProps = {
   modalText: string;
@@ -26,13 +25,7 @@ const SignUpForm = () => {
   const [loading, isLoading] = useState(false);
 
   const handleModalOnpress = () => {
-    router.push({
-      pathname: "/",
-      params: {
-        newUserEmail: userEmail,
-        newUserPass: userPass,
-      },
-    });
+    loginUser(userEmail, userPass);
   };
 
   const [modalProps, setModalProps] = useState<ModalComponentProps>({
@@ -74,7 +67,7 @@ const SignUpForm = () => {
   return (
     <>
       {loading ? (
-        <LoadingSpinner spinnerText="Entrando" />
+        <LoadingSpinner spinnerText="Criando conta" />
       ) : (
         <VStack
           space="md"

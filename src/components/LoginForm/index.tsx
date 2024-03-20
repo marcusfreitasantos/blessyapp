@@ -1,17 +1,15 @@
 import { useState, useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { authUser, validateToken } from "@/services/api";
-import { saveUserDeviceToken } from "@/services/users";
+import { validateToken } from "@/services/api";
 import { GlobalContext } from "@/contexts/currentUserContext";
-import { router, useLocalSearchParams } from "expo-router";
+import { router } from "expo-router";
 import { VStack } from "@gluestack-ui/themed";
 import { Mail, Lock } from "lucide-react-native";
 import ButtonComponent from "../Button";
 import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
-import useStoreUserObj from "@/hooks/useStoreUserObj";
 import ModalComponent from "../ModalComponent";
-import messaging from "@react-native-firebase/messaging";
+import loginUser from "@/utils/loginUser";
 
 type ModalComponentProps = {
   modalText: string;
@@ -19,14 +17,7 @@ type ModalComponentProps = {
   modalType: "success" | "error";
 };
 
-type LocalSearchParamsProps = {
-  newUserEmail: string;
-  newUserPass: string;
-};
-
 const LoginForm = () => {
-  const { newUserEmail, newUserPass } =
-    useLocalSearchParams<LocalSearchParamsProps>();
   const { setUserObj } = useContext(GlobalContext);
   const [userEmail, setuserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
@@ -40,11 +31,8 @@ const LoginForm = () => {
   const userLogin = async () => {
     try {
       isLoading(true);
-      const response = await authUser(userEmail, userPass);
-      setUserObj(response.data);
-      useStoreUserObj(response.data);
-      getUserDeviceTokenAndSaveInDatabase(response.data.userID);
-      router.replace("/home");
+      const response = await loginUser(userEmail, userPass);
+      setUserObj(response?.data);
     } catch (error) {
       console.log(error);
       setModalProps({
@@ -79,23 +67,7 @@ const LoginForm = () => {
     }
   };
 
-  const getUserDeviceTokenAndSaveInDatabase = async (currentUserId: number) => {
-    try {
-      const deviceToken = await messaging().getToken();
-
-      if (deviceToken) {
-        await saveUserDeviceToken(currentUserId, deviceToken);
-      }
-    } catch (error) {
-      console.log("Error from getUserDeviceToken: ", error);
-    }
-  };
-
   useEffect(() => {
-    if (newUserEmail && newUserPass) {
-      setuserEmail(newUserEmail);
-      setUserPass(newUserPass);
-    }
     getStoredUserObj();
   }, []);
 
