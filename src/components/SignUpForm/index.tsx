@@ -15,6 +15,7 @@ type ModalComponentProps = {
   modalText: string;
   modalState: boolean;
   modalType: "success" | "error";
+  modalOnpress?: () => void;
 };
 
 const SignUpForm = () => {
@@ -23,10 +24,22 @@ const SignUpForm = () => {
   const [userPass, setUserPass] = useState("");
   const [userConfirmPass, setUserConfirmPass] = useState("");
   const [loading, isLoading] = useState(false);
+
+  const handleModalOnpress = () => {
+    router.push({
+      pathname: "/",
+      params: {
+        newUserEmail: userEmail,
+        newUserPass: userPass,
+      },
+    });
+  };
+
   const [modalProps, setModalProps] = useState<ModalComponentProps>({
     modalText: "",
     modalType: "success",
     modalState: false,
+    modalOnpress: handleModalOnpress,
   });
 
   const createNewUser = async () => {
@@ -39,6 +52,7 @@ const SignUpForm = () => {
         modalText: "Conta criada com sucesso!",
         modalType: "success",
         modalState: true,
+        modalOnpress: handleModalOnpress,
       });
     } catch (error) {
       console.log(error);
@@ -75,6 +89,7 @@ const SignUpForm = () => {
             modalText={modalProps.modalText}
             modalState={modalProps.modalState}
             modalType={modalProps.modalType}
+            modalOnpress={modalProps.modalOnpress}
           />
           <InputComponent
             inputIcon={User}

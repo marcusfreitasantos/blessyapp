@@ -3,7 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { authUser, validateToken } from "@/services/api";
 import { saveUserDeviceToken } from "@/services/users";
 import { GlobalContext } from "@/contexts/currentUserContext";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { VStack } from "@gluestack-ui/themed";
 import { Mail, Lock } from "lucide-react-native";
 import ButtonComponent from "../Button";
@@ -19,7 +19,14 @@ type ModalComponentProps = {
   modalType: "success" | "error";
 };
 
+type LocalSearchParamsProps = {
+  newUserEmail: string;
+  newUserPass: string;
+};
+
 const LoginForm = () => {
+  const { newUserEmail, newUserPass } =
+    useLocalSearchParams<LocalSearchParamsProps>();
   const { setUserObj } = useContext(GlobalContext);
   const [userEmail, setuserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
@@ -85,6 +92,10 @@ const LoginForm = () => {
   };
 
   useEffect(() => {
+    if (newUserEmail && newUserPass) {
+      setuserEmail(newUserEmail);
+      setUserPass(newUserPass);
+    }
     getStoredUserObj();
   }, []);
 

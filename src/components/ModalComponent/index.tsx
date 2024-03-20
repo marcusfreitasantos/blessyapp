@@ -17,14 +17,23 @@ type ModalComponentProps = {
   modalText: string;
   modalState: boolean;
   modalType: "success" | "error";
+  modalOnpress?: () => void;
 };
 
 const ModalComponent = ({
   modalText,
   modalState,
   modalType,
+  modalOnpress,
 }: ModalComponentProps) => {
   const [showModal, setShowModal] = useState(modalState);
+
+  const handleModalButtonClick = () => {
+    setShowModal(false);
+    if (modalOnpress) {
+      modalOnpress();
+    }
+  };
 
   return (
     <Modal
@@ -56,7 +65,7 @@ const ModalComponent = ({
             rounded
             variant="solid"
             action="primary"
-            onPress={() => setShowModal(false)}
+            onPress={handleModalButtonClick}
           />
         </ModalFooter>
       </ModalContent>
