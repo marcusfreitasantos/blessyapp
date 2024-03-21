@@ -15,10 +15,16 @@ type NotificationMessageProps = {
     body: string;
     title: string;
   };
+  data: {
+    churchId: string;
+    postId: string;
+    postType: string;
+  };
 };
 
 const onMessageReceived = async ({
   notification,
+  data,
 }: NotificationMessageProps) => {
   if (!notification) return;
   const { title, body } = notification;

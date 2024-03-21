@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useNavigation } from "expo-router";
 import { DrawerActions } from "@react-navigation/native";
 import { GlobalContext } from "@/contexts/currentUserContext";
@@ -7,19 +7,20 @@ import { HStack, VStack, Box, Pressable, Icon } from "@gluestack-ui/themed";
 import InputComponent from "../Input";
 import { Bell, Search } from "lucide-react-native";
 import Avatar from "../Avatar";
+import NotificationsMenu from "../NotificationsMenu";
 
 const HomeHeader = () => {
   const navigation = useNavigation();
   const { userObj } = useContext(GlobalContext);
-
   const { searchTerm, setSearchTerm } = useContext(ChurchContentGlobalContext);
+  const [showNotifications, setShowNotifications] = useState(false);
 
   const handleSearch = (keyword: string) => {
     setSearchTerm(keyword);
   };
 
   const openNotificationsMenu = () => {
-    console.log("Notifications");
+    setShowNotifications(!showNotifications);
   };
 
   const showProfileMenu = () => {
@@ -54,6 +55,10 @@ const HomeHeader = () => {
           <Icon as={Bell} size="xl" color="$blessyPrimaryColor" />
         </Pressable>
       </HStack>
+
+      {showNotifications && (
+        <NotificationsMenu notificationsContent={userObj.notifications} />
+      )}
     </VStack>
   );
 };
