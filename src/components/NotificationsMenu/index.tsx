@@ -27,8 +27,11 @@ const AnimatedBox = styled(AnimatedView, {
 
 type NotificationsContentProps = {
   notificationsContent: {
-    title: string;
+    churchName: string;
+    churchId: string;
     body: string;
+    postDate: string;
+    title: string;
   }[];
 };
 
@@ -40,8 +43,8 @@ const NotificationsMenu = ({
   };
 
   return (
-    <AnimatedBox w="100%">
-      <Box h={300} bgColor="$white" w="100%" mt={20}>
+    <AnimatedBox w="100%" h={400} py={20}>
+      <Box bgColor="$white" w="100%" mt={20}>
         {notificationsContent && (
           <FlatList
             data={notificationsContent}
@@ -49,13 +52,15 @@ const NotificationsMenu = ({
               <>
                 <Pressable onPress={() => goToNotificationLink(item.body)}>
                   <HStack alignItems="center" space="md">
-                    <Avatar avatarTitle="Videira" />
+                    {item.churchName && (
+                      <Avatar avatarTitle={item.churchName} />
+                    )}
                     <VStack space="sm" py={5}>
                       <Text color="$secondary400" fontSize="$sm">
-                        {item.title}
+                        {item.body}
                       </Text>
                       <Text color="$secondary300" fontSize="$xs" mt={-10}>
-                        21 de março
+                        {item.postDate}
                       </Text>
                     </VStack>
                   </HStack>

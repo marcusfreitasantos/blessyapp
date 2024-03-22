@@ -8,12 +8,16 @@ import InputComponent from "../Input";
 import { Bell, Search } from "lucide-react-native";
 import Avatar from "../Avatar";
 import NotificationsMenu from "../NotificationsMenu";
+import { getUserNotifications } from "@/services/users";
+import LoadingSpinner from "../LoadingSpinner";
 
 const HomeHeader = () => {
   const navigation = useNavigation();
   const { userObj } = useContext(GlobalContext);
   const { searchTerm, setSearchTerm } = useContext(ChurchContentGlobalContext);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [userNotifications, setUserNotifications] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSearch = (keyword: string) => {
     setSearchTerm(keyword);
@@ -21,10 +25,25 @@ const HomeHeader = () => {
 
   const openNotificationsMenu = () => {
     setShowNotifications(!showNotifications);
+    if (!userNotifications.length) {
+      getUserNotificationsFromApi();
+    }
   };
 
   const showProfileMenu = () => {
     navigation.dispatch(DrawerActions.openDrawer());
+  };
+
+  const getUserNotificationsFromApi = async () => {
+    try {
+      setIsLoading(true);
+      const res = await getUserNotifications(userObj.userID);
+      setUserNotifications(res?.data);
+    } catch (error) {
+      console.log("Error from getUserNotificationsFromApi: ", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -56,8 +75,12 @@ const HomeHeader = () => {
         </Pressable>
       </HStack>
 
-      {showNotifications && (
-        <NotificationsMenu notificationsContent={userObj.notifications} />
+      {isLoading ? (
+        <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
+      ) : (
+        showNotifications && (
+          <NotificationsMenu notificationsContent={userNotifications} />
+        )
       )}
     </VStack>
   );
