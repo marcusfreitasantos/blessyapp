@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { FlatList } from "react-native";
+import { FlatList, Linking, Alert } from "react-native";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import { useLocalSearchParams } from "expo-router";
 import {
@@ -39,7 +39,7 @@ type CurrentContentProps = {
   eventEntranceValue: string;
   eventLink: {
     title: string;
-    url: URL;
+    url: string;
     target: string;
   };
 };
@@ -55,6 +55,16 @@ const ContentTypeScreen = () => {
 
   const goToMusics = () => {
     setShowMusicsGroup(!showMusicsGroup);
+  };
+
+  const subscribeToChurchEvent = async ({ eventLink }: CurrentContentProps) => {
+    const churchEventUrl = await Linking.canOpenURL(eventLink.url);
+
+    if (churchEventUrl) {
+      await Linking.openURL(eventLink.url);
+    } else {
+      Alert.alert(`Não foi possível abrir este link: ${eventLink.url}`);
+    }
   };
 
   const getCurrentContent = async () => {
@@ -144,7 +154,7 @@ const ContentTypeScreen = () => {
               {contentType === "event" && (
                 <ButtonComponent
                   buttonText={currentContent.eventLink.title}
-                  onPress={() => console.log("inscreva-se")}
+                  onPress={() => subscribeToChurchEvent(currentContent)}
                   variant="solid"
                   action="primary"
                 />

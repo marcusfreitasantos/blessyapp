@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import { FlatList } from "react-native";
-import { useLocalSearchParams } from "expo-router";
+import { useLocalSearchParams, router } from "expo-router";
 import { Box, StatusBar } from "@gluestack-ui/themed";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import ChurchProfileHeader from "@/components/ChurchProfileHeader";
@@ -53,6 +53,7 @@ const ChurchScreen = () => {
       setCurrentChurchInfo(res?.data);
     } catch (error) {
       console.log("Error from getChurchById: ", error);
+      router.back();
     } finally {
       setIsLoading(false);
     }

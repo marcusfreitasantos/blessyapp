@@ -8,7 +8,7 @@ import {
   VStack,
 } from "@gluestack-ui/themed";
 import Avatar from "../Avatar";
-import { router, Link } from "expo-router";
+import { router } from "expo-router";
 
 type NotificationsContentProps = {
   notificationsContent: {
@@ -17,6 +17,7 @@ type NotificationsContentProps = {
     body: string;
     postDate: string;
     postId: string;
+    postType: string;
     title: string;
   }[];
 };
@@ -24,9 +25,14 @@ type NotificationsContentProps = {
 const NotificationsMenu = ({
   notificationsContent,
 }: NotificationsContentProps) => {
-  const goToNotificationLink = (churchId: string, postId: string) => {
-    router.navigate(`/church/${churchId}/news/${postId}`);
-    console.log(`/church/${churchId}/news/${postId}`);
+  const goToNotificationLink = (
+    churchId: string,
+    postId: string,
+    postType: string
+  ) => {
+    router.push({
+      pathname: `/church/${churchId}`,
+    });
   };
 
   return (
@@ -37,7 +43,13 @@ const NotificationsMenu = ({
           renderItem={({ item }) => (
             <>
               <Pressable
-                onPress={() => goToNotificationLink(item.churchId, item.postId)}
+                onPress={() =>
+                  goToNotificationLink(
+                    item.churchId,
+                    item.postId,
+                    item.postType
+                  )
+                }
               >
                 <HStack alignItems="center" space="md">
                   {item.churchName && <Avatar avatarTitle={item.churchName} />}
