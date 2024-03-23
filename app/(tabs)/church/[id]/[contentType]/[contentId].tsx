@@ -151,7 +151,7 @@ const ContentTypeScreen = () => {
                 )}
               </Box>
 
-              {contentType === "event" && (
+              {contentType === "event" && currentContent.eventLink && (
                 <ButtonComponent
                   buttonText={currentContent.eventLink.title}
                   onPress={() => subscribeToChurchEvent(currentContent)}

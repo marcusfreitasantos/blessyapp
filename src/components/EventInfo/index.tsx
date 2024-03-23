@@ -45,27 +45,31 @@ const EventInfo = ({
         </Text>
       </HStack>
 
-      <HStack alignItems="center">
-        <Icon as={Clock} size="md" color={componentProperties.textColor} />
-        <Text
-          ml={10}
-          color={componentProperties.textColor}
-          fontSize={componentProperties.fontSize}
-        >
-          {eventTime}
-        </Text>
-      </HStack>
+      {eventTime && (
+        <HStack alignItems="center">
+          <Icon as={Clock} size="md" color={componentProperties.textColor} />
+          <Text
+            ml={10}
+            color={componentProperties.textColor}
+            fontSize={componentProperties.fontSize}
+          >
+            {eventTime}
+          </Text>
+        </HStack>
+      )}
 
-      <HStack alignItems="center">
-        <Icon color={componentProperties.textColor} as={MapPin} size="md" />
-        <Text
-          color={componentProperties.textColor}
-          ml={10}
-          fontSize={componentProperties.fontSize}
-        >
-          {eventAddress}
-        </Text>
-      </HStack>
+      {eventAddress && (
+        <HStack alignItems="center">
+          <Icon color={componentProperties.textColor} as={MapPin} size="md" />
+          <Text
+            color={componentProperties.textColor}
+            ml={10}
+            fontSize={componentProperties.fontSize}
+          >
+            {eventAddress}
+          </Text>
+        </HStack>
+      )}
 
       <HStack alignItems="center" justifyContent="space-between" pt={10}>
         <Text
