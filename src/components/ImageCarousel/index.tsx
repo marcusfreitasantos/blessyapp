@@ -1,5 +1,5 @@
-import { Dimensions } from "react-native";
-import { ScrollView, Image, Box } from "@gluestack-ui/themed";
+import { Dimensions, Linking, Alert } from "react-native";
+import { ScrollView, Image, Box, Pressable } from "@gluestack-ui/themed";
 
 type CarouselImagesProps = {
   carouselImages: string[];
@@ -8,21 +8,37 @@ type CarouselImagesProps = {
 const ImageCarousel = ({ carouselImages }: CarouselImagesProps) => {
   const deviceWidth = Dimensions.get("window").width;
   const imgWidth = (deviceWidth * 80) / 100;
+  const supportEmailUrl =
+    "mailto:support@blessy.com&subject=Quero anunciar no Blessy!";
+
+  const subscribeToChurchEvent = async () => {
+    const blessyEmailUrl = await Linking.canOpenURL(supportEmailUrl);
+
+    if (blessyEmailUrl) {
+      await Linking.openURL(supportEmailUrl);
+    } else {
+      Alert.alert(`Não foi possível abrir este link: ${supportEmailUrl}`);
+    }
+  };
 
   return (
     <Box>
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {carouselImages &&
           carouselImages.map((item, index) => (
-            <Image
+            <Pressable
+              onPress={subscribeToChurchEvent}
               key={`banner_img_${index}`}
-              source={item}
-              w={imgWidth}
-              alt="banner"
-              h={180}
-              rounded={5}
-              mr={index === carouselImages.length - 1 ? 0 : 10}
-            />
+            >
+              <Image
+                source={item}
+                w={imgWidth}
+                alt="banner"
+                h={180}
+                rounded={5}
+                mr={index === carouselImages.length - 1 ? 0 : 10}
+              />
+            </Pressable>
           ))}
       </ScrollView>
     </Box>
