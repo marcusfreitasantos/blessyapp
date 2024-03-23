@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import { Tabs, Redirect } from "expo-router";
-import { Home, Search, Heart, User } from "lucide-react-native";
+import { Home, Search, Heart, User, Bell } from "lucide-react-native";
 import { gluestackUIConfig } from "config/gluestack-ui.config";
 
 const TabsLayout = () => {
@@ -55,6 +55,16 @@ const TabsLayout = () => {
           tabBarActiveTintColor:
             gluestackUIConfig.tokens.colors.blessyPrimaryColor,
           tabBarIcon: ({ color, size }) => <User color={color} size={size} />,
+        }}
+      />
+
+      <Tabs.Screen
+        name="notifications/index"
+        options={{
+          headerTitle: "Notificações",
+          tabBarActiveTintColor:
+            gluestackUIConfig.tokens.colors.blessyPrimaryColor,
+          tabBarIcon: ({ color, size }) => <Bell color={color} size={size} />,
         }}
       />
 

@@ -7,23 +7,8 @@ import {
   Divider,
   VStack,
 } from "@gluestack-ui/themed";
-import { AnimatedView } from "@gluestack-style/animation-resolver";
-import { styled } from "@gluestack-style/react";
 import Avatar from "../Avatar";
-
-const AnimatedBox = styled(AnimatedView, {
-  ":initial": {
-    opacity: 0,
-    height: 0,
-  },
-  ":animate": {
-    opacity: 1,
-    height: 200,
-  },
-  ":exit": {
-    height: 0,
-  },
-});
+import { router, Link } from "expo-router";
 
 type NotificationsContentProps = {
   notificationsContent: {
@@ -31,6 +16,7 @@ type NotificationsContentProps = {
     churchId: string;
     body: string;
     postDate: string;
+    postId: string;
     title: string;
   }[];
 };
@@ -38,41 +24,40 @@ type NotificationsContentProps = {
 const NotificationsMenu = ({
   notificationsContent,
 }: NotificationsContentProps) => {
-  const goToNotificationLink = (notificationBody: string) => {
-    console.log("notification", notificationBody);
+  const goToNotificationLink = (churchId: string, postId: string) => {
+    router.navigate(`/church/${churchId}/news/${postId}`);
+    console.log(`/church/${churchId}/news/${postId}`);
   };
 
   return (
-    <AnimatedBox w="100%" h={400} py={20}>
-      <Box bgColor="$white" w="100%" mt={20}>
-        {notificationsContent && (
-          <FlatList
-            data={notificationsContent}
-            renderItem={({ item }) => (
-              <>
-                <Pressable onPress={() => goToNotificationLink(item.body)}>
-                  <HStack alignItems="center" space="md">
-                    {item.churchName && (
-                      <Avatar avatarTitle={item.churchName} />
-                    )}
-                    <VStack space="sm" py={5}>
-                      <Text color="$secondary400" fontSize="$sm">
-                        {item.body}
-                      </Text>
-                      <Text color="$secondary300" fontSize="$xs" mt={-10}>
-                        {item.postDate}
-                      </Text>
-                    </VStack>
-                  </HStack>
-                </Pressable>
-                <Divider bgColor="$secondary100" my={10} />
-              </>
-            )}
-            keyExtractor={(item) => item.body}
-          />
-        )}
-      </Box>
-    </AnimatedBox>
+    <Box bgColor="$white" w="100%" p={20} flex={1}>
+      {notificationsContent && (
+        <FlatList
+          data={notificationsContent}
+          renderItem={({ item }) => (
+            <>
+              <Pressable
+                onPress={() => goToNotificationLink(item.churchId, item.postId)}
+              >
+                <HStack alignItems="center" space="md">
+                  {item.churchName && <Avatar avatarTitle={item.churchName} />}
+                  <VStack space="sm" py={5}>
+                    <Text color="$secondary400" fontSize="$sm">
+                      {item.body}
+                    </Text>
+                    <Text color="$secondary300" fontSize="$xs" mt={-10}>
+                      {item.postDate}
+                    </Text>
+                  </VStack>
+                </HStack>
+              </Pressable>
+              <Divider bgColor="$secondary100" my={10} />
+            </>
+          )}
+          keyExtractor={(item) => item.body}
+        />
+      )}
+    </Box>
   );
 };
 
