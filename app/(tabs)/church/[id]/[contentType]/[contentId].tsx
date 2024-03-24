@@ -57,14 +57,8 @@ const ContentTypeScreen = () => {
     setShowMusicsGroup(!showMusicsGroup);
   };
 
-  const subscribeToChurchEvent = async ({ eventLink }: CurrentContentProps) => {
-    const churchEventUrl = await Linking.canOpenURL(eventLink.url);
-
-    if (churchEventUrl) {
-      await Linking.openURL(eventLink.url);
-    } else {
-      Alert.alert(`Não foi possível abrir este link: ${eventLink.url}`);
-    }
+  const subscribeToChurchEvent = ({ eventLink }: CurrentContentProps) => {
+    Linking.openURL(eventLink.url);
   };
 
   const getCurrentContent = async () => {

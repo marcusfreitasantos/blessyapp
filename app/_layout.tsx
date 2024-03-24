@@ -11,6 +11,12 @@ import {
   Ubuntu_700Bold,
 } from "@expo-google-fonts/ubuntu";
 
+import * as Sentry from "@sentry/react-native";
+
+Sentry.init({
+  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
+});
+
 const RootLayout = () => {
   let [fontsLoaded, fontError] = useFonts({
     Ubuntu_300Light,

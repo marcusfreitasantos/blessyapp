@@ -9,16 +9,10 @@ const ImageCarousel = ({ carouselImages }: CarouselImagesProps) => {
   const deviceWidth = Dimensions.get("window").width;
   const imgWidth = (deviceWidth * 80) / 100;
   const supportEmailUrl =
-    "mailto:support@blessy.com&subject=Quero anunciar no Blessy!";
+    "mailto:support@blessy.com?subject=Quero anunciar no Blessy!";
 
-  const subscribeToChurchEvent = async () => {
-    const blessyEmailUrl = await Linking.canOpenURL(supportEmailUrl);
-
-    if (blessyEmailUrl) {
-      await Linking.openURL(supportEmailUrl);
-    } else {
-      Alert.alert(`Não foi possível abrir este link: ${supportEmailUrl}`);
-    }
+  const sendEmailToSupport = () => {
+    Linking.openURL(supportEmailUrl);
   };
 
   return (
@@ -26,10 +20,7 @@ const ImageCarousel = ({ carouselImages }: CarouselImagesProps) => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {carouselImages &&
           carouselImages.map((item, index) => (
-            <Pressable
-              onPress={subscribeToChurchEvent}
-              key={`banner_img_${index}`}
-            >
+            <Pressable onPress={sendEmailToSupport} key={`banner_img_${index}`}>
               <Image
                 source={item}
                 w={imgWidth}
