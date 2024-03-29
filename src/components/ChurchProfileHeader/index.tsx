@@ -33,10 +33,6 @@ const ChurchProfileHeader = ({
     console.log("bookmarkCurrentChurch");
   };
 
-  const shareCurrentChurch = () => {
-    console.log("shareCurrentChurch");
-  };
-
   return (
     <ImageBackground
       h={200}
@@ -66,10 +62,6 @@ const ChurchProfileHeader = ({
               <Icon as={Heart} color="white" size="xl" />
             </Pressable>
           </HStack>
-
-          <Pressable onPress={shareCurrentChurch}>
-            <Icon as={Share2} color="white" size="xl" />
-          </Pressable>
         </HStack>
       </HStack>
     </ImageBackground>
