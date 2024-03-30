@@ -5,9 +5,8 @@ import {
   Heading,
   Divider,
   Box,
+  Image,
 } from "@gluestack-ui/themed";
-
-import Avatar from "../Avatar";
 
 type currentChurchProps = {
   currentChurchInfo: {
@@ -25,7 +24,7 @@ const ChurchProfileHeaderContent = ({
 }: currentChurchProps) => {
   return (
     <Box>
-      <HStack justifyContent="space-between">
+      <HStack justifyContent="space-between" space="md">
         <VStack>
           <Heading color="$secondary700">{currentChurchInfo.name}</Heading>
           <Text color="$secondary400" fontSize="$sm">
@@ -33,7 +32,18 @@ const ChurchProfileHeaderContent = ({
           </Text>
         </VStack>
 
-        <Avatar avatarImg="" avatarTitle={currentChurchInfo.name} />
+        {currentChurchInfo.logo && (
+          <Image
+            size="full"
+            alt="church logo"
+            source={{
+              uri: currentChurchInfo.logo,
+            }}
+            h={40}
+            w={100}
+            resizeMode="contain"
+          />
+        )}
       </HStack>
 
       <Divider my={10} bgColor="$secondary400" />
