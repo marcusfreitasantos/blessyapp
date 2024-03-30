@@ -12,7 +12,6 @@ const Bookmarks = () => {
   const { userObj } = useContext(GlobalContext);
   const [isLoading, setIsLoading] = useState(false);
   const [currentChuches, setCurrentChurches] = useState(null);
-  const isFocused = useIsFocused();
 
   const getUserBookmarkedChurches = async () => {
     try {
@@ -27,8 +26,8 @@ const Bookmarks = () => {
   };
 
   useEffect(() => {
-    if (isFocused) getUserBookmarkedChurches();
-  }, [isFocused]);
+    getUserBookmarkedChurches();
+  }, []);
   return (
     <>
       <HeaderDefault screenName="Favoritos" />

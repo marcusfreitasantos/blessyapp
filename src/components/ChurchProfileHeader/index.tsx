@@ -32,7 +32,7 @@ const ChurchProfileHeader = ({
 
   const handleBack = () => {
     setCurrentChurchContentCategory("news");
-    router.back();
+    router.push({ pathname: "/home" });
   };
 
   const bookmarkCurrentChurch = () => {

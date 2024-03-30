@@ -9,6 +9,7 @@ import {
 } from "@gluestack-ui/themed";
 import Avatar from "../Avatar";
 import { router } from "expo-router";
+import EmptyListCardComponent from "../EmptyListCardComponent";
 
 type NotificationsContentProps = {
   notificationsContent: {
@@ -31,7 +32,7 @@ const NotificationsMenu = ({
     postType: string
   ) => {
     router.push({
-      pathname: `/church/${churchId}`,
+      pathname: `/church/${churchId}/${postType}/${postId}`,
     });
   };
 
@@ -40,6 +41,7 @@ const NotificationsMenu = ({
       {notificationsContent && (
         <FlatList
           data={notificationsContent}
+          ListEmptyComponent={<EmptyListCardComponent />}
           renderItem={({ item }) => (
             <>
               <Pressable

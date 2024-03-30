@@ -16,6 +16,7 @@ const TabsLayout = () => {
       screenOptions={{
         tabBarShowLabel: false,
         headerShown: false,
+        unmountOnBlur: true,
       }}
     >
       <Tabs.Screen
