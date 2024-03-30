@@ -55,7 +55,7 @@ const NotificationsMenu = ({
                   {item.churchName && <Avatar avatarTitle={item.churchName} />}
                   <VStack space="sm" py={5}>
                     <Text color="$secondary400" fontSize="$sm">
-                      {item.body}
+                      {`[${item.churchName}] ${item.body}`}
                     </Text>
                     <Text color="$secondary300" fontSize="$xs" mt={-10}>
                       {item.postDate}
