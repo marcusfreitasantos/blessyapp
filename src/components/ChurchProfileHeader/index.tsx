@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
+import { GlobalContext } from "@/contexts/currentUserContext";
+
 import {
   HStack,
   ImageBackground,
@@ -9,7 +11,7 @@ import {
 } from "@gluestack-ui/themed";
 import { LinearGradient } from "expo-linear-gradient";
 import { ArrowLeft, Heart, Share2 } from "lucide-react-native";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 type ChurchProfileHeaderProps = {
   coverImg: string;
@@ -23,6 +25,10 @@ const ChurchProfileHeader = ({
   const { setCurrentChurchContentCategory } = useContext(
     ChurchContentGlobalContext
   );
+
+  const currentChurch = useLocalSearchParams();
+  const { userObj } = useContext(GlobalContext);
+  const bookmarkIconFill = userObj.bookmarks.includes(Number(currentChurch.id));
 
   const handleBack = () => {
     setCurrentChurchContentCategory("news");
@@ -59,7 +65,11 @@ const ChurchProfileHeader = ({
             </Text>
 
             <Pressable onPress={bookmarkCurrentChurch}>
-              <Icon as={Heart} color="white" size="xl" />
+              {bookmarkIconFill ? (
+                <Icon as={Heart} color="white" size="xl" fill="$white" />
+              ) : (
+                <Icon as={Heart} color="white" size="xl" />
+              )}
             </Pressable>
           </HStack>
         </HStack>

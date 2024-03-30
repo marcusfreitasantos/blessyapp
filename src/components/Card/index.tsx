@@ -36,7 +36,9 @@ const CardComponent = (props: CardComponentProps) => {
   const [currentIndexType, setCurrentIndexType] = useState("even");
   const [bookmarkIconFill, setBookmarkIconFill] = useState(props.bookmarked);
   const navigateToCardUrl = () => {
-    router.navigate(`/${props.parentUrl}/${props.id}`);
+    router.push({
+      pathname: `/${props.parentUrl}/${props.id}`,
+    });
   };
 
   const handleBookmarks = async () => {
