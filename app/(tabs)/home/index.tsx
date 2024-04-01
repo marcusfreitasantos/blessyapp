@@ -7,11 +7,11 @@ import HomeHeader from "@/components/HomeHeader";
 import CardComponent from "@/components/Card";
 import ImageCarousel from "@/components/ImageCarousel";
 import HeadingComponent from "@/components/Heading";
-import BannerImg from "../../../assets/home_banner.jpg";
-import { getChurches } from "@/services/churches";
+import { getChurches, getChurchesAds } from "@/services/churches";
 import { getChurchesByKeyword } from "@/services/churches";
 import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 import SearchResult from "@/components/SearchResult";
+import { defaultBannerImg } from "@/components/DefaultImages";
 import {
   InterstitialAd,
   TestIds,
@@ -25,6 +25,12 @@ type CurrentChurchesProps = {
   address: string;
 };
 
+type ChurchesAdsProps = {
+  bannerImg: string;
+  bannerLink: string;
+  bannerTitle: string;
+};
+
 const Home = () => {
   const [currentChuches, setCurrentChurches] = useState<
     CurrentChurchesProps[] | null
@@ -32,7 +38,22 @@ const Home = () => {
   const { userObj } = useContext(GlobalContext);
   const { searchTerm } = useContext(ChurchContentGlobalContext);
   const [isLoading, setIsLoading] = useState(false);
-  const imgArray = [BannerImg, BannerImg, BannerImg];
+
+  let defaultChurchAd = [
+    {
+      bannerImg: defaultBannerImg,
+      bannerLink: "mailto:support@blessy.com?subject=Quero anunciar no Blessy!",
+      bannerTitle: "Anuncie Aqui",
+    },
+    {
+      bannerImg: defaultBannerImg,
+      bannerLink: "mailto:support@blessy.com?subject=Quero anunciar no Blessy!",
+      bannerTitle: "Anuncie Aqui",
+    },
+  ];
+
+  const [churchAds, setChurchAds] = useState(defaultChurchAd);
+
   const adUnitId = __DEV__
     ? TestIds.INTERSTITIAL
     : process.env.EXPO_PUBLIC_GOOGLE_ADMOB_ANDROID_ID;
@@ -60,6 +81,22 @@ const Home = () => {
     }
   };
 
+  const getChurchesAdsFromApi = async () => {
+    try {
+      const res = await getChurchesAds();
+
+      const resObj = res?.data;
+
+      resObj.map((item: ChurchesAdsProps) => {
+        defaultChurchAd.push(item);
+      });
+
+      setChurchAds(defaultChurchAd);
+    } catch (error) {
+      console.log("Error from request list", error);
+    }
+  };
+
   useEffect(() => {
     if (searchTerm) {
       findChurchBySearchTerm();
@@ -69,6 +106,7 @@ const Home = () => {
   }, [searchTerm]);
 
   useEffect(() => {
+    getChurchesAdsFromApi();
     if (adUnitId) {
       const interstitial = InterstitialAd.createForAdRequest(adUnitId);
       const unsubscribe = interstitial.addAdEventListener(
@@ -77,7 +115,6 @@ const Home = () => {
           interstitial.show();
         }
       );
-
       interstitial.load();
       return unsubscribe;
     }
@@ -92,7 +129,7 @@ const Home = () => {
         <SearchResult churchesList={currentChuches} />
       ) : (
         <Box p={20} flex={1} bgColor="$white">
-          <ImageCarousel carouselImages={imgArray} />
+          <ImageCarousel carouselImages={churchAds.reverse()} />
 
           <HeadingComponent headingText="Encontre a sua igreja!" />
 

@@ -9,6 +9,15 @@ export const getChurches = () => {
   }
 };
 
+export const getChurchesAds = () => {
+  try {
+    const response = axios.get(`${process.env.EXPO_PUBLIC_BASE_URL}/church_ad`);
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
 export const getChurchById = (churchId: string | string[] | undefined) => {
   try {
     const response = axios.get(

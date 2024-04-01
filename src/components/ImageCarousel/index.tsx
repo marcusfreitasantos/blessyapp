@@ -2,17 +2,19 @@ import { Dimensions, Linking, Alert } from "react-native";
 import { ScrollView, Image, Box, Pressable } from "@gluestack-ui/themed";
 
 type CarouselImagesProps = {
-  carouselImages: string[];
+  carouselImages: {
+    bannerImg: string;
+    bannerLink: string;
+    bannerTitle: string;
+  }[];
 };
 
 const ImageCarousel = ({ carouselImages }: CarouselImagesProps) => {
   const deviceWidth = Dimensions.get("window").width;
   const imgWidth = (deviceWidth * 80) / 100;
-  const supportEmailUrl =
-    "mailto:support@blessy.com?subject=Quero anunciar no Blessy!";
 
-  const sendEmailToSupport = () => {
-    Linking.openURL(supportEmailUrl);
+  const sendEmailToSupport = (bannerLink: string) => {
+    Linking.openURL(bannerLink);
   };
 
   return (
@@ -20,9 +22,12 @@ const ImageCarousel = ({ carouselImages }: CarouselImagesProps) => {
       <ScrollView horizontal showsHorizontalScrollIndicator={false}>
         {carouselImages &&
           carouselImages.map((item, index) => (
-            <Pressable onPress={sendEmailToSupport} key={`banner_img_${index}`}>
+            <Pressable
+              onPress={() => sendEmailToSupport(item.bannerLink)}
+              key={`banner_img_${index}`}
+            >
               <Image
-                source={item}
+                source={item.bannerImg}
                 w={imgWidth}
                 alt="banner"
                 h={180}
