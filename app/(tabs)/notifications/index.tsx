@@ -31,7 +31,7 @@ const Notifications = () => {
     <>
       <HeaderDefault screenName="Notificações" />
       {isLoading ? (
-        <LoadingSpinner />
+        <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
       ) : (
         <NotificationsMenu notificationsContent={userNotifications} />
       )}

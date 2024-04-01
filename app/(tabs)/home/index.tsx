@@ -12,6 +12,11 @@ import { getChurches } from "@/services/churches";
 import { getChurchesByKeyword } from "@/services/churches";
 import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 import SearchResult from "@/components/SearchResult";
+import {
+  InterstitialAd,
+  TestIds,
+  AdEventType,
+} from "react-native-google-mobile-ads";
 
 type CurrentChurchesProps = {
   id: number;
@@ -28,6 +33,9 @@ const Home = () => {
   const { searchTerm } = useContext(ChurchContentGlobalContext);
   const [isLoading, setIsLoading] = useState(false);
   const imgArray = [BannerImg, BannerImg, BannerImg];
+  const adUnitId = __DEV__
+    ? TestIds.INTERSTITIAL
+    : process.env.EXPO_PUBLIC_GOOGLE_ADMOB_ANDROID_ID;
 
   const findChurchBySearchTerm = async () => {
     try {
@@ -59,6 +67,21 @@ const Home = () => {
       getChurchesFromApi();
     }
   }, [searchTerm]);
+
+  useEffect(() => {
+    if (adUnitId) {
+      const interstitial = InterstitialAd.createForAdRequest(adUnitId);
+      const unsubscribe = interstitial.addAdEventListener(
+        AdEventType.LOADED,
+        () => {
+          interstitial.show();
+        }
+      );
+
+      interstitial.load();
+      return unsubscribe;
+    }
+  }, []);
 
   return (
     <>
