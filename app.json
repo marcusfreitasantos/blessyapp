@@ -1,5 +1,8 @@
 {
   "expo": {
     "name": "Blessy"
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "ca-app-pub-8430347978354434~8038298119"
   }
 }

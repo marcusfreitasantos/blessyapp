@@ -17,18 +17,13 @@ import {
   TestIds,
   AdEventType,
 } from "react-native-google-mobile-ads";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 type CurrentChurchesProps = {
   id: number;
   logo: string;
   name: string;
   address: string;
-};
-
-type ChurchesAdsProps = {
-  bannerImg: string;
-  bannerLink: string;
-  bannerTitle: string;
 };
 
 const Home = () => {
@@ -39,24 +34,17 @@ const Home = () => {
   const { searchTerm } = useContext(ChurchContentGlobalContext);
   const [isLoading, setIsLoading] = useState(false);
 
-  let defaultChurchAd = [
-    {
-      bannerImg: defaultBannerImg,
-      bannerLink: "mailto:support@blessy.com?subject=Quero anunciar no Blessy!",
-      bannerTitle: "Anuncie Aqui",
-    },
-    {
-      bannerImg: defaultBannerImg,
-      bannerLink: "mailto:support@blessy.com?subject=Quero anunciar no Blessy!",
-      bannerTitle: "Anuncie Aqui",
-    },
-  ];
-
-  const [churchAds, setChurchAds] = useState(defaultChurchAd);
+  let defaultChurchAd = {
+    bannerImg: defaultBannerImg,
+    bannerLink:
+      "mailto:suporte@blessyapp.com?subject=Quero anunciar no Blessy!",
+    bannerTitle: "Anuncie Aqui",
+  };
+  const [churchAds, setChurchAds] = useState(null);
 
   const adUnitId = __DEV__
     ? TestIds.INTERSTITIAL
-    : process.env.EXPO_PUBLIC_GOOGLE_ADMOB_ANDROID_ID;
+    : "ca-app-pub-8430347978354434/9223155764";
 
   const findChurchBySearchTerm = async () => {
     try {
@@ -65,6 +53,20 @@ const Home = () => {
     } catch (error) {
       console.log("Error from handleSearch: ", error);
       setCurrentChurches([]);
+    }
+  };
+
+  const getChurchesAdsFromApi = async () => {
+    try {
+      const res = await getChurchesAds();
+
+      const resObj = res?.data;
+
+      resObj.push(defaultChurchAd);
+
+      setChurchAds(resObj);
+    } catch (error) {
+      console.log("Error from request list", error);
     }
   };
 
@@ -78,22 +80,6 @@ const Home = () => {
       setCurrentChurches([]);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const getChurchesAdsFromApi = async () => {
-    try {
-      const res = await getChurchesAds();
-
-      const resObj = res?.data;
-
-      resObj.map((item: ChurchesAdsProps) => {
-        defaultChurchAd.push(item);
-      });
-
-      setChurchAds(defaultChurchAd);
-    } catch (error) {
-      console.log("Error from request list", error);
     }
   };
 
@@ -129,36 +115,41 @@ const Home = () => {
         <SearchResult churchesList={currentChuches} />
       ) : (
         <Box p={20} flex={1} bgColor="$white">
-          <ImageCarousel carouselImages={churchAds.reverse()} />
+          {isLoading ? (
+            <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
+          ) : (
+            <>
+              {churchAds && <ImageCarousel carouselImages={churchAds} />}
+              <HeadingComponent headingText="Encontre a sua igreja!" />
 
-          <HeadingComponent headingText="Encontre a sua igreja!" />
-
-          <FlatList
-            contentContainerStyle={{ paddingBottom: 60 }}
-            showsVerticalScrollIndicator={false}
-            data={currentChuches}
-            ListEmptyComponent={<EmptyListCardComponent />}
-            refreshControl={
-              <RefreshControl
-                refreshing={isLoading}
-                onRefresh={getChurchesFromApi}
+              <FlatList
+                contentContainerStyle={{ paddingBottom: 60 }}
+                showsVerticalScrollIndicator={false}
+                data={currentChuches}
+                ListEmptyComponent={<EmptyListCardComponent />}
+                refreshControl={
+                  <RefreshControl
+                    refreshing={isLoading}
+                    onRefresh={getChurchesFromApi}
+                  />
+                }
+                renderItem={({ item, index }) => (
+                  <CardComponent
+                    id={item.id}
+                    logo={item.logo}
+                    name={item.name}
+                    description={item.address}
+                    parentUrl="church"
+                    currentIndex={index}
+                    hasImg
+                    hasIcon
+                    bookmarked={userObj.bookmarks.includes(item.id)}
+                  />
+                )}
+                keyExtractor={(item) => item.id.toString()}
               />
-            }
-            renderItem={({ item, index }) => (
-              <CardComponent
-                id={item.id}
-                logo={item.logo}
-                name={item.name}
-                description={item.address}
-                parentUrl="church"
-                currentIndex={index}
-                hasImg
-                hasIcon
-                bookmarked={userObj.bookmarks.includes(item.id)}
-              />
-            )}
-            keyExtractor={(item) => item.id.toString()}
-          />
+            </>
+          )}
         </Box>
       )}
     </>

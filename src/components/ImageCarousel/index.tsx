@@ -11,7 +11,10 @@ type CarouselImagesProps = {
 
 const ImageCarousel = ({ carouselImages }: CarouselImagesProps) => {
   const deviceWidth = Dimensions.get("window").width;
-  const imgWidth = (deviceWidth * 80) / 100;
+  const imgWidth =
+    carouselImages.length > 1
+      ? (deviceWidth * 80) / 100
+      : (deviceWidth * 90) / 100;
 
   const sendEmailToSupport = (bannerLink: string) => {
     Linking.openURL(bannerLink);
