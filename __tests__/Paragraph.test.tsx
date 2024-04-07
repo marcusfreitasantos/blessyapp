@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react-native";
-import Paragraph from ".";
+import Paragraph from "@/components/Paragraph";
 import { StyledProvider } from "@gluestack-style/react";
-import { config } from "../../../config/gluestack-ui.config";
+import { config } from "../config/gluestack-ui.config";
 
 describe("Paragraph", () => {
   it("Should render paragraph with props", () => {

@@ -1,8 +1,8 @@
 import { render, screen } from "@testing-library/react-native";
-import InputComponent from ".";
+import InputComponent from "@/components/Input";
 import { Lock } from "lucide-react-native";
 import { StyledProvider } from "@gluestack-style/react";
-import { config } from "../../../config/gluestack-ui.config";
+import { config } from "../config/gluestack-ui.config";
 
 describe("Component: Input", () => {
   it("should render input component with password type with icon", () => {

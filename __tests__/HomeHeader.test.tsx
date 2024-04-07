@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react-native";
-import HomeHeader from ".";
+import HomeHeader from "@/components/HomeHeader";
 import { StyledProvider } from "@gluestack-style/react";
-import { config } from "../../../config/gluestack-ui.config";
+import { config } from "../config/gluestack-ui.config";
 
 describe("Home Header Component", () => {
   it("Should render Home Header", () => {

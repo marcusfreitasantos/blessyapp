@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react-native";
-import ImageCarousel from ".";
-import BannerImg from "../../../assets/home_banner.jpg";
+import ImageCarousel from "@/components/ImageCarousel";
+import BannerImg from "../assets/home_banner.jpg";
 
 describe("Image Carousel", () => {
   it("Should render a carousel of images with props", () => {

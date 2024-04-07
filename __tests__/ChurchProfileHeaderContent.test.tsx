@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react-native";
-import ChurchProfileHeaderContent from ".";
+import ChurchProfileHeaderContent from "@/components/ChurchProfileHeaderContent";
 import { StyledProvider } from "@gluestack-style/react";
-import { config } from "../../../config/gluestack-ui.config";
+import { config } from "../config/gluestack-ui.config";
 
 const currentChurchInfo = {
   id: 1,

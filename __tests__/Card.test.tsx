@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react-native";
 import { StyledProvider } from "@gluestack-style/react";
-import { config } from "../../../config/gluestack-ui.config";
-import CardComponent from ".";
+import { config } from "../config/gluestack-ui.config";
+import CardComponent from "@/components/Card";
 
 describe("Card Component", () => {
   it("Should render the card with image and icon", () => {

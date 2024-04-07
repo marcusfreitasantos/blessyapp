@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react-native";
-import LoadingSpinner from ".";
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { StyledProvider } from "@gluestack-style/react";
-import { config } from "../../../config/gluestack-ui.config";
+import { config } from "../config/gluestack-ui.config";
 
 describe("Loading Spinner", () => {
   it("Should render loading spinner with text from props", () => {

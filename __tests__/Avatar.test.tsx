@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react-native";
-
-import Avatar from ".";
+import Avatar from "@/components/Avatar";
 
 describe("Avatar Component", () => {
   it("Should render image and not the text", () => {

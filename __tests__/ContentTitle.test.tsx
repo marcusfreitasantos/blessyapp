@@ -1,7 +1,7 @@
 import { render } from "@testing-library/react-native";
-import ContentTitle from ".";
+import ContentTitle from "@/components/ContentTitle";
 import { StyledProvider } from "@gluestack-style/react";
-import { config } from "../../../config/gluestack-ui.config";
+import { config } from "../config/gluestack-ui.config";
 
 describe("Content Title Component", () => {
   it("Should render the Content Title component with props", () => {

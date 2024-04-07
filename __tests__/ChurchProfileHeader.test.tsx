@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react-native";
-import ChurchProfileHeader from ".";
+import ChurchProfileHeader from "@/components/ChurchProfileHeader";
 
 describe("ChurchProfileHeader Component", () => {
   it("Should render the profile header", () => {

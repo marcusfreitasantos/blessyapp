@@ -40,7 +40,7 @@ const Home = () => {
       "mailto:suporte@blessyapp.com?subject=Quero anunciar no Blessy!",
     bannerTitle: "Anuncie Aqui",
   };
-  const [churchAds, setChurchAds] = useState(null);
+  const [churchAds, setChurchAds] = useState([defaultChurchAd]);
 
   const adUnitId = __DEV__
     ? TestIds.INTERSTITIAL
@@ -67,6 +67,7 @@ const Home = () => {
       setChurchAds(resObj);
     } catch (error) {
       console.log("Error from request list", error);
+      setChurchAds([defaultChurchAd]);
     }
   };
 
@@ -119,7 +120,7 @@ const Home = () => {
             <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
           ) : (
             <>
-              {churchAds && <ImageCarousel carouselImages={churchAds} />}
+              <ImageCarousel carouselImages={churchAds} />
               <HeadingComponent headingText="Encontre a sua igreja!" />
 
               <FlatList
