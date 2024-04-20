@@ -1,5 +1,9 @@
 export const ContentCategories = [
   {
+    name: "about",
+    buttonText: "Sobre",
+  },
+  {
     name: "news",
     buttonText: "Notícias",
   },

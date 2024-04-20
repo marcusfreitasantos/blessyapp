@@ -27,7 +27,7 @@ const ChurchContentDataProvider = ({
   children,
 }: ChurchContentDataProviderProps) => {
   const [currentChurchContentCategory, setCurrentChurchContentCategory] =
-    useState("news");
+    useState("about");
 
   const [showMusicsGroup, setShowMusicsGroup] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");

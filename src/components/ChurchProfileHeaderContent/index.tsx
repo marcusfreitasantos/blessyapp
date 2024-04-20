@@ -3,25 +3,19 @@ import {
   Text,
   VStack,
   Heading,
-  Divider,
   Box,
   Image,
 } from "@gluestack-ui/themed";
 
-type currentChurchProps = {
-  currentChurchInfo: {
-    id: number;
-    name: string;
-    address: string;
-    description: string;
-    logo: string;
-    coverImg: string;
-  };
+import ChurchProps from "@/utils/churchProps";
+
+type CurrentChurchProps = {
+  currentChurchInfo: ChurchProps;
 };
 
 const ChurchProfileHeaderContent = ({
   currentChurchInfo,
-}: currentChurchProps) => {
+}: CurrentChurchProps) => {
   return (
     <Box>
       <HStack justifyContent="space-between" space="md">
@@ -29,6 +23,9 @@ const ChurchProfileHeaderContent = ({
           <Heading color="$secondary700">{currentChurchInfo.name}</Heading>
           <Text color="$secondary400" fontSize="$sm">
             {currentChurchInfo.address}
+          </Text>
+          <Text color="$secondary400" fontSize="$sm">
+            {currentChurchInfo.city} - {currentChurchInfo.state}
           </Text>
         </VStack>
 
@@ -45,12 +42,6 @@ const ChurchProfileHeaderContent = ({
           />
         )}
       </HStack>
-
-      <Divider my={10} bgColor="$secondary400" />
-
-      <Text color="$secondary400" fontSize="$sm">
-        {currentChurchInfo.description}
-      </Text>
     </Box>
   );
 };

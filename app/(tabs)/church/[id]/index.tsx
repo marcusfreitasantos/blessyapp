@@ -13,6 +13,8 @@ import LoadingSpinner from "@/components/LoadingSpinner";
 import { useIsFocused } from "@react-navigation/native";
 import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 import { defaultCoverImgUri } from "@/components/DefaultImages";
+import AboutChurch from "@/components/AboutChurch";
+import ChurchProps from "@/utils/churchProps";
 
 type CurrentContentProps = {
   churchId: number;
@@ -21,19 +23,10 @@ type CurrentContentProps = {
   postExcerpt: string;
 };
 
-type CurrentChurchProps = {
-  id: number;
-  name: string;
-  address: string;
-  description: string;
-  logo: string;
-  coverImg: string;
-  totalFollowers: number;
-};
-
 const ChurchScreen = () => {
-  const { currentChurchContentCategory, setCurrentChurchContentCategory } =
-    useContext(ChurchContentGlobalContext);
+  const { currentChurchContentCategory } = useContext(
+    ChurchContentGlobalContext
+  );
 
   const isFocused = useIsFocused();
   const [isLoading, setIsLoading] = useState(true);
@@ -44,7 +37,7 @@ const ChurchScreen = () => {
   >(null);
 
   const [currentChurchInfo, setCurrentChurchInfo] =
-    useState<CurrentChurchProps | null>(null);
+    useState<ChurchProps | null>(null);
 
   const getCurrentChurchById = async () => {
     try {
@@ -112,20 +105,26 @@ const ChurchScreen = () => {
         {isLoading ? (
           <LoadingSpinner spinnerColor="$blessyPrimaryColor" />
         ) : (
-          <FlatList
-            data={currentContent}
-            ListEmptyComponent={<EmptyListCardComponent />}
-            renderItem={({ item, index }) => (
-              <CardComponent
-                id={item.id}
-                name={item.postTitle}
-                description={item.postExcerpt}
-                parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
-                currentIndex={index}
+          <>
+            {currentChurchContentCategory === "about" ? (
+              <AboutChurch currentChurchInfo={currentChurchInfo} />
+            ) : (
+              <FlatList
+                data={currentContent}
+                ListEmptyComponent={<EmptyListCardComponent />}
+                renderItem={({ item, index }) => (
+                  <CardComponent
+                    id={item.id}
+                    name={item.postTitle}
+                    description={item.postExcerpt}
+                    parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
+                    currentIndex={index}
+                  />
+                )}
+                keyExtractor={(item) => item.id.toString()}
               />
             )}
-            keyExtractor={(item) => item.id.toString()}
-          />
+          </>
         )}
       </Box>
     </>

@@ -45,7 +45,7 @@ const HomeHeader = () => {
           <InputComponent
             inputIcon={Search}
             inputType="text"
-            inputPlaceholder="Pesquisar"
+            inputPlaceholder="Pesquisar igreja"
             inputValue={searchTerm}
             onChangeText={(t) => handleSearch(t)}
             clearButton={searchTerm ? true : false}
