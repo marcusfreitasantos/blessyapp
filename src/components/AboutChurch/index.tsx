@@ -59,151 +59,182 @@ const AboutChurch = ({ currentChurchInfo }: CurrentChurchProps) => {
         <Text>{currentChurchInfo.description}</Text>
       </Box>
 
-      <Divider my={dividerMarginNumber} />
+      {currentChurchInfo.hours && (
+        <>
+          <Divider my={dividerMarginNumber} />
+          <Box>
+            <Text bold mb={titleMarginNumber}>
+              Horário de funcionamento:
+            </Text>
+            <Text>{currentChurchInfo.hours}</Text>
+          </Box>
+        </>
+      )}
 
-      <Box>
-        <Text bold mb={titleMarginNumber}>
-          Horário de funcionamento:
-        </Text>
-        <Text>{currentChurchInfo.hours}</Text>
-      </Box>
+      {currentChurchInfo.staff.length ? (
+        <>
+          <Divider my={dividerMarginNumber} />
+          <Box>
+            <Text bold mb={titleMarginNumber}>
+              Nosso ministério:
+            </Text>
 
-      <Divider my={dividerMarginNumber} />
+            {currentChurchInfo.staff.map((churchStaff, index) => {
+              return (
+                <HStack
+                  space="sm"
+                  alignItems="center"
+                  py={5}
+                  key={`${churchStaff.church_staff_group.church_staff_group_person_name}_${index}`}
+                >
+                  <Icon as={UserCircle} size="md" color="$secondary600" />
 
-      <Box>
-        <Text bold mb={titleMarginNumber}>
-          Nosso ministério:
-        </Text>
+                  <Text bold>
+                    {
+                      churchStaff.church_staff_group
+                        .church_staff_group_person_name
+                    }
+                  </Text>
+                  <Text>-</Text>
+                  <Text>
+                    {
+                      churchStaff.church_staff_group
+                        .church_staff_group_person_job
+                    }
+                  </Text>
+                </HStack>
+              );
+            })}
+          </Box>
+        </>
+      ) : null}
 
-        {currentChurchInfo.staff.map((churchStaff, index) => {
-          return (
-            <HStack
-              space="sm"
-              alignItems="center"
-              py={5}
-              key={`${churchStaff.church_staff_group.church_staff_group_person_name}_${index}`}
-            >
-              <Icon as={UserCircle} size="md" color="$secondary600" />
+      {currentChurchInfo.contact && (
+        <>
+          <Divider my={dividerMarginNumber} />
+          <Box>
+            <Text bold mb={titleMarginNumber}>
+              Contato:
+            </Text>
 
-              <Text bold>
-                {churchStaff.church_staff_group.church_staff_group_person_name}
-              </Text>
-              <Text>-</Text>
-              <Text>
-                {churchStaff.church_staff_group.church_staff_group_person_job}
-              </Text>
+            {currentChurchInfo.contact.church_email && (
+              <Pressable
+                onPress={() =>
+                  openCurrentLink(
+                    `mailto:${currentChurchInfo.contact.church_email}`
+                  )
+                }
+              >
+                <HStack space="sm" alignItems="center">
+                  <Icon as={Mail} size="md" color="$secondary600" />
+                  <Text color="$secondary600">
+                    {currentChurchInfo.contact.church_email}
+                  </Text>
+                </HStack>
+              </Pressable>
+            )}
+
+            {currentChurchInfo.contact.church_phone && (
+              <Pressable
+                onPress={() =>
+                  openCurrentLink(
+                    `tel:${currentChurchInfo.contact.church_phone}`
+                  )
+                }
+              >
+                <HStack space="sm" alignItems="center">
+                  <Icon as={Phone} size="md" color="$secondary600" />
+                  <Text color="$secondary600">
+                    {maskForPhoneNumber(currentChurchInfo.contact.church_phone)}
+                  </Text>
+                </HStack>
+              </Pressable>
+            )}
+
+            {currentChurchInfo.contact.church_whatsapp && (
+              <Pressable
+                onPress={() =>
+                  openCurrentLink(
+                    `https://api.whatsapp.com/send?phone=55${formatWhatsappNumber(
+                      currentChurchInfo.contact.church_whatsapp
+                    )}`
+                  )
+                }
+              >
+                <HStack space="sm" alignItems="center">
+                  <Icon as={MessageCircle} size="md" color="$secondary600" />
+                  <Text color="$secondary600">
+                    {maskForPhoneNumber(
+                      currentChurchInfo.contact.church_whatsapp
+                    )}
+                  </Text>
+                </HStack>
+              </Pressable>
+            )}
+          </Box>
+        </>
+      )}
+
+      {currentChurchInfo.socialMedia && (
+        <>
+          <Divider my={dividerMarginNumber} />
+
+          <Box>
+            <Text bold mb={titleMarginNumber}>
+              Redes sociais:
+            </Text>
+            <HStack space="md" alignItems="center">
+              {currentChurchInfo.socialMedia.church_facebook && (
+                <Pressable
+                  onPress={() =>
+                    openCurrentLink(
+                      currentChurchInfo.socialMedia.church_facebook
+                    )
+                  }
+                >
+                  <Icon as={Facebook} size="xl" color="$secondary600" />
+                </Pressable>
+              )}
+
+              {currentChurchInfo.socialMedia.church_instagram && (
+                <Pressable
+                  onPress={() =>
+                    openCurrentLink(
+                      currentChurchInfo.socialMedia.church_instagram
+                    )
+                  }
+                >
+                  <Icon as={Instagram} size="xl" color="$secondary600" />
+                </Pressable>
+              )}
+
+              {currentChurchInfo.socialMedia.church_linkedin && (
+                <Pressable
+                  onPress={() =>
+                    openCurrentLink(
+                      currentChurchInfo.socialMedia.church_linkedin
+                    )
+                  }
+                >
+                  <Icon as={Youtube} size="xl" color="$secondary600" />
+                </Pressable>
+              )}
+
+              {currentChurchInfo.socialMedia.church_youtube && (
+                <Pressable
+                  onPress={() =>
+                    openCurrentLink(
+                      currentChurchInfo.socialMedia.church_youtube
+                    )
+                  }
+                >
+                  <Icon as={Linkedin} size="xl" color="$secondary600" />
+                </Pressable>
+              )}
             </HStack>
-          );
-        })}
-      </Box>
-
-      <Divider my={dividerMarginNumber} />
-
-      <Box>
-        <Text bold mb={titleMarginNumber}>
-          Contato:
-        </Text>
-
-        {currentChurchInfo.contact.church_email && (
-          <Pressable
-            onPress={() =>
-              openCurrentLink(
-                `mailto:${currentChurchInfo.contact.church_email}`
-              )
-            }
-          >
-            <HStack space="sm" alignItems="center">
-              <Icon as={Mail} size="md" color="$secondary600" />
-              <Text color="$secondary600">
-                {currentChurchInfo.contact.church_email}
-              </Text>
-            </HStack>
-          </Pressable>
-        )}
-
-        {currentChurchInfo.contact.church_phone && (
-          <Pressable
-            onPress={() =>
-              openCurrentLink(`tel:${currentChurchInfo.contact.church_phone}`)
-            }
-          >
-            <HStack space="sm" alignItems="center">
-              <Icon as={Phone} size="md" color="$secondary600" />
-              <Text color="$secondary600">
-                {maskForPhoneNumber(currentChurchInfo.contact.church_phone)}
-              </Text>
-            </HStack>
-          </Pressable>
-        )}
-
-        {currentChurchInfo.contact.church_whatsapp && (
-          <Pressable
-            onPress={() =>
-              openCurrentLink(
-                `https://api.whatsapp.com/send?phone=55${formatWhatsappNumber(
-                  currentChurchInfo.contact.church_whatsapp
-                )}`
-              )
-            }
-          >
-            <HStack space="sm" alignItems="center">
-              <Icon as={MessageCircle} size="md" color="$secondary600" />
-              <Text color="$secondary600">
-                {maskForPhoneNumber(currentChurchInfo.contact.church_whatsapp)}
-              </Text>
-            </HStack>
-          </Pressable>
-        )}
-      </Box>
-
-      <Divider my={dividerMarginNumber} />
-
-      <Box>
-        <Text bold mb={titleMarginNumber}>
-          Redes sociais:
-        </Text>
-        <HStack space="md" alignItems="center">
-          {currentChurchInfo.socialMedia.church_facebook && (
-            <Pressable
-              onPress={() =>
-                openCurrentLink(currentChurchInfo.socialMedia.church_facebook)
-              }
-            >
-              <Icon as={Facebook} size="xl" color="$secondary600" />
-            </Pressable>
-          )}
-
-          {currentChurchInfo.socialMedia.church_instagram && (
-            <Pressable
-              onPress={() =>
-                openCurrentLink(currentChurchInfo.socialMedia.church_instagram)
-              }
-            >
-              <Icon as={Instagram} size="xl" color="$secondary600" />
-            </Pressable>
-          )}
-
-          {currentChurchInfo.socialMedia.church_linkedin && (
-            <Pressable
-              onPress={() =>
-                openCurrentLink(currentChurchInfo.socialMedia.church_linkedin)
-              }
-            >
-              <Icon as={Youtube} size="xl" color="$secondary600" />
-            </Pressable>
-          )}
-
-          {currentChurchInfo.socialMedia.church_youtube && (
-            <Pressable
-              onPress={() =>
-                openCurrentLink(currentChurchInfo.socialMedia.church_youtube)
-              }
-            >
-              <Icon as={Linkedin} size="xl" color="$secondary600" />
-            </Pressable>
-          )}
-        </HStack>
-      </Box>
+          </Box>
+        </>
+      )}
     </ScrollView>
   );
 };
