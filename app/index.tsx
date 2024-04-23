@@ -31,7 +31,7 @@ const Signin = () => {
           <Text color="white">Crie sua conta!</Text>
         </Link>
 
-        <Link href="/home">
+        <Link href="/resetPassword">
           <Text color="white">Recuperar senha</Text>
         </Link>
       </HStack>

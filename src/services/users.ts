@@ -89,6 +89,20 @@ export const saveUserDeviceToken = (
   }
 };
 
+export const resetUserPassword = (userEmail: string) => {
+  try {
+    const response = axios.post(
+      `${process.env.EXPO_PUBLIC_BASE_URL}/users/reset-password/`,
+      {
+        userEmail,
+      }
+    );
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  }
+};
+
 export const getUserNotifications = (userID: number) => {
   try {
     const response = axios.get(
