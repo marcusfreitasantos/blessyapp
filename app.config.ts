@@ -45,6 +45,12 @@ const config: ExpoConfig = {
     "expo-router",
     "expo-image-picker",
     [
+      "expo-updates",
+      {
+        username: "marcusfreitas",
+      },
+    ],
+    [
       "expo-font",
       {
         fonts: [

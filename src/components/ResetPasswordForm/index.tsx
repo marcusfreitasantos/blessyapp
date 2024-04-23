@@ -60,7 +60,7 @@ const ResetPasswordForm = () => {
   return (
     <>
       {loading ? (
-        <LoadingSpinner spinnerText="Criando conta" />
+        <LoadingSpinner spinnerText="Gerando nova senha." />
       ) : (
         <VStack
           space="md"
