@@ -11,6 +11,11 @@ type contentCategoriesGroupProps = {
   }[];
 };
 
+type ScrollRefProps = {
+  scrollToEnd: () => void;
+  scrollTo: (options: { x: number; y: number }) => void;
+};
+
 const ChurchProfileContentMenu = ({
   getContent,
   contentCategoriesGroup,
@@ -18,11 +23,14 @@ const ChurchProfileContentMenu = ({
   const { currentChurchContentCategory, setCurrentChurchContentCategory } =
     useContext(ChurchContentGlobalContext);
 
-  const scrollRef = useRef();
+  const scrollRef = useRef<ScrollRefProps>();
 
   const autoScrollMenuItems = (currentButtonIndex: number) => {
     if (scrollRef.current) {
-      if (currentButtonIndex === contentCategoriesGroup.length - 1) {
+      if (
+        currentButtonIndex === contentCategoriesGroup.length - 2 ||
+        currentButtonIndex === contentCategoriesGroup.length - 1
+      ) {
         scrollRef.current.scrollToEnd();
       } else {
         scrollRef.current.scrollTo({
