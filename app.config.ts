@@ -42,6 +42,8 @@ const config: ExpoConfig = {
   plugins: [
     "@react-native-firebase/app",
     "@react-native-firebase/messaging",
+    "@react-native-firebase/crashlytics",
+    "@react-native-firebase/perf",
     "expo-router",
     "expo-image-picker",
     [

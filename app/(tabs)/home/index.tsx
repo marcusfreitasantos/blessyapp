@@ -66,7 +66,7 @@ const Home = () => {
 
       setChurchAds(resObj);
     } catch (error) {
-      console.log("Error from request list", error);
+      console.log("Error from request list (getChurchesAdsFromApi)", error);
       setChurchAds([defaultChurchAd]);
     }
   };
@@ -77,7 +77,7 @@ const Home = () => {
       const res = await getChurches();
       setCurrentChurches(res?.data);
     } catch (error) {
-      console.log("Error from request list", error);
+      console.log("Error from request list (getChurchesFromApi)", error);
       setCurrentChurches([]);
     } finally {
       setIsLoading(false);
