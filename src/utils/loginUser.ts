@@ -1,5 +1,5 @@
 import useStoreUserObj from "@/hooks/useStoreUserObj";
-import { authUser } from "@/services/api";
+import { authUser } from "@/services/users";
 import { router } from "expo-router";
 
 const loginUser = async (userEmail: string, userPass: string) => {

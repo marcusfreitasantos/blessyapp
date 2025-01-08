@@ -1,6 +1,6 @@
-import { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { validateToken } from "@/services/api";
+import { validateToken } from "@/services/users";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import { router } from "expo-router";
 import { VStack } from "@gluestack-ui/themed";

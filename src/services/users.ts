@@ -1,19 +1,62 @@
 import axios from "axios";
+import perf from "@react-native-firebase/perf";
 
-export const createUser = (
+export const authUser = async (username: string, password: string) => {
+  const trace = await perf().startTrace("auth_user_trace");
+
+  try {
+    const jwtAuthResponse = axios.post(`${process.env.EXPO_PUBLIC_AUTH_URL}`, {
+      username,
+      password,
+    });
+
+    return jwtAuthResponse;
+  } catch (e: any) {
+    throw new Error(e.message);
+  } finally {
+    await trace.stop();
+  }
+};
+
+export const validateToken = (token: string) => {
+  const jwtAuthResponse = axios.post(
+    `${process.env.EXPO_PUBLIC_VALIDATE_TOKEN}`,
+    "",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return jwtAuthResponse;
+};
+
+export const createUser = async (
   username: string,
   userEmail: string,
   userPass: string,
   userFullName: string
 ) => {
-  const createdUser = axios.post(`${process.env.EXPO_PUBLIC_BASE_URL}/users`, {
-    username,
-    userEmail,
-    userPass,
-    userFullName,
-  });
+  const trace = await perf().startTrace("create_user_trace");
 
-  return createdUser;
+  try {
+    const createdUser = axios.post(
+      `${process.env.EXPO_PUBLIC_BASE_URL}/users`,
+      {
+        username,
+        userEmail,
+        userPass,
+        userFullName,
+      }
+    );
+
+    return createdUser;
+  } catch (e: any) {
+    throw new Error(e.message);
+  } finally {
+    await trace.stop();
+  }
 };
 
 export const updateUserById = (

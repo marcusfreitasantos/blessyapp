@@ -16,6 +16,7 @@ const config: ExpoConfig = {
   assetBundlePatterns: ["**/*"],
   ios: {
     supportsTablet: true,
+    "bundleIdentifier": "com.blessyapp"
   },
   android: {
     googleServicesFile: process.env.EXPO_PUBLIC_GOOGLE_SERVICES_JSON,
