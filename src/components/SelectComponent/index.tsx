@@ -15,28 +15,28 @@ import {
 
 import { ChevronDown } from "lucide-react-native";
 import { FlatList } from "react-native";
-import { MapPin } from "lucide-react-native";
+import { UserRoundCheck } from "lucide-react-native";
 
 type SelectComponentProps = {
   onValueChange: (value: string) => void;
-  selectItemsList: [
-    {
-      name: string;
-      value: string;
-    }
-  ];
+  placeHolder: string;
+  selectItemsList: {
+    name: string;
+    value: string;
+  }[];
 };
 
 const SelectComponent = ({
   onValueChange,
   selectItemsList,
+  placeHolder,
 }: SelectComponentProps) => {
   return (
     <Select onValueChange={(value) => onValueChange(value)}>
       <SelectTrigger variant="outline" size="md">
         <HStack alignItems="center">
-          <Icon as={MapPin} ml={10} color="$secondary400" size="sm" />
-          <SelectInput placeholder="Estado" />
+          <Icon as={UserRoundCheck} ml={10} color="$secondary400" size="sm" />
+          <SelectInput placeholder={placeHolder} />
           <Icon as={ChevronDown} mr={10} color="$secondary400" />
         </HStack>
       </SelectTrigger>

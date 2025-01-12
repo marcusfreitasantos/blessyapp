@@ -1,14 +1,13 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { createUser } from "@/services/users";
-
 import { VStack } from "@gluestack-ui/themed";
 import { User, Mail, Lock } from "lucide-react-native";
-
 import ButtonComponent from "../Button";
 import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
 import ModalComponent from "../ModalComponent";
 import loginUser from "@/utils/loginUser";
+import SelectComponent from "../SelectComponent";
 
 type ModalComponentProps = {
   modalText: string;
@@ -21,8 +20,19 @@ const SignUpForm = () => {
   const [userFullName, setUserFullName] = useState("");
   const [userEmail, setuserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
-  const [userConfirmPass, setUserConfirmPass] = useState("");
+  const [userRole, setUserRole] = useState("subscriber");
   const [loading, isLoading] = useState(false);
+
+  const selectItemsList = [
+    {
+      name: "Membro",
+      value: "subscriber",
+    },
+    {
+      name: "Instituição",
+      value: "church",
+    },
+  ];
 
   const handleModalOnpress = () => {
     loginUser(userEmail, userPass);
@@ -40,7 +50,7 @@ const SignUpForm = () => {
 
     try {
       isLoading(true);
-      await createUser(username, userEmail, userPass, userFullName);
+      await createUser(username, userEmail, userPass, userFullName, userRole);
       setModalProps({
         modalText: "Conta criada com sucesso!",
         modalType: "success",
@@ -60,7 +70,6 @@ const SignUpForm = () => {
       setUserFullName("");
       setuserEmail("");
       setUserPass("");
-      setUserConfirmPass("");
     }
   };
 
@@ -87,7 +96,11 @@ const SignUpForm = () => {
           <InputComponent
             inputIcon={User}
             inputType="text"
-            inputPlaceholder="Seu nome completo"
+            inputPlaceholder={
+              userRole === "subscriber"
+                ? "Seu nome completo"
+                : "Nome da Instituição"
+            }
             inputValue={userFullName}
             onChangeText={(t: string) => setUserFullName(t)}
           />
@@ -108,12 +121,10 @@ const SignUpForm = () => {
             onChangeText={(t: string) => setUserPass(t)}
           />
 
-          <InputComponent
-            inputIcon={Lock}
-            inputType="password"
-            inputPlaceholder="Confirme sua senha"
-            inputValue={userConfirmPass}
-            onChangeText={(t: string) => setUserConfirmPass(t)}
+          <SelectComponent
+            placeHolder="Selecione o tipo de conta"
+            onValueChange={(value: string) => setUserRole(value)}
+            selectItemsList={selectItemsList}
           />
 
           <ButtonComponent

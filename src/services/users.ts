@@ -36,7 +36,8 @@ export const createUser = async (
   username: string,
   userEmail: string,
   userPass: string,
-  userFullName: string
+  userFullName: string,
+  role: string
 ) => {
   const trace = await perf().startTrace("create_user_trace");
 
@@ -48,6 +49,7 @@ export const createUser = async (
         userEmail,
         userPass,
         userFullName,
+        role,
       }
     );
 
@@ -59,24 +61,32 @@ export const createUser = async (
   }
 };
 
-export const updateUserById = (
+export const updateUserById = async (
   userID: number,
   firstName: string,
   lastName: string,
   email: string,
   userPass: string
 ) => {
-  const updatedUser = axios.post(
-    `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}`,
-    {
-      firstName,
-      lastName,
-      email,
-      userPass,
-    }
-  );
+  const trace = await perf().startTrace("update_user_trace");
 
-  return updatedUser;
+  try {
+    const updatedUser = axios.post(
+      `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}`,
+      {
+        firstName,
+        lastName,
+        email,
+        userPass,
+      }
+    );
+
+    return updatedUser;
+  } catch (e: any) {
+    throw new Error(e.message);
+  } finally {
+    await trace.stop();
+  }
 };
 
 export const saveUserBookmarks = (userID: number, churchId: number) => {
@@ -132,7 +142,8 @@ export const saveUserDeviceToken = (
   }
 };
 
-export const resetUserPassword = (userEmail: string) => {
+export const resetUserPassword = async (userEmail: string) => {
+  const trace = await perf().startTrace("reset_user_password_trace");
   try {
     const response = axios.post(
       `${process.env.EXPO_PUBLIC_BASE_URL}/users/reset-password/`,
@@ -143,6 +154,8 @@ export const resetUserPassword = (userEmail: string) => {
     return response;
   } catch (error) {
     console.log("Error: ", error);
+  } finally {
+    await trace.stop();
   }
 };
 
