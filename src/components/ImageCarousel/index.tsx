@@ -33,8 +33,8 @@ const ImageCarousel = ({ carouselImages }: CarouselImagesProps) => {
                 source={item.bannerImg}
                 w={imgWidth}
                 alt="banner"
-                h={180}
-                rounded={5}
+                h={240}
+                rounded={15}
                 mr={index === carouselImages.length - 1 ? 0 : 10}
               />
             </Pressable>
