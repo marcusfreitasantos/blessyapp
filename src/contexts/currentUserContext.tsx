@@ -9,6 +9,7 @@ type currentUserProps = {
     lastName: string;
     avatar: string;
     bookmarks: number[];
+    role: string;
   };
   setUserObj: React.Dispatch<
     React.SetStateAction<{
@@ -19,6 +20,7 @@ type currentUserProps = {
       lastName: string;
       avatar: string;
       bookmarks: number[];
+      role: string;
     }>
   >;
 };
@@ -36,6 +38,7 @@ export const GlobalContext = createContext<currentUserProps>({
     lastName: "",
     avatar: "",
     bookmarks: [0],
+    role: "subscriber",
   },
   setUserObj: () => {},
 });
@@ -49,6 +52,7 @@ const UserDataProvider = ({ children }: UserDataProviderProps) => {
     lastName: "",
     avatar: "",
     bookmarks: [0],
+    role: "subscriber",
   });
 
   return (

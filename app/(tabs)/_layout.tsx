@@ -13,7 +13,6 @@ import { gluestackUIConfig } from "config/gluestack-ui.config";
 
 const TabsLayout = () => {
   const { userObj } = useContext(GlobalContext);
-
   if (!userObj.token) {
     return <Redirect href="/" />;
   }
@@ -85,6 +84,7 @@ const TabsLayout = () => {
           tabBarIcon: ({ color, size }) => (
             <PlusCircle color={color} size={size} />
           ),
+          href: userObj.role === "church" ? "/content" : null,
         }}
       />
 
