@@ -11,23 +11,24 @@ import {
 import InputComponent from "../Input";
 import ButtonComponent from "../Button";
 import { router } from "expo-router";
+import { createNews } from "@/services/news";
+import { Alert } from "react-native";
 
 type Inputs = {
   title: string;
   content: string;
 };
 
-const CreateContentForm = () => {
+type CreateContentFormTypes = {
+  userId: number;
+};
+
+const CreateContentForm = ({ userId }: CreateContentFormTypes) => {
   const [isLoading, setIsLoading] = useState(false);
   const requiredFieldMsg = "Campo obrigatório";
   const formDefaultValues = {
     title: "",
     content: "",
-  };
-
-  const onSubmit = (data: Inputs) => {
-    console.log(data);
-    reset(formDefaultValues);
   };
 
   const {
@@ -38,6 +39,28 @@ const CreateContentForm = () => {
   } = useForm({
     defaultValues: formDefaultValues,
   });
+
+  const createNewContent = async (title: string, content: string) => {
+    try {
+      setIsLoading(true);
+      const req = await createNews(title, content, userId);
+      if (req?.status === 200) {
+        console.log(req);
+        Alert.alert("Sucesso!", "Notícia publicada.");
+      }
+    } catch (e) {
+      console.log(e);
+      Alert.alert("Deu ruim");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onSubmit = (data: Inputs) => {
+    console.log(data);
+    createNewContent(data.title, data.content);
+    reset(formDefaultValues);
+  };
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FlatList, Linking, Alert } from "react-native";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import { useLocalSearchParams } from "expo-router";
@@ -31,6 +31,7 @@ type CurrentContentProps = {
       paragraph_text: string;
     }
   ];
+  singlePostContent: string;
   eventStartDate: string;
   eventEndDate: string;
   eventTime: string;
@@ -65,6 +66,7 @@ const ContentTypeScreen = () => {
     try {
       setIsLoading(true);
       const res = await getChurchSingleContentById(id, contentType, contentId);
+      console.log(res?.data);
       setCurrentContent(res?.data);
     } catch (error) {
       console.log("Error from getCurrentContent: ", error);
@@ -131,17 +133,8 @@ const ContentTypeScreen = () => {
               </Box>
 
               <Box px={20} pb={20} flex={1}>
-                {currentContent.postContent && (
-                  <FlatList
-                    data={currentContent.postContent}
-                    renderItem={({ item }) => (
-                      <Paragraph
-                        paragraphTitle={item.paragraph_title}
-                        paragraphText={item.paragraph_text}
-                      />
-                    )}
-                    keyExtractor={(item) => item.paragraph_title.toString()}
-                  />
+                {currentContent.singlePostContent && (
+                  <Paragraph postContent={currentContent.singlePostContent} />
                 )}
               </Box>
 

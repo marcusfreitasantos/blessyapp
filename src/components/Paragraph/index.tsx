@@ -2,16 +2,14 @@ import { Box, Text } from "@gluestack-ui/themed";
 import HeadingComponent from "../Heading";
 
 type ParagraphProps = {
-  paragraphTitle?: string;
-  paragraphText?: string;
+  postContent?: string;
 };
 
-const Paragraph = ({ paragraphTitle = "", paragraphText }: ParagraphProps) => {
+const Paragraph = ({ postContent = "" }: ParagraphProps) => {
   return (
     <Box>
-      <HeadingComponent headingText={paragraphTitle} />
       <Text fontSize="$sm" color="$secondary400" mb={40}>
-        {paragraphText}
+        {postContent}
       </Text>
     </Box>
   );
