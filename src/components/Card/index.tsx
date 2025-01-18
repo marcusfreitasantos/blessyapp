@@ -19,6 +19,7 @@ type CardComponentProps = {
   hasIcon?: boolean;
   bookmarked?: boolean;
   isEditable?: boolean;
+  trashIconPress?: () => void;
 };
 
 type UpdateduserObjProps = {
@@ -152,7 +153,7 @@ const CardComponent = (props: CardComponentProps) => {
             )}
 
             {props.isEditable && (
-              <Pressable>
+              <Pressable onPress={props.trashIconPress}>
                 <Icon as={Trash2} size="xl" color="$error500" />
               </Pressable>
             )}

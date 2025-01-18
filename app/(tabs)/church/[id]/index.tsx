@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { FlatList } from "react-native";
+import { Alert, FlatList } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { Box, StatusBar } from "@gluestack-ui/themed";
 import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
@@ -15,6 +15,8 @@ import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 import { defaultCoverImgUri } from "@/components/DefaultImages";
 import AboutChurch from "@/components/AboutChurch";
 import ChurchProps from "@/utils/churchProps";
+import { deleteNews } from "@/services/news";
+import { GlobalContext } from "@/contexts/currentUserContext";
 
 type CurrentContentProps = {
   churchId: number;
@@ -27,7 +29,7 @@ const ChurchScreen = () => {
   const { currentChurchContentCategory } = useContext(
     ChurchContentGlobalContext
   );
-
+  const { userObj } = useContext(GlobalContext);
   const isFocused = useIsFocused();
   const [isLoading, setIsLoading] = useState(true);
   const currentChurch = useLocalSearchParams();
@@ -62,6 +64,21 @@ const ChurchScreen = () => {
       setCurrentContent(null);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const deleteCurrentNewsById = async (postId: number) => {
+    try {
+      setIsLoading(true);
+      const req = await deleteNews(postId, userObj.userID);
+      if (req?.status === 200) {
+        Alert.alert("Item removido com sucesso!");
+      }
+    } catch (e) {
+      Alert.alert("Não foi possível deletar este item.");
+      console.log(e);
+    } finally {
+      getCurrentChurchContent(currentChurchContentCategory);
     }
   };
 
@@ -121,6 +138,7 @@ const ChurchScreen = () => {
                     currentIndex={index}
                     isEditable={true}
                     hasIcon={true}
+                    trashIconPress={() => deleteCurrentNewsById(item.id)}
                   />
                 )}
                 keyExtractor={(item) => item.id.toString()}
