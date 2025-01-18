@@ -2,11 +2,11 @@ import { Box, Text } from "@gluestack-ui/themed";
 import HeadingComponent from "../Heading";
 
 type ParagraphProps = {
-  paragraphTitle: string;
-  paragraphText: string;
+  paragraphTitle?: string;
+  paragraphText?: string;
 };
 
-const Paragraph = ({ paragraphTitle, paragraphText }: ParagraphProps) => {
+const Paragraph = ({ paragraphTitle = "", paragraphText }: ParagraphProps) => {
   return (
     <Box>
       <HeadingComponent headingText={paragraphTitle} />

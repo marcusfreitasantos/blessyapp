@@ -1,11 +1,7 @@
-import { View, Text } from "react-native";
+import CreateContentForm from "@/components/CreateContentForm";
 
 const News = () => {
-  return (
-    <View>
-      <Text>CreateNews</Text>
-    </View>
-  );
+  return <CreateContentForm />;
 };
 
 export default News;
