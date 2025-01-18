@@ -7,6 +7,7 @@ import {
   Textarea,
   VStack,
   TextareaInput,
+  View,
 } from "@gluestack-ui/themed";
 import InputComponent from "../Input";
 import ButtonComponent from "../Button";
@@ -65,7 +66,12 @@ const CreateContentForm = ({ userId }: CreateContentFormTypes) => {
   return (
     <>
       {isLoading ? (
-        <LoadingSpinner spinnerText="Publicando conteúdo..." />
+        <View h={"100%"}>
+          <LoadingSpinner
+            spinnerText="Publicando conteúdo..."
+            spinnerColor="$blessyPrimaryColor"
+          />
+        </View>
       ) : (
         <VStack
           space="md"

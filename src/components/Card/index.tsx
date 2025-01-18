@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import { router } from "expo-router";
 import { HStack, VStack, Text, Icon, Pressable } from "@gluestack-ui/themed";
-import { Heart } from "lucide-react-native";
+import { Heart, Edit, Trash2 } from "lucide-react-native";
 import Avatar from "../Avatar";
 import { saveUserBookmarks, removeUserBookmarks } from "@/services/users";
 import { GlobalContext } from "@/contexts/currentUserContext";
@@ -18,6 +18,7 @@ type CardComponentProps = {
   hasImg?: boolean;
   hasIcon?: boolean;
   bookmarked?: boolean;
+  isEditable?: boolean;
 };
 
 type UpdateduserObjProps = {
@@ -28,6 +29,7 @@ type UpdateduserObjProps = {
   lastName: string;
   avatar: string;
   bookmarks: number[];
+  role: string;
 };
 
 const CardComponent = (props: CardComponentProps) => {
@@ -61,6 +63,7 @@ const CardComponent = (props: CardComponentProps) => {
         lastName: userObj.lastName,
         avatar: "",
         bookmarks: req?.data,
+        role: userObj.role,
       };
       setUserObj(updatedUserObj);
       useStoreUserObj(updatedUserObj);
@@ -81,6 +84,7 @@ const CardComponent = (props: CardComponentProps) => {
         lastName: userObj.lastName,
         avatar: "",
         bookmarks: req?.data,
+        role: userObj.role,
       };
       setUserObj(updatedUserObj);
       useStoreUserObj(updatedUserObj);
@@ -132,14 +136,27 @@ const CardComponent = (props: CardComponentProps) => {
         </VStack>
 
         {props.hasIcon && (
-          <Pressable onPress={handleBookmarks} testID="card__component_icon">
-            <Icon
-              as={Heart}
-              size="xl"
-              color="$blessyPrimaryColor"
-              fill={bookmarkIconFill ? "$blessyPrimaryColor" : "$white"}
-            />
-          </Pressable>
+          <HStack gap={12}>
+            {!props.isEditable && (
+              <Pressable
+                onPress={handleBookmarks}
+                testID="card__component_icon"
+              >
+                <Icon
+                  as={Heart}
+                  size="xl"
+                  color="$blessyPrimaryColor"
+                  fill={bookmarkIconFill ? "$blessyPrimaryColor" : "$white"}
+                />
+              </Pressable>
+            )}
+
+            {props.isEditable && (
+              <Pressable>
+                <Icon as={Trash2} size="xl" color="$error500" />
+              </Pressable>
+            )}
+          </HStack>
         )}
       </HStack>
     </Pressable>

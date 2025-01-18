@@ -10,7 +10,7 @@ const LoadingSpinner = ({ spinnerText, spinnerColor }: LoadingSpinnerProps) => {
     <Center w="100%" flex={1}>
       <HStack space="sm">
         <Spinner color={spinnerColor ? spinnerColor : "$white"} />
-        <Text color="white" size="md">
+        <Text color={spinnerColor ? spinnerColor : "$white"} size="md">
           {spinnerText}
         </Text>
       </HStack>

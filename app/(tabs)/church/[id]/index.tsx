@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { FlatList } from "react-native";
 import { useLocalSearchParams, router } from "expo-router";
 import { Box, StatusBar } from "@gluestack-ui/themed";
@@ -119,6 +119,8 @@ const ChurchScreen = () => {
                     description={item.postExcerpt}
                     parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
                     currentIndex={index}
+                    isEditable={true}
+                    hasIcon={true}
                   />
                 )}
                 keyExtractor={(item) => item.id.toString()}
