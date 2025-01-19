@@ -1,5 +1,6 @@
 import { useForm, Controller } from "react-hook-form";
-import React, { useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { ChurchContentGlobalContext } from "@/contexts/currentChurchContent";
 import LoadingSpinner from "../LoadingSpinner";
 import {
   HStack,
@@ -22,14 +23,26 @@ type Inputs = {
 
 type CreateContentFormTypes = {
   userId: number;
+  postId: number;
+  contentData: {
+    postTitle: string;
+    singlePostContent: string;
+  } | null;
 };
 
-const CreateContentForm = ({ userId }: CreateContentFormTypes) => {
+const CreateContentForm = ({
+  userId,
+  postId,
+  contentData,
+}: CreateContentFormTypes) => {
+  const { setCurrentChurchContentCategory } = useContext(
+    ChurchContentGlobalContext
+  );
   const [isLoading, setIsLoading] = useState(false);
   const requiredFieldMsg = "Campo obrigatório";
   const formDefaultValues = {
-    title: "",
-    content: "",
+    title: contentData ? contentData.postTitle : "",
+    content: contentData ? contentData.singlePostContent : "",
   };
 
   const {
@@ -46,19 +59,31 @@ const CreateContentForm = ({ userId }: CreateContentFormTypes) => {
       setIsLoading(true);
       const req = await createNews(title, content, userId);
       if (req?.status === 200) {
-        console.log(req);
-        Alert.alert("Sucesso!", "Notícia publicada.");
+        Alert.alert("Sucesso!", "Conteúdo publicado.", [
+          {
+            text: "Ver notícias",
+            onPress: () => {
+              setCurrentChurchContentCategory("news");
+              router.push(`/church/${userId}`);
+            },
+            style: "default",
+          },
+
+          {
+            text: "Criar outro conteúdo",
+            style: "cancel",
+          },
+        ]);
       }
     } catch (e) {
       console.log(e);
-      Alert.alert("Deu ruim");
+      Alert.alert("Oops!", "O conteúdo não foi publicado, tente novamente.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const onSubmit = (data: Inputs) => {
-    console.log(data);
     createNewContent(data.title, data.content);
     reset(formDefaultValues);
   };
@@ -111,6 +136,7 @@ const CreateContentForm = ({ userId }: CreateContentFormTypes) => {
                 isReadOnly={false}
                 isInvalid={false}
                 isDisabled={false}
+                p={10}
               >
                 <TextareaInput
                   numberOfLines={40}

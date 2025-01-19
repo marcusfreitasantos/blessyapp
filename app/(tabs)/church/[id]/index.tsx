@@ -82,6 +82,15 @@ const ChurchScreen = () => {
     }
   };
 
+  const goToEditContent = (postId: number) => {
+    router.push({
+      pathname: "/content/news",
+      params: {
+        postId,
+      },
+    });
+  };
+
   useEffect(() => {
     if (isFocused) {
       getCurrentChurchById();
@@ -138,6 +147,7 @@ const ChurchScreen = () => {
                     currentIndex={index}
                     isEditable={true}
                     hasIcon={true}
+                    editIconPress={() => goToEditContent(item.id)}
                     trashIconPress={() => deleteCurrentNewsById(item.id)}
                   />
                 )}

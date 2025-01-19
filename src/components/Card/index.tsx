@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { router } from "expo-router";
 import { HStack, VStack, Text, Icon, Pressable } from "@gluestack-ui/themed";
 import { Heart, Edit, Trash2 } from "lucide-react-native";
@@ -20,6 +20,7 @@ type CardComponentProps = {
   bookmarked?: boolean;
   isEditable?: boolean;
   trashIconPress?: () => void;
+  editIconPress?: () => void;
 };
 
 type UpdateduserObjProps = {
@@ -153,9 +154,14 @@ const CardComponent = (props: CardComponentProps) => {
             )}
 
             {props.isEditable && (
-              <Pressable onPress={props.trashIconPress}>
-                <Icon as={Trash2} size="xl" color="$error500" />
-              </Pressable>
+              <>
+                <Pressable onPress={props.editIconPress}>
+                  <Icon as={Edit} size="xl" color="$blessyPrimaryColor" />
+                </Pressable>
+                <Pressable onPress={props.trashIconPress}>
+                  <Icon as={Trash2} size="xl" color="$error500" />
+                </Pressable>
+              </>
             )}
           </HStack>
         )}
