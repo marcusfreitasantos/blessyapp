@@ -140,6 +140,7 @@ const ChurchScreen = () => {
                 ListEmptyComponent={<EmptyListCardComponent />}
                 renderItem={({ item, index }) => (
                   <CardComponent
+                    currentChurchId={currentChurch.id?.toString()}
                     id={item.id}
                     name={item.postTitle}
                     description={item.postExcerpt}

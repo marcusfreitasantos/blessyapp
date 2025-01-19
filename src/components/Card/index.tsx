@@ -9,6 +9,7 @@ import messaging from "@react-native-firebase/messaging";
 import useStoreUserObj from "@/hooks/useStoreUserObj";
 
 type CardComponentProps = {
+  currentChurchId?: string;
   id: number;
   currentIndex: number;
   parentUrl: string;
@@ -153,16 +154,17 @@ const CardComponent = (props: CardComponentProps) => {
               </Pressable>
             )}
 
-            {props.isEditable && (
-              <>
-                <Pressable onPress={props.editIconPress}>
-                  <Icon as={Edit} size="xl" color="$blessyPrimaryColor" />
-                </Pressable>
-                <Pressable onPress={props.trashIconPress}>
-                  <Icon as={Trash2} size="xl" color="$error500" />
-                </Pressable>
-              </>
-            )}
+            {props.isEditable &&
+              props.currentChurchId === userObj.userID.toString() && (
+                <>
+                  <Pressable onPress={props.editIconPress}>
+                    <Icon as={Edit} size="xl" color="$blessyPrimaryColor" />
+                  </Pressable>
+                  <Pressable onPress={props.trashIconPress}>
+                    <Icon as={Trash2} size="xl" color="$error500" />
+                  </Pressable>
+                </>
+              )}
           </HStack>
         )}
       </HStack>
