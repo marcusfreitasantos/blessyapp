@@ -13,7 +13,7 @@ import {
 import InputComponent from "../Input";
 import ButtonComponent from "../Button";
 import { router } from "expo-router";
-import { createNews } from "@/services/news";
+import { createNews, updateNews } from "@/services/news";
 import { Alert } from "react-native";
 
 type Inputs = {
@@ -70,7 +70,35 @@ const CreateContentForm = ({
           },
 
           {
-            text: "Criar outro conteúdo",
+            text: "Criar novo conteúdo",
+            style: "cancel",
+          },
+        ]);
+      }
+    } catch (e) {
+      console.log(e);
+      Alert.alert("Oops!", "O conteúdo não foi publicado, tente novamente.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const updateNewsById = async (title: string, content: string) => {
+    try {
+      setIsLoading(true);
+      const req = await updateNews(title, content, userId, postId);
+      if (req?.status === 200) {
+        Alert.alert("Sucesso!", "Conteúdo atualizado.", [
+          {
+            text: "Ver notícias",
+            onPress: () => {
+              setCurrentChurchContentCategory("news");
+              router.push(`/church/${userId}`);
+            },
+            style: "default",
+          },
+          {
+            text: "Criar novo conteúdo",
             style: "cancel",
           },
         ]);
@@ -84,6 +112,14 @@ const CreateContentForm = ({
   };
 
   const onSubmit = (data: Inputs) => {
+    if (contentData) {
+      updateNewsById(data.title, data.content);
+      reset({
+        title: data.title,
+        content: data.content,
+      });
+      return;
+    }
     createNewContent(data.title, data.content);
     reset(formDefaultValues);
   };
