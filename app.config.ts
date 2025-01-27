@@ -4,7 +4,7 @@ const config: ExpoConfig = {
   name: "Blessy",
   slug: "blessyapp",
   scheme: "blessyapp",
-  version: "1.3.0",
+  version: "1.3.1",
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "light",
@@ -16,7 +16,7 @@ const config: ExpoConfig = {
   assetBundlePatterns: ["**/*"],
   ios: {
     supportsTablet: true,
-    "bundleIdentifier": "com.blessyapp"
+    bundleIdentifier: "com.blessyapp",
   },
   android: {
     googleServicesFile: process.env.EXPO_PUBLIC_GOOGLE_SERVICES_JSON,
