@@ -19,7 +19,7 @@ const config: ExpoConfig = {
     bundleIdentifier: "com.blessyapp",
   },
   android: {
-    googleServicesFile: process.env.EXPO_PUBLIC_GOOGLE_SERVICES_JSON,
+    googleServicesFile: process.env.EXPO_GOOGLE_SERVICES_JSON,
     adaptiveIcon: {
       foregroundImage: "./assets/adaptive-icon.png",
       backgroundColor: "#45B7D0",

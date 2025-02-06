@@ -1,5 +1,6 @@
 import axios from "axios";
 import perf from "@react-native-firebase/perf";
+import auth from "@react-native-firebase/auth";
 
 export const authUser = async (username: string, password: string) => {
   const trace = await perf().startTrace("auth_user_trace");
@@ -12,9 +13,22 @@ export const authUser = async (username: string, password: string) => {
 
     return jwtAuthResponse;
   } catch (e: any) {
-    throw new Error(e.message);
+    throw new Error(e);
   } finally {
     await trace.stop();
+  }
+};
+
+//FIREBASE AUTH
+export const loginUserWithFirebase = async (
+  email: string,
+  password: string
+) => {
+  try {
+    const response = auth().signInWithEmailAndPassword(email, password);
+    return response;
+  } catch (e: any) {
+    throw new Error(e);
   }
 };
 

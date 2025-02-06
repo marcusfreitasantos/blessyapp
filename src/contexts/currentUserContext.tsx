@@ -1,59 +1,31 @@
 import { createContext, useState, ReactNode } from "react";
 
-type currentUserProps = {
-  userObj: {
-    token: string;
-    userID: number;
-    email: string;
-    firstName: string;
-    lastName: string;
-    avatar: string;
-    bookmarks: number[];
-    role: string;
-  };
-  setUserObj: React.Dispatch<
-    React.SetStateAction<{
-      token: string;
-      userID: number;
-      email: string;
-      firstName: string;
-      lastName: string;
-      avatar: string;
-      bookmarks: number[];
-      role: string;
-    }>
-  >;
+type UserDataTypes = {
+  userID: number;
+  email: string;
+  firstName: string;
+  lastName: string;
+  avatar: string;
+  bookmarks: number[];
+  role: string;
+};
+
+type CurrentUserProps = {
+  userObj: UserDataTypes | null;
+  setUserObj: React.Dispatch<React.SetStateAction<UserDataTypes | null>>;
 };
 
 type UserDataProviderProps = {
   children: ReactNode;
 };
 
-export const GlobalContext = createContext<currentUserProps>({
-  userObj: {
-    token: "",
-    userID: 0,
-    email: "",
-    firstName: "",
-    lastName: "",
-    avatar: "",
-    bookmarks: [0],
-    role: "subscriber",
-  },
-  setUserObj: () => {},
+export const GlobalContext = createContext<CurrentUserProps>({
+  userObj: null,
+  setUserObj: () => {}, // This remains a no-op function for default value
 });
 
 const UserDataProvider = ({ children }: UserDataProviderProps) => {
-  const [userObj, setUserObj] = useState({
-    token: "",
-    userID: 0,
-    email: "",
-    firstName: "",
-    lastName: "",
-    avatar: "",
-    bookmarks: [0],
-    role: "subscriber",
-  });
+  const [userObj, setUserObj] = useState<UserDataTypes | null>(null);
 
   return (
     <GlobalContext.Provider value={{ userObj, setUserObj }}>

@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { validateToken } from "@/services/users";
+import { validateToken, loginUserWithFirebase } from "@/services/users";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import { router } from "expo-router";
 import { VStack } from "@gluestack-ui/themed";
@@ -10,6 +10,7 @@ import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
 import ModalComponent from "../ModalComponent";
 import loginUser from "@/utils/loginUser";
+import { Alert } from "react-native";
 
 type ModalComponentProps = {
   modalText: string;
@@ -67,6 +68,16 @@ const LoginForm = () => {
     }
   };
 
+  const signInUser = async () => {
+    console.log(userEmail, userPass);
+    try {
+      const res = await loginUserWithFirebase(userEmail, userPass);
+      console.log(res);
+    } catch (e) {
+      Alert.alert("Usuário ou senha inválidos");
+    }
+  };
+
   useEffect(() => {
     getStoredUserObj();
   }, []);
@@ -107,7 +118,7 @@ const LoginForm = () => {
           />
 
           <ButtonComponent
-            onPress={userLogin}
+            onPress={signInUser}
             buttonText="Login"
             action="primary"
             variant="solid"
