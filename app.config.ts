@@ -4,7 +4,7 @@ const config: ExpoConfig = {
   name: "Blessy",
   slug: "blessyapp",
   scheme: "blessyapp",
-  version: "1.3.1",
+  version: "1.3.2",
   orientation: "portrait",
   icon: "./assets/icon.png",
   userInterfaceStyle: "light",

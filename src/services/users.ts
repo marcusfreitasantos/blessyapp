@@ -24,11 +24,14 @@ export const loginUserWithFirebase = async (
   email: string,
   password: string
 ) => {
+  const trace = await perf().startTrace("fs_login_user_trace");
   try {
     const response = auth().signInWithEmailAndPassword(email, password);
     return response;
   } catch (e: any) {
     throw new Error(e);
+  } finally {
+    trace.stop();
   }
 };
 

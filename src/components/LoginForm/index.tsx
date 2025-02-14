@@ -74,6 +74,7 @@ const LoginForm = () => {
       const res = await loginUserWithFirebase(userEmail, userPass);
       console.log(res);
     } catch (e) {
+      console.log(e);
       Alert.alert("Usuário ou senha inválidos");
     }
   };
