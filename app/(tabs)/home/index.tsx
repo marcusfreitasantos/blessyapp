@@ -107,6 +107,8 @@ const Home = () => {
     }
   }, []);
 
+  if (!userObj) return;
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -144,7 +146,7 @@ const Home = () => {
                     currentIndex={index}
                     hasImg
                     hasIcon
-                    bookmarked={userObj.bookmarks.includes(item.id)}
+                    bookmarked={userObj.bookmarks?.includes(item.id)}
                   />
                 )}
                 keyExtractor={(item) => item.id.toString()}

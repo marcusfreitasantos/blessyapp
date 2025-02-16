@@ -76,7 +76,7 @@ const LoginForm = () => {
 
       if (res?.docs[0]._data) {
         console.log("userdata", res?.docs[0]._data);
-        //setUserObj(res?.docs[0]._data);
+        setUserObj(res?.docs[0]._data);
         router.replace("/home");
       }
     } catch (e) {

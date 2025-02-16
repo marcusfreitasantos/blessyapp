@@ -13,9 +13,11 @@ import { gluestackUIConfig } from "config/gluestack-ui.config";
 
 const TabsLayout = () => {
   const { userObj } = useContext(GlobalContext);
-  if (!userObj.token) {
+  if (userObj && !userObj.userID) {
     return <Redirect href="/" />;
   }
+
+  if (!userObj) return;
 
   return (
     <Tabs
