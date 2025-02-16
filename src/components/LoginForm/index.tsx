@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { validateToken, loginUserWithFirebase } from "@/services/users";
+import { loginUserWithFirebase } from "@/services/users";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import { router } from "expo-router";
 import { VStack } from "@gluestack-ui/themed";
@@ -70,18 +70,22 @@ const LoginForm = () => {
 
   const signInUser = async () => {
     console.log(userEmail, userPass);
+    isLoading(true);
     try {
       const res = await loginUserWithFirebase(userEmail, userPass);
-      console.log(res);
+
+      if (res?.docs[0]._data) {
+        console.log("userdata", res?.docs[0]._data);
+        //setUserObj(res?.docs[0]._data);
+        router.replace("/home");
+      }
     } catch (e) {
       console.log(e);
       Alert.alert("Usuário ou senha inválidos");
+    } finally {
+      isLoading(false);
     }
   };
-
-  useEffect(() => {
-    getStoredUserObj();
-  }, []);
 
   return (
     <>

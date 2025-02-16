@@ -1,7 +1,7 @@
 import { createContext, useState, ReactNode } from "react";
 
 type UserDataTypes = {
-  userID: number;
+  userID: string;
   email: string;
   firstName: string;
   lastName: string;

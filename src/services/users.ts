@@ -1,21 +1,20 @@
 import axios from "axios";
 import perf from "@react-native-firebase/perf";
 import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
+const usersCollection = firestore().collection("Users");
 
-export const authUser = async (username: string, password: string) => {
-  const trace = await perf().startTrace("auth_user_trace");
-
+//FIREBASE GET USER DATA
+export const getUserDataFromFirebase = async (userID: string) => {
   try {
-    const jwtAuthResponse = axios.post(`${process.env.EXPO_PUBLIC_AUTH_URL}`, {
-      username,
-      password,
-    });
+    const response = await firestore()
+      .collection("Users")
+      .where("userID", "==", userID)
+      .get();
 
-    return jwtAuthResponse;
+    return response;
   } catch (e: any) {
     throw new Error(e);
-  } finally {
-    await trace.stop();
   }
 };
 
@@ -26,8 +25,11 @@ export const loginUserWithFirebase = async (
 ) => {
   const trace = await perf().startTrace("fs_login_user_trace");
   try {
-    const response = auth().signInWithEmailAndPassword(email, password);
-    return response;
+    const response = await auth().signInWithEmailAndPassword(email, password);
+    if (response.user.uid) {
+      const userData = getUserDataFromFirebase(response.user.uid);
+      return userData;
+    }
   } catch (e: any) {
     throw new Error(e);
   } finally {
@@ -35,46 +37,58 @@ export const loginUserWithFirebase = async (
   }
 };
 
-export const validateToken = (token: string) => {
-  const jwtAuthResponse = axios.post(
-    `${process.env.EXPO_PUBLIC_VALIDATE_TOKEN}`,
-    "",
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  return jwtAuthResponse;
-};
-
-export const createUser = async (
-  username: string,
-  userEmail: string,
-  userPass: string,
-  userFullName: string,
+//FIREBASE REGISTER USER
+const saveUserDataInFirebaseCollection = async (
+  userID: string,
+  email: string,
+  firstName: string,
+  lastName: string,
   role: string
 ) => {
-  const trace = await perf().startTrace("create_user_trace");
-
   try {
-    const createdUser = axios.post(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/users`,
-      {
-        username,
-        userEmail,
-        userPass,
-        userFullName,
-        role,
-      }
+    const response = firestore().collection("Users").add({
+      userID,
+      email,
+      firstName,
+      lastName,
+      role,
+    });
+
+    return response;
+  } catch (e: any) {
+    throw new Error(e);
+  }
+};
+
+export const createUserWithFirebase = async (
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+  role: string
+) => {
+  const trace = await perf().startTrace("fs_create_user_trace");
+  try {
+    const response = await auth().createUserWithEmailAndPassword(
+      email,
+      password
     );
 
-    return createdUser;
+    if (response.user.uid) {
+      const newUserRegistered = await saveUserDataInFirebaseCollection(
+        response.user.uid,
+        email,
+        firstName,
+        lastName,
+        role
+      );
+      return newUserRegistered;
+    }
   } catch (e: any) {
-    throw new Error(e.message);
+    console.log("error creating user", e);
+    throw new Error(e);
   } finally {
-    await trace.stop();
+    trace.stop();
   }
 };
 

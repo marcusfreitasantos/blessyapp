@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createUser } from "@/services/users";
+import { createUser, createUserWithFirebase } from "@/services/users";
 import { VStack } from "@gluestack-ui/themed";
 import { User, Mail, Lock } from "lucide-react-native";
 import ButtonComponent from "../Button";
@@ -17,7 +17,8 @@ type ModalComponentProps = {
 };
 
 const SignUpForm = () => {
-  const [userFullName, setUserFullName] = useState("");
+  const [userFirstName, setUserFirstName] = useState("");
+  const [userLastName, setUserLastName] = useState("");
   const [userEmail, setuserEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [userRole, setUserRole] = useState("subscriber");
@@ -35,7 +36,7 @@ const SignUpForm = () => {
   ];
 
   const handleModalOnpress = () => {
-    loginUser(userEmail, userPass);
+    console.log(userEmail, userPass);
   };
 
   const [modalProps, setModalProps] = useState<ModalComponentProps>({
@@ -46,11 +47,15 @@ const SignUpForm = () => {
   });
 
   const createNewUser = async () => {
-    const username = userFullName.replace(" ", "").toLowerCase();
-
     try {
       isLoading(true);
-      await createUser(username, userEmail, userPass, userFullName, userRole);
+      await createUserWithFirebase(
+        userEmail,
+        userPass,
+        userFirstName,
+        userLastName,
+        userRole
+      );
       setModalProps({
         modalText: "Conta criada com sucesso!",
         modalType: "success",
@@ -67,9 +72,6 @@ const SignUpForm = () => {
       });
     } finally {
       isLoading(false);
-      setUserFullName("");
-      setuserEmail("");
-      setUserPass("");
     }
   };
 
@@ -97,13 +99,23 @@ const SignUpForm = () => {
             inputIcon={User}
             inputType="text"
             inputPlaceholder={
-              userRole === "subscriber"
-                ? "Seu nome completo"
-                : "Nome da Instituição"
+              userRole === "subscriber" ? "Nome" : "Nome da Instituição"
             }
-            inputValue={userFullName}
-            onChangeText={(t: string) => setUserFullName(t)}
+            inputValue={userFirstName}
+            onChangeText={(t: string) => setUserFirstName(t)}
           />
+
+          {userRole === "subscriber" && (
+            <InputComponent
+              inputIcon={User}
+              inputType="text"
+              inputPlaceholder={
+                userRole === "subscriber" ? "Sobrenome" : "Nome da Instituição"
+              }
+              inputValue={userLastName}
+              onChangeText={(t: string) => setUserLastName(t)}
+            />
+          )}
 
           <InputComponent
             inputIcon={Mail}
