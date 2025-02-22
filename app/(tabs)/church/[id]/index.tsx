@@ -8,7 +8,11 @@ import ChurchProfileContentMenu from "@/components/ChurchProfileContentMenu";
 import CardComponent from "@/components/Card";
 import ChurchProfileHeaderContent from "@/components/ChurchProfileHeaderContent";
 import { ContentCategories } from "@/mocks/contentCategories";
-import { getChurchById, getChurchContent } from "@/services/churches";
+import {
+  getChurchById,
+  getChurchContent,
+  getChurchesFromFirebaseByID,
+} from "@/services/churches";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useIsFocused } from "@react-navigation/native";
 import EmptyListCardComponent from "@/components/EmptyListCardComponent";
@@ -34,9 +38,9 @@ const ChurchScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const currentChurch = useLocalSearchParams();
 
-  const [currentContent, setCurrentContent] = useState<
-    CurrentContentProps[] | null
-  >(null);
+  const [currentContent, setCurrentContent] = useState<CurrentContentProps[]>(
+    []
+  );
 
   const [currentChurchInfo, setCurrentChurchInfo] =
     useState<ChurchProps | null>(null);
@@ -44,8 +48,9 @@ const ChurchScreen = () => {
   const getCurrentChurchById = async () => {
     try {
       setIsLoading(true);
-      const res = await getChurchById(currentChurch.id);
-      setCurrentChurchInfo(res?.data);
+      const res = await getChurchesFromFirebaseByID(currentChurch.id);
+      console.log("getCurrentChurchById__", res?.docs[0]._data);
+      setCurrentChurchInfo(res?.docs[0]._data);
     } catch (error) {
       console.log("Error from getChurchById: ", error);
       router.back();
@@ -94,9 +99,9 @@ const ChurchScreen = () => {
   useEffect(() => {
     if (isFocused) {
       getCurrentChurchById();
-      getCurrentChurchContent(currentChurchContentCategory);
+      //getCurrentChurchContent(currentChurchContentCategory);
     } else {
-      setCurrentContent(null);
+      setCurrentContent([]);
       setCurrentChurchInfo(null);
     }
   }, [isFocused]);

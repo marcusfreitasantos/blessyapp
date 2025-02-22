@@ -166,3 +166,19 @@ export const getChurchesFromFirebaseByMetadata = async (
     await trace.stop();
   }
 };
+
+export const getChurchesFromFirebaseByID = async (churchID: string) => {
+  const trace = await perf().startTrace("fs_get_church_by_id_trace");
+  try {
+    const response = await firestore()
+      .collection("Users")
+      .where("role", "==", "church")
+      .where("userID", "==", churchID)
+      .get();
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  } finally {
+    await trace.stop();
+  }
+};

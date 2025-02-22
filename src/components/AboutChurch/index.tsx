@@ -71,7 +71,7 @@ const AboutChurch = ({ currentChurchInfo }: CurrentChurchProps) => {
         </>
       )}
 
-      {currentChurchInfo.staff.length ? (
+      {currentChurchInfo.staff?.length ? (
         <>
           <Divider my={dividerMarginNumber} />
           <Box>
