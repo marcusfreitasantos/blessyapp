@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createUser, createUserWithFirebase } from "@/services/users";
+import { createUserWithFirebase } from "@/services/users";
 import { VStack } from "@gluestack-ui/themed";
 import { User, Mail, Lock } from "lucide-react-native";
 import ButtonComponent from "../Button";
@@ -52,8 +52,8 @@ const SignUpForm = () => {
       await createUserWithFirebase(
         userEmail,
         userPass,
-        userFirstName,
-        userLastName,
+        userFirstName.toLowerCase(),
+        userLastName.toLocaleLowerCase(),
         userRole
       );
       setModalProps({

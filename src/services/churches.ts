@@ -1,5 +1,6 @@
 import axios from "axios";
 import perf from "@react-native-firebase/perf";
+import firestore from "@react-native-firebase/firestore";
 
 export const getChurches = async () => {
   const trace = await perf().startTrace("get_churches_trace");
@@ -102,6 +103,37 @@ export const getChurchesByMetadata = async (
     const response = axios.get(
       `${process.env.EXPO_PUBLIC_BASE_URL}/church/searchbymeta/?church_name=${churchName}&church_state=${churchState}&church_city=${churchCity}&church_address=${churchAddress}`
     );
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  } finally {
+    await trace.stop();
+  }
+};
+
+//FIREBASE
+export const getChurchesFromFirebase = async () => {
+  const trace = await perf().startTrace("fs_get_churches_trace");
+  try {
+    const response = await firestore()
+      .collection("Users")
+      .where("role", "==", "church")
+      .get();
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  } finally {
+    await trace.stop();
+  }
+};
+
+export const getChurchesFromFirebaseByKeyword = async (keyword: string) => {
+  const trace = await perf().startTrace("fs_get_church_by_keyword_trace");
+  try {
+    const response = await firestore()
+      .collection("Users")
+      .where("firstName", "==", keyword.toLocaleLowerCase())
+      .get();
     return response;
   } catch (error) {
     console.log("Error: ", error);

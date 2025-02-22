@@ -27,10 +27,10 @@ const SearchResult = ({ churchesList }: ChurchesListProps) => {
             ListEmptyComponent={<EmptyListCardComponent />}
             renderItem={({ item, index }) => (
               <CardComponent
-                id={item.id}
-                logo={item.logo}
-                name={item.name}
-                description={item.address}
+                id={item._data.userID}
+                logo={item._data.logo}
+                name={item._data.firstName}
+                description={item._data.address}
                 parentUrl="church"
                 currentIndex={index}
                 hasImg

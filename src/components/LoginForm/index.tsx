@@ -20,8 +20,8 @@ type ModalComponentProps = {
 
 const LoginForm = () => {
   const { setUserObj } = useContext(GlobalContext);
-  const [userEmail, setuserEmail] = useState("");
-  const [userPass, setUserPass] = useState("");
+  const [userEmail, setuserEmail] = useState("videira@gmail.com");
+  const [userPass, setUserPass] = useState("cdz___182");
   const [loading, isLoading] = useState(false);
   const [modalProps, setModalProps] = useState<ModalComponentProps>({
     modalText: "",
@@ -41,28 +41,6 @@ const LoginForm = () => {
         modalType: "error",
         modalState: true,
       });
-    } finally {
-      isLoading(false);
-    }
-  };
-
-  const getStoredUserObj = async () => {
-    isLoading(true);
-    try {
-      const storedUserObj = await AsyncStorage.getItem("blessy_current_user");
-
-      if (storedUserObj !== null) {
-        const currentUserObj = JSON.parse(storedUserObj);
-
-        const { data } = await validateToken(currentUserObj.token);
-
-        if (data.data.status === 200) {
-          setUserObj(currentUserObj);
-          router.replace("/home");
-        }
-      }
-    } catch (error) {
-      console.log("Error getting token from Async Storage:", error);
     } finally {
       isLoading(false);
     }
