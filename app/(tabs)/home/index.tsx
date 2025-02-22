@@ -53,7 +53,9 @@ const Home = () => {
 
   const findChurchBySearchTerm = async () => {
     try {
-      const res = await getChurchesFromFirebaseByKeyword(searchTerm);
+      const res = await getChurchesFromFirebaseByKeyword(
+        searchTerm.toLocaleLowerCase()
+      );
       setCurrentChurches(res?.docs);
     } catch (error) {
       console.log("Error from handleSearch: ", error);

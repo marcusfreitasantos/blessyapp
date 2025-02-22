@@ -132,7 +132,32 @@ export const getChurchesFromFirebaseByKeyword = async (keyword: string) => {
   try {
     const response = await firestore()
       .collection("Users")
-      .where("firstName", "==", keyword.toLocaleLowerCase())
+      .where("role", "==", "church")
+      .where("firstName", "==", keyword)
+      .get();
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  } finally {
+    await trace.stop();
+  }
+};
+
+export const getChurchesFromFirebaseByMetadata = async (
+  churchName: string,
+  churchState: string,
+  churchCity: string,
+  churchAddress: string
+) => {
+  const trace = await perf().startTrace("fs_get_church_by_metadata_trace");
+  try {
+    const response = await firestore()
+      .collection("Users")
+      .where("role", "==", "church")
+      .where("firstName", "==", churchName)
+      .where("state", "==", churchState)
+      .where("city", "==", churchCity)
+      .where("address", "==", churchAddress)
       .get();
     return response;
   } catch (error) {
