@@ -182,3 +182,21 @@ export const getChurchesFromFirebaseByID = async (churchID: string) => {
     await trace.stop();
   }
 };
+
+export const getChurchContentFromFirebase = async (
+  churchID: string,
+  contentCategory: string
+) => {
+  const trace = await perf().startTrace("fs_get_church_content_trace");
+  try {
+    const response = await firestore()
+      .collection(contentCategory)
+      .where("authorID", "==", churchID)
+      .get();
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  } finally {
+    await trace.stop();
+  }
+};

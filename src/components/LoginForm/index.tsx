@@ -52,9 +52,9 @@ const LoginForm = () => {
     try {
       const res = await loginUserWithFirebase(userEmail, userPass);
 
-      if (res?.docs[0]._data) {
-        console.log("userdata", res?.docs[0]._data);
-        setUserObj(res?.docs[0]._data);
+      if (res?.docs[0].data()) {
+        console.log("userdata", res?.docs[0].data());
+        setUserObj(res?.docs[0].data());
         router.replace("/home");
       }
     } catch (e) {

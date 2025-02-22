@@ -12,6 +12,7 @@ import {
   getChurchById,
   getChurchContent,
   getChurchesFromFirebaseByID,
+  getChurchContentFromFirebase,
 } from "@/services/churches";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useIsFocused } from "@react-navigation/native";
@@ -49,8 +50,7 @@ const ChurchScreen = () => {
     try {
       setIsLoading(true);
       const res = await getChurchesFromFirebaseByID(currentChurch.id);
-      console.log("getCurrentChurchById__", res?.docs[0]._data);
-      setCurrentChurchInfo(res?.docs[0]._data);
+      setCurrentChurchInfo(res?.docs[0].data());
     } catch (error) {
       console.log("Error from getChurchById: ", error);
       router.back();
@@ -62,8 +62,11 @@ const ChurchScreen = () => {
   const getCurrentChurchContent = async (contentCategory: string) => {
     try {
       setIsLoading(true);
-      const res = await getChurchContent(currentChurch.id, contentCategory);
-      setCurrentContent(res?.data);
+      const res = await getChurchContentFromFirebase(
+        currentChurch.id,
+        contentCategory
+      );
+      setCurrentContent(res?.docs);
     } catch (error) {
       console.log("Error from getCurrentChurchContent: ", error);
       setCurrentContent(null);
@@ -99,7 +102,7 @@ const ChurchScreen = () => {
   useEffect(() => {
     if (isFocused) {
       getCurrentChurchById();
-      //getCurrentChurchContent(currentChurchContentCategory);
+      getCurrentChurchContent(currentChurchContentCategory);
     } else {
       setCurrentContent([]);
       setCurrentChurchInfo(null);
@@ -147,8 +150,8 @@ const ChurchScreen = () => {
                   <CardComponent
                     currentChurchId={currentChurch.id?.toString()}
                     id={item.id}
-                    name={item.postTitle}
-                    description={item.postExcerpt}
+                    name={item.data().postTitle}
+                    description={item.data().postExcerpt}
                     parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
                     currentIndex={index}
                     isEditable={true}
