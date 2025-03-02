@@ -200,3 +200,28 @@ export const getChurchContentFromFirebase = async (
     await trace.stop();
   }
 };
+
+export const getChurchSingleContentFromFirebaseById = async (
+  contentCategory: string,
+  contentID: string
+) => {
+  const trace = await perf().startTrace("fs_get_church_single_content_trace");
+  try {
+    const response = await firestore()
+      .collection(contentCategory)
+      .doc(contentID)
+      .get()
+      .then((documentSnapshot) => {
+        if (documentSnapshot.exists) {
+          return documentSnapshot.data();
+        } else {
+          return `Erro. Documento [${contentID}] não encontrado`;
+        }
+      });
+    return response;
+  } catch (error) {
+    console.log("Error: ", error);
+  } finally {
+    await trace.stop();
+  }
+};

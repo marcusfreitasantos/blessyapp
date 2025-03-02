@@ -1,5 +1,6 @@
 import axios from "axios";
 import perf from "@react-native-firebase/perf";
+import firestore from "@react-native-firebase/firestore";
 
 export const createNews = async (
   title: string,

@@ -29,31 +29,12 @@ const LoginForm = () => {
     modalState: false,
   });
 
-  const userLogin = async () => {
-    try {
-      isLoading(true);
-      const response = await loginUser(userEmail, userPass);
-      setUserObj(response?.data);
-    } catch (error) {
-      console.log(error);
-      setModalProps({
-        modalText: "Usuário ou senha incorretos!",
-        modalType: "error",
-        modalState: true,
-      });
-    } finally {
-      isLoading(false);
-    }
-  };
-
   const signInUser = async () => {
-    console.log(userEmail, userPass);
     isLoading(true);
     try {
       const res = await loginUserWithFirebase(userEmail, userPass);
 
       if (res?.docs[0].data()) {
-        console.log("userdata", res?.docs[0].data());
         setUserObj(res?.docs[0].data());
         router.replace("/home");
       }

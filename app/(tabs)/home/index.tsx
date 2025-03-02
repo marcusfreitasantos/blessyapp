@@ -99,20 +99,20 @@ const Home = () => {
     }
   }, [searchTerm]);
 
-  useEffect(() => {
-    getChurchesAdsFromApi();
-    if (adUnitId) {
-      const interstitial = InterstitialAd.createForAdRequest(adUnitId);
-      const unsubscribe = interstitial.addAdEventListener(
-        AdEventType.LOADED,
-        () => {
-          interstitial.show();
-        }
-      );
-      interstitial.load();
-      return unsubscribe;
-    }
-  }, []);
+  // useEffect(() => {
+  //   getChurchesAdsFromApi();
+  //   if (adUnitId) {
+  //     const interstitial = InterstitialAd.createForAdRequest(adUnitId);
+  //     const unsubscribe = interstitial.addAdEventListener(
+  //       AdEventType.LOADED,
+  //       () => {
+  //         interstitial.show();
+  //       }
+  //     );
+  //     interstitial.load();
+  //     return unsubscribe;
+  //   }
+  // }, []);
 
   if (!userObj) return;
 
