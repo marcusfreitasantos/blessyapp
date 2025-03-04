@@ -90,11 +90,11 @@ const ChurchScreen = () => {
     }
   };
 
-  const goToEditContent = (postId: number) => {
+  const goToEditContent = (contentId: number) => {
     router.push({
       pathname: "/content/news",
       params: {
-        postId,
+        contentId,
       },
     });
   };

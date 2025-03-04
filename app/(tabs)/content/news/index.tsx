@@ -20,7 +20,7 @@ const News = () => {
         contentId
       );
 
-      if (!res?.includes("Erro")) setContentData(res);
+      if (res.postTitle) setContentData(res);
     } catch (e) {
       console.log(e);
     } finally {

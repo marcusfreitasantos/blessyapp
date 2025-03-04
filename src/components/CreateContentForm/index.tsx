@@ -13,7 +13,7 @@ import {
 import InputComponent from "../Input";
 import ButtonComponent from "../Button";
 import { router } from "expo-router";
-import { createNewsInFirebase, updateNews } from "@/services/news";
+import { createNewsInFirebase, updateNewsInFirebase } from "@/services/news";
 import { Alert } from "react-native";
 import { limitStringLength } from "@/utils/limitStringLength";
 import { getFormattedDate } from "@/utils/getFormatedDate";
@@ -28,7 +28,7 @@ type CreateContentFormTypes = {
   postId: string;
   contentData: {
     postTitle: string;
-    singlePostContent: string;
+    postContent: string;
   } | null;
 };
 
@@ -44,7 +44,7 @@ const CreateContentForm = ({
   const requiredFieldMsg = "Campo obrigatório";
   const formDefaultValues = {
     title: contentData ? contentData.postTitle : "",
-    content: contentData ? contentData.singlePostContent : "",
+    content: contentData ? contentData.postContent : "",
   };
 
   const {
@@ -95,25 +95,32 @@ const CreateContentForm = ({
   };
 
   const updateNewsById = async (title: string, content: string) => {
+    const postExcerpt = limitStringLength(content, 140);
+
     try {
       setIsLoading(true);
-      const req = await updateNews(title, content, userId, postId);
-      if (req?.status === 200) {
-        Alert.alert("Sucesso!", "Conteúdo atualizado.", [
-          {
-            text: "Ver notícias",
-            onPress: () => {
-              setCurrentChurchContentCategory("news");
-              router.push(`/church/${userId}`);
-            },
-            style: "default",
+      const req = await updateNewsInFirebase(
+        postId,
+        content,
+        postExcerpt,
+        "publish",
+        title
+      );
+
+      Alert.alert("Sucesso!", "Conteúdo atualizado.", [
+        {
+          text: "Ver notícias",
+          onPress: () => {
+            setCurrentChurchContentCategory("news");
+            router.push(`/church/${userId}`);
           },
-          {
-            text: "Criar novo conteúdo",
-            style: "cancel",
-          },
-        ]);
-      }
+          style: "default",
+        },
+        {
+          text: "Criar novo conteúdo",
+          style: "cancel",
+        },
+      ]);
     } catch (e) {
       console.log(e);
       Alert.alert("Oops!", "O conteúdo não foi publicado, tente novamente.");
