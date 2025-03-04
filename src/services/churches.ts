@@ -192,6 +192,7 @@ export const getChurchContentFromFirebase = async (
     const response = await firestore()
       .collection(contentCategory)
       .where("authorID", "==", churchID)
+      .where("postStatus", "==", "publish")
       .get();
     return response;
   } catch (error) {

@@ -121,3 +121,16 @@ export const updateNewsInFirebase = async (
     trace.stop();
   }
 };
+
+export const deleteNewsInFirebase = async (postID: string) => {
+  const trace = await perf().startTrace("fs_delete_news_trace");
+
+  try {
+    const response = firestore().collection("news").doc(postID).delete();
+    return response;
+  } catch (e: any) {
+    throw new Error(e);
+  } finally {
+    trace.stop();
+  }
+};

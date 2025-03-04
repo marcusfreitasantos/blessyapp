@@ -139,7 +139,7 @@ const CreateContentForm = ({
       return;
     }
     createNewContent(data.title, data.content);
-    //reset(formDefaultValues);
+    reset(formDefaultValues);
   };
 
   return (

@@ -20,7 +20,7 @@ import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 import { defaultCoverImgUri } from "@/components/DefaultImages";
 import AboutChurch from "@/components/AboutChurch";
 import ChurchProps from "@/utils/churchProps";
-import { deleteNews } from "@/services/news";
+import { deleteNewsInFirebase } from "@/services/news";
 import { GlobalContext } from "@/contexts/currentUserContext";
 
 type CurrentContentProps = {
@@ -75,13 +75,11 @@ const ChurchScreen = () => {
     }
   };
 
-  const deleteCurrentNewsById = async (postId: number) => {
+  const deleteCurrentNewsById = async (postId: string) => {
     try {
       setIsLoading(true);
-      const req = await deleteNews(postId, userObj.userID);
-      if (req?.status === 200) {
-        Alert.alert("Item removido com sucesso!");
-      }
+      await deleteNewsInFirebase(postId);
+      Alert.alert("Item removido com sucesso!");
     } catch (e) {
       Alert.alert("Não foi possível deletar este item.");
       console.log(e);
