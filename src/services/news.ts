@@ -67,3 +67,57 @@ export const deleteNews = async (postId: number, userId: number) => {
     await trace.stop();
   }
 };
+
+//FIREBASE
+export const createNewsInFirebase = async (
+  authorID: string,
+  postContent: string,
+  postDate: string,
+  postExcerpt: string,
+  postStatus: string,
+  postTitle: string
+) => {
+  const trace = await perf().startTrace("fs_create_news_trace");
+
+  try {
+    const response = firestore().collection("news").add({
+      authorID,
+      postContent,
+      postDate,
+      postExcerpt,
+      postStatus,
+      postTitle,
+    });
+
+    return response;
+  } catch (e: any) {
+    throw new Error(e);
+  } finally {
+    trace.stop();
+  }
+};
+
+export const updateNewsInFirebase = async (
+  postID: string,
+  postContent: string,
+  postExcerpt: string,
+  postStatus: string,
+  postTitle: string
+) => {
+  const trace = await perf().startTrace("fs_update_news_trace");
+
+  try {
+    const response = firestore().collection("news").doc(postID).update({
+      postContent,
+      postExcerpt,
+      postStatus,
+      postTitle,
+    });
+
+    return response;
+  } catch (e: any) {
+    throw new Error(e);
+  } finally {
+    trace.stop();
+  }
+};

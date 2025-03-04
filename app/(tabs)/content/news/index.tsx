@@ -2,10 +2,12 @@ import { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import CreateContentForm from "@/components/CreateContentForm";
 import { useLocalSearchParams } from "expo-router";
-import { getChurchSingleContentById } from "@/services/churches";
+import { getChurchSingleContentFromFirebaseById } from "@/services/churches";
 
 const News = () => {
-  const { postId } = useLocalSearchParams();
+  const postData = useLocalSearchParams();
+  const contentId =
+    typeof postData.contentId === "string" ? postData.contentId : "";
   const { userObj } = useContext(GlobalContext);
   const [contentData, setContentData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -13,14 +15,12 @@ const News = () => {
   const getContent = async () => {
     try {
       setIsLoading(true);
-      const req = await getChurchSingleContentById(
-        userObj.userID.toString(),
+      const res = await getChurchSingleContentFromFirebaseById(
         "news",
-        postId
+        contentId
       );
-      if (req?.status === 200) {
-        setContentData(req.data);
-      }
+
+      if (!res?.includes("Erro")) setContentData(res);
     } catch (e) {
       console.log(e);
     } finally {
@@ -37,7 +37,7 @@ const News = () => {
   return (
     <CreateContentForm
       userId={userObj.userID}
-      postId={postId ? Number(postId) : 0}
+      postId={contentId ?? 0}
       contentData={contentData}
     />
   );

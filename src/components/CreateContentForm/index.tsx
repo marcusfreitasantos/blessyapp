@@ -13,8 +13,10 @@ import {
 import InputComponent from "../Input";
 import ButtonComponent from "../Button";
 import { router } from "expo-router";
-import { createNews, updateNews } from "@/services/news";
+import { createNewsInFirebase, updateNews } from "@/services/news";
 import { Alert } from "react-native";
+import { limitStringLength } from "@/utils/limitStringLength";
+import { getFormattedDate } from "@/utils/getFormatedDate";
 
 type Inputs = {
   title: string;
@@ -22,8 +24,8 @@ type Inputs = {
 };
 
 type CreateContentFormTypes = {
-  userId: number;
-  postId: number;
+  userId: string;
+  postId: string;
   contentData: {
     postTitle: string;
     singlePostContent: string;
@@ -55,26 +57,35 @@ const CreateContentForm = ({
   });
 
   const createNewContent = async (title: string, content: string) => {
+    const postDate = getFormattedDate();
+    const postExcerpt = limitStringLength(content, 140);
+
     try {
       setIsLoading(true);
-      const req = await createNews(title, content, userId);
-      if (req?.status === 200) {
-        Alert.alert("Sucesso!", "Conteúdo publicado.", [
-          {
-            text: "Ver notícias",
-            onPress: () => {
-              setCurrentChurchContentCategory("news");
-              router.push(`/church/${userId}`);
-            },
-            style: "default",
-          },
+      const req = await createNewsInFirebase(
+        userId,
+        content,
+        postDate,
+        postExcerpt,
+        "publish",
+        title
+      );
 
-          {
-            text: "Criar novo conteúdo",
-            style: "cancel",
+      Alert.alert("Sucesso!", "Conteúdo publicado.", [
+        {
+          text: "Ver notícias",
+          onPress: () => {
+            setCurrentChurchContentCategory("news");
+            router.push(`/church/${userId}`);
           },
-        ]);
-      }
+          style: "default",
+        },
+
+        {
+          text: "Criar novo conteúdo",
+          style: "cancel",
+        },
+      ]);
     } catch (e) {
       console.log(e);
       Alert.alert("Oops!", "O conteúdo não foi publicado, tente novamente.");
@@ -121,7 +132,7 @@ const CreateContentForm = ({
       return;
     }
     createNewContent(data.title, data.content);
-    reset(formDefaultValues);
+    //reset(formDefaultValues);
   };
 
   return (
