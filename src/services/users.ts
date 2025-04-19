@@ -32,11 +32,8 @@ export const loginUserWithFirebase = async (
 
     if (response.user.uid) {
       trace.putAttribute("status", "success");
-
-      const userData = await getUserDataFromFirebase(response.user.uid);
-      return userData;
+      return response.user.uid;
     }
-
     trace.putAttribute("status", "no_uid");
   } catch (e: any) {
     trace.putAttribute("status", "error");

@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { loginUserWithFirebase } from "@/services/users";
+import {
+  loginUserWithFirebase,
+  getUserDataFromFirebase,
+} from "@/services/users";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import { router } from "expo-router";
 import { VStack } from "@gluestack-ui/themed";
@@ -32,11 +35,14 @@ const LoginForm = () => {
   const signInUser = async () => {
     isLoading(true);
     try {
-      const res = await loginUserWithFirebase(userEmail, userPass);
+      const userUUID = await loginUserWithFirebase(userEmail, userPass);
 
-      if (res?.docs[0].data()) {
-        setUserObj(res?.docs[0].data());
-        router.replace("/home");
+      if (userUUID) {
+        const userData = await getUserDataFromFirebase(userUUID);
+        if (userData) {
+          setUserObj(userData?.docs[0].data());
+          router.replace("/home");
+        }
       }
     } catch (e) {
       console.log(e);
