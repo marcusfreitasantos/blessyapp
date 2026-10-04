@@ -28,7 +28,7 @@ const ChurchProfileHeader = ({
 
   const currentChurch = useLocalSearchParams();
   const { userObj } = useContext(GlobalContext);
-  const bookmarkIconFill = userObj.bookmarks.includes(Number(currentChurch.id));
+  const bookmarkIconFill = true; //userObj.bookmarks.includes(Number(currentChurch.id));
 
   const handleBack = () => {
     setCurrentChurchContentCategory("news");

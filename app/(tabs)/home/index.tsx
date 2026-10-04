@@ -7,7 +7,12 @@ import HomeHeader from "@/components/HomeHeader";
 import CardComponent from "@/components/Card";
 import ImageCarousel from "@/components/ImageCarousel";
 import HeadingComponent from "@/components/Heading";
-import { getChurches, getChurchesAds } from "@/services/churches";
+import {
+  getChurches,
+  getChurchesAds,
+  getChurchesFromFirebase,
+  getChurchesFromFirebaseByKeyword,
+} from "@/services/churches";
 import { getChurchesByKeyword } from "@/services/churches";
 import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 import SearchResult from "@/components/SearchResult";
@@ -48,8 +53,10 @@ const Home = () => {
 
   const findChurchBySearchTerm = async () => {
     try {
-      const res = await getChurchesByKeyword(searchTerm);
-      setCurrentChurches(res?.data);
+      const res = await getChurchesFromFirebaseByKeyword(
+        searchTerm.toLocaleLowerCase()
+      );
+      setCurrentChurches(res?.docs);
     } catch (error) {
       console.log("Error from handleSearch: ", error);
       setCurrentChurches([]);
@@ -74,8 +81,8 @@ const Home = () => {
   const getChurchesFromApi = async () => {
     try {
       setIsLoading(true);
-      const res = await getChurches();
-      setCurrentChurches(res?.data);
+      const res = await getChurchesFromFirebase();
+      setCurrentChurches(res?.docs);
     } catch (error) {
       console.log("Error from request list (getChurchesFromApi)", error);
       setCurrentChurches([]);
@@ -92,20 +99,22 @@ const Home = () => {
     }
   }, [searchTerm]);
 
-  useEffect(() => {
-    getChurchesAdsFromApi();
-    if (adUnitId) {
-      const interstitial = InterstitialAd.createForAdRequest(adUnitId);
-      const unsubscribe = interstitial.addAdEventListener(
-        AdEventType.LOADED,
-        () => {
-          interstitial.show();
-        }
-      );
-      interstitial.load();
-      return unsubscribe;
-    }
-  }, []);
+  // useEffect(() => {
+  //   getChurchesAdsFromApi();
+  //   if (adUnitId) {
+  //     const interstitial = InterstitialAd.createForAdRequest(adUnitId);
+  //     const unsubscribe = interstitial.addAdEventListener(
+  //       AdEventType.LOADED,
+  //       () => {
+  //         interstitial.show();
+  //       }
+  //     );
+  //     interstitial.load();
+  //     return unsubscribe;
+  //   }
+  // }, []);
+
+  if (!userObj) return;
 
   return (
     <>
@@ -136,15 +145,14 @@ const Home = () => {
                 }
                 renderItem={({ item, index }) => (
                   <CardComponent
-                    id={item.id}
-                    logo={item.logo}
-                    name={item.name}
-                    description={item.address}
+                    id={item.data().userID}
+                    logo={item.data().logo}
+                    name={item.data().firstName}
+                    description={item.data().address}
                     parentUrl="church"
                     currentIndex={index}
                     hasImg
                     hasIcon
-                    bookmarked={userObj.bookmarks.includes(item.id)}
                   />
                 )}
                 keyExtractor={(item) => item.id.toString()}

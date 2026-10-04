@@ -7,7 +7,10 @@ import InputComponent from "@/components/Input";
 import ButtonComponent from "@/components/Button";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import SearchResult from "@/components/SearchResult";
-import { getChurchesByMetadata } from "@/services/churches";
+import {
+  getChurchesByMetadata,
+  getChurchesFromFirebaseByMetadata,
+} from "@/services/churches";
 import { useIsFocused } from "@react-navigation/native";
 import SelectComponent from "@/components/SelectComponent";
 import { BrazilianStates } from "@/mocks/brazilianStatesList";
@@ -19,12 +22,10 @@ type CurrentChurchesProps = {
   address: string;
 };
 
-type SelectItemsListProps = [
-  {
-    name: string;
-    value: string;
-  }
-];
+type SelectItemsListProps = {
+  name: string;
+  value: string;
+}[];
 const Search = () => {
   const [churchName, setChurchName] = useState("");
   const [churchCity, setChurchCity] = useState("");
@@ -41,13 +42,13 @@ const Search = () => {
     try {
       setIsLoading(true);
       Keyboard.dismiss();
-      const res = await getChurchesByMetadata(
-        churchName,
+      const res = await getChurchesFromFirebaseByMetadata(
+        churchName.toLocaleLowerCase(),
         churchState,
-        churchCity,
-        churchAddress
+        churchCity.toLocaleLowerCase(),
+        churchAddress.toLocaleLowerCase()
       );
-      setChurchesFound(res?.data);
+      setChurchesFound(res?.docs);
     } catch (error) {
       console.log("Error from findChurchByMetadata: ", error);
       setChurchesFound([]);
@@ -78,6 +79,7 @@ const Search = () => {
         <SelectComponent
           selectItemsList={selectItemsList}
           onValueChange={setChurchState}
+          placeHolder="Estado"
         />
 
         <InputComponent

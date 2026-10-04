@@ -1,67 +1,95 @@
-import axios from "axios";
 import perf from "@react-native-firebase/perf";
+import firestore from "@react-native-firebase/firestore";
 
-export const createNews = async (
-  title: string,
-  content: string,
-  userId: number
+//FIREBASE
+export const createNewsInFirebase = async (
+  authorID: string,
+  postContent: string,
+  postDate: string,
+  postExcerpt: string,
+  postStatus: string,
+  postTitle: string
 ) => {
-  const trace = await perf().startTrace("create_news_trace");
+  const trace = await perf().startTrace("fs_create_news_trace");
+
   try {
-    const response = axios.post(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/news/create`,
-      {
-        title,
-        content,
-        userId,
-      }
-    );
+    const payload = {
+      authorID,
+      postContent,
+      postDate,
+      postExcerpt,
+      postStatus,
+      postTitle,
+    };
+
+    const payloadSize = JSON.stringify(payload).length;
+
+    trace.putMetric("payload_size_bytes", payloadSize);
+
+    const response = await firestore().collection("news").add(payload);
+
+    trace.putAttribute("status", "success");
+
     return response;
-  } catch (error) {
-    console.log("Error: ", error);
+  } catch (e: any) {
+    trace.putAttribute("status", "error");
+    trace.putAttribute("error_message", e.message ?? "unknown");
+    throw new Error(e);
   } finally {
     await trace.stop();
   }
 };
 
-export const updateNews = async (
-  title: string,
-  content: string,
-  userId: number,
-  postId: number
+export const updateNewsInFirebase = async (
+  postID: string,
+  postContent: string,
+  postExcerpt: string,
+  postStatus: string,
+  postTitle: string
 ) => {
-  const trace = await perf().startTrace("update_news_trace");
+  const trace = await perf().startTrace("fs_update_news_trace");
+
   try {
-    const response = axios.post(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/news/update`,
-      {
-        title,
-        content,
-        userId,
-        postId,
-      }
-    );
+    const payload = {
+      postContent,
+      postExcerpt,
+      postStatus,
+      postTitle,
+    };
+
+    const payloadSize = JSON.stringify(payload).length;
+    trace.putMetric("payload_size_bytes", payloadSize);
+
+    const response = await firestore()
+      .collection("news")
+      .doc(postID)
+      .update(payload);
+
+    trace.putAttribute("status", "success");
+
     return response;
-  } catch (error) {
-    console.log("Error: ", error);
+  } catch (e: any) {
+    trace.putAttribute("status", "error");
+    trace.putAttribute("error_message", e.message ?? "unknown");
+    throw new Error(e);
   } finally {
     await trace.stop();
   }
 };
 
-export const deleteNews = async (postId: number, userId: number) => {
-  const trace = await perf().startTrace("delete_news_trace");
+export const deleteNewsInFirebase = async (postID: string) => {
+  const trace = await perf().startTrace("fs_delete_news_trace");
+
   try {
-    const response = axios.post(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/news/delete`,
-      {
-        postId,
-        userId,
-      }
-    );
+    const response = await firestore().collection("news").doc(postID).delete();
+
+    trace.putAttribute("status", "success");
+
     return response;
-  } catch (error) {
-    console.log("Error: ", error);
+  } catch (e: any) {
+    trace.putAttribute("status", "error");
+    trace.putAttribute("error_message", e.message ?? "unknown");
+    throw new Error(e);
   } finally {
     await trace.stop();
   }

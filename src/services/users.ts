@@ -1,171 +1,115 @@
-import axios from "axios";
 import perf from "@react-native-firebase/perf";
+import auth from "@react-native-firebase/auth";
+import firestore from "@react-native-firebase/firestore";
 
-export const authUser = async (username: string, password: string) => {
-  const trace = await perf().startTrace("auth_user_trace");
-
+export const getUserDataFromFirebase = async (userID: string) => {
+  const trace = await perf().startTrace("fs_get_user_data_trace");
   try {
-    const jwtAuthResponse = axios.post(`${process.env.EXPO_PUBLIC_AUTH_URL}`, {
-      username,
-      password,
-    });
+    const response = await firestore()
+      .collection("Users")
+      .where("userID", "==", userID)
+      .get();
 
-    return jwtAuthResponse;
+    trace.putAttribute("status", "success");
+
+    return response;
   } catch (e: any) {
-    throw new Error(e.message);
+    trace.putAttribute("status", "error");
+    trace.putAttribute("error_message", e.message ?? "unknown");
+    throw new Error(e);
   } finally {
     await trace.stop();
   }
 };
 
-export const validateToken = (token: string) => {
-  const jwtAuthResponse = axios.post(
-    `${process.env.EXPO_PUBLIC_VALIDATE_TOKEN}`,
-    "",
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
-
-  return jwtAuthResponse;
-};
-
-export const createUser = async (
-  username: string,
-  userEmail: string,
-  userPass: string,
-  userFullName: string,
-  role: string
+export const loginUserWithFirebase = async (
+  email: string,
+  password: string
 ) => {
-  const trace = await perf().startTrace("create_user_trace");
-
+  const trace = await perf().startTrace("fs_login_user_trace");
   try {
-    const createdUser = axios.post(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/users`,
-      {
-        username,
-        userEmail,
-        userPass,
-        userFullName,
-        role,
-      }
-    );
+    const response = await auth().signInWithEmailAndPassword(email, password);
 
-    return createdUser;
+    if (response.user.uid) {
+      trace.putAttribute("status", "success");
+      return response.user.uid;
+    }
+    trace.putAttribute("status", "no_uid");
   } catch (e: any) {
-    throw new Error(e.message);
+    trace.putAttribute("status", "error");
+    trace.putAttribute("error_message", e.message ?? "unknown");
+    throw new Error(e);
   } finally {
     await trace.stop();
   }
 };
 
-export const updateUserById = async (
-  userID: number,
+const saveUserDataInFirebaseCollection = async (
+  userID: string,
+  email: string,
   firstName: string,
   lastName: string,
-  email: string,
-  userPass: string
+  role: string
 ) => {
-  const trace = await perf().startTrace("update_user_trace");
-
+  const trace = await perf().startTrace("fs_save_user_data_trace");
   try {
-    const updatedUser = axios.post(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}`,
-      {
+    const payload = {
+      userID,
+      email,
+      firstName,
+      lastName,
+      role,
+    };
+
+    trace.putMetric("payload_size", JSON.stringify(payload).length);
+    trace.putAttribute("status", "success");
+
+    const response = await firestore().collection("Users").add(payload);
+    return response;
+  } catch (e: any) {
+    trace.putAttribute("status", "error");
+    trace.putAttribute("error_message", e.message ?? "unknown");
+    throw new Error(e);
+  } finally {
+    await trace.stop();
+  }
+};
+
+export const createUserWithFirebase = async (
+  email: string,
+  password: string,
+  firstName: string,
+  lastName: string,
+  role: string
+) => {
+  const trace = await perf().startTrace("fs_create_user_trace");
+  try {
+    const response = await auth().createUserWithEmailAndPassword(
+      email,
+      password
+    );
+
+    if (response.user.uid) {
+      const newUserRegistered = await saveUserDataInFirebaseCollection(
+        response.user.uid,
+        email,
         firstName,
         lastName,
-        email,
-        userPass,
-      }
-    );
+        role
+      );
 
-    return updatedUser;
+      trace.putAttribute("status", "success");
+
+      return newUserRegistered;
+    }
+
+    trace.putAttribute("status", "no_uid");
   } catch (e: any) {
-    throw new Error(e.message);
+    trace.putAttribute("status", "error");
+    trace.putAttribute("error_message", e.message ?? "unknown");
+    console.log("error creating user", e);
+    throw new Error(e);
   } finally {
     await trace.stop();
-  }
-};
-
-export const saveUserBookmarks = (userID: number, churchId: number) => {
-  try {
-    const response = axios.post(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}/bookmark`,
-      {
-        churchId,
-      }
-    );
-    return response;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
-};
-
-export const removeUserBookmarks = (userID: number, churchId: number) => {
-  try {
-    const response = axios.delete(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}/bookmark/${churchId}`
-    );
-    return response;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
-};
-
-export const getUserBookmarks = (userID: number) => {
-  try {
-    const response = axios.get(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}/bookmark`
-    );
-    return response;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
-};
-
-export const saveUserDeviceToken = (
-  userID: number,
-  userDeviceToken: string
-) => {
-  try {
-    const response = axios.post(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}/devices`,
-      {
-        userDeviceToken,
-      }
-    );
-    return response;
-  } catch (error) {
-    console.log("Error: ", error);
-  }
-};
-
-export const resetUserPassword = async (userEmail: string) => {
-  const trace = await perf().startTrace("reset_user_password_trace");
-  try {
-    const response = axios.post(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/users/reset-password/`,
-      {
-        userEmail,
-      }
-    );
-    return response;
-  } catch (error) {
-    console.log("Error: ", error);
-  } finally {
-    await trace.stop();
-  }
-};
-
-export const getUserNotifications = (userID: number) => {
-  try {
-    const response = axios.get(
-      `${process.env.EXPO_PUBLIC_BASE_URL}/users/${userID}/notifications`
-    );
-    return response;
-  } catch (error) {
-    console.log("Error: ", error);
   }
 };

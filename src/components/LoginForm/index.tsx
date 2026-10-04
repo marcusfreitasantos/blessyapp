@@ -1,6 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { validateToken } from "@/services/users";
+import {
+  loginUserWithFirebase,
+  getUserDataFromFirebase,
+} from "@/services/users";
 import { GlobalContext } from "@/contexts/currentUserContext";
 import { router } from "expo-router";
 import { VStack } from "@gluestack-ui/themed";
@@ -10,6 +13,7 @@ import InputComponent from "../Input";
 import LoadingSpinner from "../LoadingSpinner";
 import ModalComponent from "../ModalComponent";
 import loginUser from "@/utils/loginUser";
+import { Alert } from "react-native";
 
 type ModalComponentProps = {
   modalText: string;
@@ -19,8 +23,8 @@ type ModalComponentProps = {
 
 const LoginForm = () => {
   const { setUserObj } = useContext(GlobalContext);
-  const [userEmail, setuserEmail] = useState("");
-  const [userPass, setUserPass] = useState("");
+  const [userEmail, setuserEmail] = useState("videira@gmail.com");
+  const [userPass, setUserPass] = useState("cdz___182");
   const [loading, isLoading] = useState(false);
   const [modalProps, setModalProps] = useState<ModalComponentProps>({
     modalText: "",
@@ -28,48 +32,25 @@ const LoginForm = () => {
     modalState: false,
   });
 
-  const userLogin = async () => {
-    try {
-      isLoading(true);
-      const response = await loginUser(userEmail, userPass);
-      setUserObj(response?.data);
-    } catch (error) {
-      console.log(error);
-      setModalProps({
-        modalText: "Usuário ou senha incorretos!",
-        modalType: "error",
-        modalState: true,
-      });
-    } finally {
-      isLoading(false);
-    }
-  };
-
-  const getStoredUserObj = async () => {
+  const signInUser = async () => {
     isLoading(true);
     try {
-      const storedUserObj = await AsyncStorage.getItem("blessy_current_user");
+      const userUUID = await loginUserWithFirebase(userEmail, userPass);
 
-      if (storedUserObj !== null) {
-        const currentUserObj = JSON.parse(storedUserObj);
-
-        const { data } = await validateToken(currentUserObj.token);
-
-        if (data.data.status === 200) {
-          setUserObj(currentUserObj);
+      if (userUUID) {
+        const userData = await getUserDataFromFirebase(userUUID);
+        if (userData) {
+          setUserObj(userData?.docs[0].data());
           router.replace("/home");
         }
       }
-    } catch (error) {
-      console.log("Error getting token from Async Storage:", error);
+    } catch (e) {
+      console.log(e);
+      Alert.alert("Usuário ou senha inválidos");
     } finally {
       isLoading(false);
     }
   };
-
-  useEffect(() => {
-    getStoredUserObj();
-  }, []);
 
   return (
     <>
@@ -107,7 +88,7 @@ const LoginForm = () => {
           />
 
           <ButtonComponent
-            onPress={userLogin}
+            onPress={signInUser}
             buttonText="Login"
             action="primary"
             variant="solid"

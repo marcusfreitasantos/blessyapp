@@ -8,14 +8,19 @@ import ChurchProfileContentMenu from "@/components/ChurchProfileContentMenu";
 import CardComponent from "@/components/Card";
 import ChurchProfileHeaderContent from "@/components/ChurchProfileHeaderContent";
 import { ContentCategories } from "@/mocks/contentCategories";
-import { getChurchById, getChurchContent } from "@/services/churches";
+import {
+  getChurchById,
+  getChurchContent,
+  getChurchesFromFirebaseByID,
+  getChurchContentFromFirebase,
+} from "@/services/churches";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import { useIsFocused } from "@react-navigation/native";
 import EmptyListCardComponent from "@/components/EmptyListCardComponent";
 import { defaultCoverImgUri } from "@/components/DefaultImages";
 import AboutChurch from "@/components/AboutChurch";
 import ChurchProps from "@/utils/churchProps";
-import { deleteNews } from "@/services/news";
+import { deleteNewsInFirebase } from "@/services/news";
 import { GlobalContext } from "@/contexts/currentUserContext";
 
 type CurrentContentProps = {
@@ -34,9 +39,9 @@ const ChurchScreen = () => {
   const [isLoading, setIsLoading] = useState(true);
   const currentChurch = useLocalSearchParams();
 
-  const [currentContent, setCurrentContent] = useState<
-    CurrentContentProps[] | null
-  >(null);
+  const [currentContent, setCurrentContent] = useState<CurrentContentProps[]>(
+    []
+  );
 
   const [currentChurchInfo, setCurrentChurchInfo] =
     useState<ChurchProps | null>(null);
@@ -44,8 +49,8 @@ const ChurchScreen = () => {
   const getCurrentChurchById = async () => {
     try {
       setIsLoading(true);
-      const res = await getChurchById(currentChurch.id);
-      setCurrentChurchInfo(res?.data);
+      const res = await getChurchesFromFirebaseByID(currentChurch.id);
+      setCurrentChurchInfo(res?.docs[0].data());
     } catch (error) {
       console.log("Error from getChurchById: ", error);
       router.back();
@@ -57,8 +62,11 @@ const ChurchScreen = () => {
   const getCurrentChurchContent = async (contentCategory: string) => {
     try {
       setIsLoading(true);
-      const res = await getChurchContent(currentChurch.id, contentCategory);
-      setCurrentContent(res?.data);
+      const res = await getChurchContentFromFirebase(
+        currentChurch.id,
+        contentCategory
+      );
+      setCurrentContent(res?.docs);
     } catch (error) {
       console.log("Error from getCurrentChurchContent: ", error);
       setCurrentContent(null);
@@ -67,13 +75,11 @@ const ChurchScreen = () => {
     }
   };
 
-  const deleteCurrentNewsById = async (postId: number) => {
+  const deleteCurrentNewsById = async (postId: string) => {
     try {
       setIsLoading(true);
-      const req = await deleteNews(postId, userObj.userID);
-      if (req?.status === 200) {
-        Alert.alert("Item removido com sucesso!");
-      }
+      await deleteNewsInFirebase(postId);
+      Alert.alert("Item removido com sucesso!");
     } catch (e) {
       Alert.alert("Não foi possível deletar este item.");
       console.log(e);
@@ -82,11 +88,11 @@ const ChurchScreen = () => {
     }
   };
 
-  const goToEditContent = (postId: number) => {
+  const goToEditContent = (contentId: number) => {
     router.push({
       pathname: "/content/news",
       params: {
-        postId,
+        contentId,
       },
     });
   };
@@ -96,7 +102,7 @@ const ChurchScreen = () => {
       getCurrentChurchById();
       getCurrentChurchContent(currentChurchContentCategory);
     } else {
-      setCurrentContent(null);
+      setCurrentContent([]);
       setCurrentChurchInfo(null);
     }
   }, [isFocused]);
@@ -142,8 +148,8 @@ const ChurchScreen = () => {
                   <CardComponent
                     currentChurchId={currentChurch.id?.toString()}
                     id={item.id}
-                    name={item.postTitle}
-                    description={item.postExcerpt}
+                    name={item.data().postTitle}
+                    description={item.data().postExcerpt}
                     parentUrl={`church/${currentChurch.id}/${currentChurchContentCategory}`}
                     currentIndex={index}
                     isEditable={true}

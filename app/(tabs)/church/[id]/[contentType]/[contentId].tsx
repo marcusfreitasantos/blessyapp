@@ -14,7 +14,7 @@ import Paragraph from "@/components/Paragraph";
 import ContentTitle from "@/components/ContentTitle";
 import { Music } from "lucide-react-native";
 import MusicsGroup from "@/components/MusicsGroup";
-import { getChurchSingleContentById } from "@/services/churches";
+import { getChurchSingleContentFromFirebaseById } from "@/services/churches";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import EventInfo from "@/components/EventInfo";
 import ButtonComponent from "@/components/Button";
@@ -25,12 +25,7 @@ type CurrentContentProps = {
   postDate: string;
   postTitle: string;
   postExcerpt: string;
-  postContent: [
-    {
-      paragraph_title: string;
-      paragraph_text: string;
-    }
-  ];
+  postContent: string;
   singlePostContent: string;
   eventStartDate: string;
   eventEndDate: string;
@@ -52,7 +47,11 @@ const ContentTypeScreen = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentContent, setCurrentContent] =
     useState<CurrentContentProps | null>(null);
-  const { contentId, contentType, id } = useLocalSearchParams();
+  const postData = useLocalSearchParams();
+  const contentId =
+    typeof postData.contentId === "string" ? postData.contentId : "";
+  const contentType =
+    typeof postData.contentType === "string" ? postData.contentType : "";
 
   const goToMusics = () => {
     setShowMusicsGroup(!showMusicsGroup);
@@ -65,9 +64,11 @@ const ContentTypeScreen = () => {
   const getCurrentContent = async () => {
     try {
       setIsLoading(true);
-      const res = await getChurchSingleContentById(id, contentType, contentId);
-      console.log(res?.data);
-      setCurrentContent(res?.data);
+      const res = await getChurchSingleContentFromFirebaseById(
+        contentType,
+        contentId
+      );
+      setCurrentContent(res);
     } catch (error) {
       console.log("Error from getCurrentContent: ", error);
     } finally {
@@ -133,8 +134,8 @@ const ContentTypeScreen = () => {
               </Box>
 
               <Box px={20} pb={20} flex={1}>
-                {currentContent.singlePostContent && (
-                  <Paragraph postContent={currentContent.singlePostContent} />
+                {currentContent.postContent && (
+                  <Paragraph postContent={currentContent.postContent} />
                 )}
               </Box>
 
